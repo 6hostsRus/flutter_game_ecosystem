@@ -1,4 +1,3 @@
-
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +10,7 @@ class SurvivorGame extends FlameGame {
 
   @override
   void update(double dt) {
+    super.update(dt);
     time += dt;
     final nextWave = (time ~/ 30).toInt();
     if (nextWave > wave) {

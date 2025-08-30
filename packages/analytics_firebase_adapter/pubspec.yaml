@@ -1,16 +1,14 @@
-
 name: analytics_firebase_adapter
 description: Firebase Analytics sink for core_services AnalyticsSink.
 version: 0.1.0
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+     sdk: '>=3.3.0 <4.0.0'
 dependencies:
-  flutter:
-    sdk: flutter
-  firebase_core: ^2.32.0
-  firebase_analytics: ^10.10.0
-  flutter_riverpod: ^2.5.1
-  core_services:
-    path: ../core_services
+     flutter:
+          sdk: flutter
+     firebase_core: ^2.32.0
+     firebase_analytics: ^10.10.0
+     flutter_riverpod: ^2.5.1
+     core_services: core_services/core_services
 dev_dependencies:
-  flutter_lints: ^4.0.0
+     flutter_lints: ^4.0.0

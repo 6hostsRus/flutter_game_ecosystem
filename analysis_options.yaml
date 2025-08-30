@@ -1,0 +1,7 @@
+analyzer:
+     exclude:
+          - bricks/**/__brick__/**
+          - bricks/**/__bricks__/**
+          - bricks/__brick__/**
+          - bricks/__bricks__/**
+# ...other analysis options if needed...

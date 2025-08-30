@@ -1,0 +1,54 @@
+# Flutter/Dart
+**/build/
+**/.dart_tool/
+**/.packages
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.idea/
+**/.vscode/
+**/.DS_Store
+**/pubspec.lock
+**/.env
+**/.env.*
+
+# Node.js (if any JS tooling)
+**/node_modules/
+**/npm-debug.log*
+
+# macOS
+**/.DS_Store
+
+# Mason bricks
+**/bricks/**/build/
+
+# Secrets
+**/secrets.*.md
+
+# Coverage
+**/coverage/
+
+# Logs
+**/*.log
+
+# Misc
+**/.history
+**/.sourcemaps
+
+# Ignore by convention
+**/tmp/
+**/temp/
+**/.cache/
+
+# Python (if any automation scripts)
+**/__pycache__/
+**/*.pyc
+
+# Ignore IDE settings
+**/.vscode/
+**/.idea/
+
+# Ignore test output
+**/test-output/
+
+# Ignore generated docs
+**/docs/generated/
