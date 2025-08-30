@@ -1,0 +1,31 @@
+name: Epic Builder
+on:
+  repository_dispatch:
+    types: [epic]
+permissions:
+  issues: write
+jobs:
+  epic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const payload = context.payload.client_payload.slash_command;
+            const args = payload.args;
+            // Expected: "Title" children: #12 #34
+            const m = args.match(/^"([^"]+)"\s+children:\s+(.+)$/i);
+            if (!m) { core.setFailed('Usage: /epic "Title" children: #1 #2'); return; }
+            const title = m[1];
+            const children = m[2].match(/#\d+/g) || [];
+            const parent = await github.rest.issues.create({
+              owner: context.repo.owner, repo: context.repo.repo,
+              title: `[Epic] ${title}`, body: `Tracks: ${children.join(' ')}`
+            });
+            for (const ch of children) {
+              const num = parseInt(ch.replace('#',''));
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo, issue_number: num,
+                body: `Linked to epic #${parent.data.number}`
+              });
+            }

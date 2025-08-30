@@ -1,0 +1,21 @@
+name: Store Metadata Sync
+on:
+  repository_dispatch:
+    types: [store]
+  workflow_dispatch:
+jobs:
+  ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deliver listing (iOS)
+        run: |
+          gem install fastlane
+          echo "Stub: fastlane deliver --metadata_path ./store/ios --screenshots_path ./assets/store/ios"
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Supply listing (Android)
+        run: |
+          echo "Stub: fastlane supply --metadata ./store/android --json_key_data '${{ secrets.PLAY_JSON_KEY }}'"

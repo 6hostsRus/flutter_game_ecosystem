@@ -1,0 +1,18 @@
+name: Golden Image Guard
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  goldens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for goldens
+        id: detect
+        run: |
+          if [ -d "test/golden" ]; then echo "present=true" >> $GITHUB_OUTPUT; else echo "present=false" >> $GITHUB_OUTPUT; fi
+      - name: Run golden tests
+        if: steps.detect.outputs.present == 'true'
+        run: |
+          flutter test --update-goldens=false

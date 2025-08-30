@@ -1,0 +1,254 @@
+[
+  {
+    "title": "Create `release/x.y.z` branch",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Create `release/x.y.z` branch\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Bump app version codes (iOS CFBundleShortVersionString/Build, Android versionName/versionCode)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Bump app version codes (iOS CFBundleShortVersionString/Build, Android versionName/versionCode)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Update CHANGELOG.md",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Update CHANGELOG.md\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Tag `vX.Y.Z` after store approvals",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Tag `vX.Y.Z` after store approvals\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Update Privacy Policy URL (hosted & reachable)",
+    "labels": [
+      "release-train"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Update Privacy Policy URL (hosted & reachable)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Review data collection map (SDKs, analytics, ads)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Review data collection map (SDKs, analytics, ads)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "iOS: App Privacy labels updated",
+    "labels": [
+      "release-train"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] iOS: App Privacy labels updated\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "iOS: ATT prompt logic validated (if IDFA)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] iOS: ATT prompt logic validated (if IDFA)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Android: Data Safety form updated (AdMob + other SDKs)",
+    "labels": [
+      "release-train"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Android: Data Safety form updated (AdMob + other SDKs)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Validate AdMob unit IDs (test vs prod)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Validate AdMob unit IDs (test vs prod)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Rewarded/interstitial placement flags in Remote Config",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Rewarded/interstitial placement flags in Remote Config\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Frequency caps verified (cooldowns respected)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Frequency caps verified (cooldowns respected)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "IAP products (if any) present and in correct state (Cleared for sale/Active)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] IAP products (if any) present and in correct state (Cleared for sale/Active)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Icon sets generated (iOS 1024x1024, Android 512x512)",
+    "labels": [
+      "assets"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Icon sets generated (iOS 1024x1024, Android 512x512)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Feature graphic (Android 1024x500)",
+    "labels": [
+      "assets"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Feature graphic (Android 1024x500)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Screenshots (phones & tablets: iOS 6.7/5.5/iPad; Android phone/7\"/10\")",
+    "labels": [
+      "assets"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Screenshots (phones & tablets: iOS 6.7/5.5/iPad; Android phone/7\"/10\")\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Video preview (optional) prepared",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Video preview (optional) prepared\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Store descriptions (short/full) reviewed with keywords",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Store descriptions (short/full) reviewed with keywords\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "iOS: Archive in Xcode \u2192 upload to App Store Connect",
+    "labels": [
+      "store"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] iOS: Archive in Xcode \u2192 upload to App Store Connect\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "iOS: TestFlight build distributed to testers",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] iOS: TestFlight build distributed to testers\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Android: Generate signed AAB (release keystore)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Android: Generate signed AAB (release keystore)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Android: Upload to Play Console (internal test or closed track)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Android: Upload to Play Console (internal test or closed track)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Crash-free smoke tests on 3\u20135 devices per platform",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Crash-free smoke tests on 3\u20135 devices per platform\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "iOS: Content rating questionnaire completed",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] iOS: Content rating questionnaire completed\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "iOS: App Review notes + demo credentials added (if needed)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] iOS: App Review notes + demo credentials added (if needed)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Android: Content rating questionnaire completed",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Android: Content rating questionnaire completed\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Android: Target API level compliant & Play App Signing enabled",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Android: Target API level compliant & Play App Signing enabled\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Categories, age ratings, pricing set on both stores",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Categories, age ratings, pricing set on both stores\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "iOS: Submit for review",
+    "labels": [
+      "store"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] iOS: Submit for review\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Android: Promote from internal/closed to production (staged rollout %)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Android: Promote from internal/closed to production (staged rollout %)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Monitor review feedback; respond to required changes",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Monitor review feedback; respond to required changes\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Post-approval: publish release notes",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Post-approval: publish release notes\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Enable production Remote Config flags (ads, events)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Enable production Remote Config flags (ads, events)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Verify analytics dashboards (events, retention proxies, ARPDAU)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Verify analytics dashboards (events, retention proxies, ARPDAU)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "In-app review prompts gated by engagement rules",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] In-app review prompts gated by engagement rules\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  },
+  {
+    "title": "Cross-promo slot updated (promote next title)",
+    "labels": [
+      "task"
+    ],
+    "body": "Auto-generated from release_train.md checklist.\n\nAcceptance Criteria:\n- [ ] Cross-promo slot updated (promote next title)\n\nDefinition of Done:\n- [ ] Completed and validated\n"
+  }
+]

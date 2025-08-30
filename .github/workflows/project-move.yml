@@ -1,0 +1,19 @@
+name: Project Move
+on:
+  repository_dispatch:
+    types: [project]
+permissions:
+  issues: write
+  pull-requests: write
+jobs:
+  move:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const payload = context.payload.client_payload.slash_command;
+            const args = payload.args;
+            core.info(`Args: ${args}`);
+            // This is a placeholder; use actions/add-to-project for adds on open
+            core.info('Use add-to-project.yml for auto adds on open; manual move not supported via API without item id.')

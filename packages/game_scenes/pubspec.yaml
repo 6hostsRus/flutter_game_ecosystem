@@ -1,0 +1,12 @@
+name: game_scenes
+description: Flame-ready stub scenes for Platformer and Survivor-like modes.
+version: 0.1.0
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: ^1.11.0
+  flutter_riverpod: ^2.5.1
+dev_dependencies:
+  flutter_lints: ^4.0.0

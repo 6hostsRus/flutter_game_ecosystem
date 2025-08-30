@@ -1,0 +1,27 @@
+name: Android Upload (Internal)
+on:
+  repository_dispatch:
+    types: [promote]
+  workflow_dispatch:
+jobs:
+  internal:
+    if: contains(github.event.action, '') # always run on dispatch; controlled by args
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Build AAB
+        run: flutter build appbundle --release
+      - name: Sign AAB
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 -d > keystore.jks
+          jarsigner -keystore keystore.jks -storepass "${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" -keypass "${{ secrets.ANDROID_KEY_PASSWORD }}" build/app/outputs/bundle/release/app-release.aab "${{ secrets.ANDROID_KEY_ALIAS }}"
+      - name: Upload to Play (internal)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_JSON_KEY }}
+          packageName: ${{ vars.ANDROID_PACKAGE_NAME }}
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: internal

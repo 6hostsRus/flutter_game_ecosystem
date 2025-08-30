@@ -1,0 +1,325 @@
+Title,Body,Labels
+Create `release/x.y.z` branch,"**Section:** Versioning & Branching
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+"Bump app version codes (iOS CFBundleShortVersionString/Build, Android versionName/versionCode)","**Section:** Versioning & Branching
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+Update CHANGELOG.md,"**Section:** Versioning & Branching
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+Tag `vX.Y.Z` after store approvals,"**Section:** Versioning & Branching
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+Update Privacy Policy URL (hosted & reachable),"**Section:** Compliance & Privacy
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,compliance"
+"Review data collection map (SDKs, analytics, ads)","**Section:** Compliance & Privacy
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,analytics"
+iOS: App Privacy labels updated,"**Section:** Compliance & Privacy
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,compliance"
+iOS: ATT prompt logic validated (if IDFA),"**Section:** Compliance & Privacy
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,compliance"
+Android: Data Safety form updated (AdMob + other SDKs),"**Section:** Compliance & Privacy
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,compliance,monetization"
+Validate AdMob unit IDs (test vs prod),"**Section:** Monetization & Remote Flags
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,monetization"
+Rewarded/interstitial placement flags in Remote Config,"**Section:** Monetization & Remote Flags
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,monetization,analytics"
+Frequency caps verified (cooldowns respected),"**Section:** Monetization & Remote Flags
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+IAP products (if any) present and in correct state (Cleared for sale/Active),"**Section:** Monetization & Remote Flags
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,monetization"
+"Icon sets generated (iOS 1024x1024, Android 512x512)","**Section:** Assets Matrix
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,assets"
+Feature graphic (Android 1024x500),"**Section:** Assets Matrix
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,assets"
+"Screenshots (phones & tablets: iOS 6.7/5.5/iPad; Android phone/7""/10"")","**Section:** Assets Matrix
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,assets"
+Video preview (optional) prepared,"**Section:** Assets Matrix
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,assets"
+Store descriptions (short/full) reviewed with keywords,"**Section:** Assets Matrix
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+[Store] iOS: Archive in Xcode → upload to App Store Connect,"**Section:** Build & Validate
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store"
+[Store] iOS: TestFlight build distributed to testers,"**Section:** Build & Validate
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store"
+[Store] Android: Generate signed AAB (release keystore),"**Section:** Build & Validate
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store"
+[Store] Android: Upload to Play Console (internal test or closed track),"**Section:** Build & Validate
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store"
+Crash-free smoke tests on 3–5 devices per platform,"**Section:** Build & Validate
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+iOS: Content rating questionnaire completed,"**Section:** Store Config
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,compliance"
+iOS: App Review notes + demo credentials added (if needed),"**Section:** Store Config
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+Android: Content rating questionnaire completed,"**Section:** Store Config
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,compliance"
+Android: Target API level compliant & Play App Signing enabled,"**Section:** Store Config
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+"Categories, age ratings, pricing set on both stores","**Section:** Store Config
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,compliance"
+[Store] iOS: Submit for review,"**Section:** Review & Rollout
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store"
+[Store] Android: Promote from internal/closed to production (staged rollout %),"**Section:** Review & Rollout
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store"
+Monitor review feedback; respond to required changes,"**Section:** Review & Rollout
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+Post-approval: publish release notes,"**Section:** Review & Rollout
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+"[Store] Enable production Remote Config flags (ads, events)","**Section:** Post-Launch
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store,analytics"
+"Verify analytics dashboards (events, retention proxies, ARPDAU)","**Section:** Post-Launch
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,analytics"
+In-app review prompts gated by engagement rules,"**Section:** Post-Launch
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+",release-train
+[Store] Cross-promo slot updated (promote next title),"**Section:** Post-Launch
+
+Checklist item from `platform/checklists/release_train.md`.
+
+**Acceptance Criteria**
+- [ ] Complete the described task
+- [ ] Update the master checklist
+- [ ] Link related PR(s)
+","release-train,store"

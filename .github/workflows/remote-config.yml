@@ -1,0 +1,16 @@
+name: Firebase Remote Config Sync
+on:
+  repository_dispatch:
+    types: [rc]
+  workflow_dispatch:
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Push RC (stub)
+        run: |
+          echo "$FIREBASE_SA_JSON" > sa.json
+          echo "Stub: curl OAuth2 token and PUT RC template from platform/rc.json"
+        env:
+          FIREBASE_SA_JSON: ${{ secrets.FIREBASE_SA_JSON }}

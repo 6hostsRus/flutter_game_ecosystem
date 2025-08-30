@@ -1,0 +1,7 @@
+name: game_upgrade_panel
+description: Create an upgrades screen with a list of UpgradeCard widgets.
+version: 0.1.0
+vars:
+  title:
+    type: string
+    default: Upgrades

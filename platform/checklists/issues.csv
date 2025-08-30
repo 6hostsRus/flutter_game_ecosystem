@@ -1,0 +1,289 @@
+title,labels,body
+Create `release/x.y.z` branch,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Create `release/x.y.z` branch
+
+Definition of Done:
+- [ ] Completed and validated
+"
+"Bump app version codes (iOS CFBundleShortVersionString/Build, Android versionName/versionCode)",task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Bump app version codes (iOS CFBundleShortVersionString/Build, Android versionName/versionCode)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Update CHANGELOG.md,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Update CHANGELOG.md
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Tag `vX.Y.Z` after store approvals,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Tag `vX.Y.Z` after store approvals
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Update Privacy Policy URL (hosted & reachable),release-train,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Update Privacy Policy URL (hosted & reachable)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+"Review data collection map (SDKs, analytics, ads)",task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Review data collection map (SDKs, analytics, ads)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+iOS: App Privacy labels updated,release-train,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] iOS: App Privacy labels updated
+
+Definition of Done:
+- [ ] Completed and validated
+"
+iOS: ATT prompt logic validated (if IDFA),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] iOS: ATT prompt logic validated (if IDFA)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Android: Data Safety form updated (AdMob + other SDKs),release-train,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Android: Data Safety form updated (AdMob + other SDKs)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Validate AdMob unit IDs (test vs prod),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Validate AdMob unit IDs (test vs prod)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Rewarded/interstitial placement flags in Remote Config,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Rewarded/interstitial placement flags in Remote Config
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Frequency caps verified (cooldowns respected),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Frequency caps verified (cooldowns respected)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+IAP products (if any) present and in correct state (Cleared for sale/Active),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] IAP products (if any) present and in correct state (Cleared for sale/Active)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+"Icon sets generated (iOS 1024x1024, Android 512x512)",assets,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Icon sets generated (iOS 1024x1024, Android 512x512)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Feature graphic (Android 1024x500),assets,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Feature graphic (Android 1024x500)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+"Screenshots (phones & tablets: iOS 6.7/5.5/iPad; Android phone/7""/10"")",assets,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Screenshots (phones & tablets: iOS 6.7/5.5/iPad; Android phone/7""/10"")
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Video preview (optional) prepared,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Video preview (optional) prepared
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Store descriptions (short/full) reviewed with keywords,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Store descriptions (short/full) reviewed with keywords
+
+Definition of Done:
+- [ ] Completed and validated
+"
+iOS: Archive in Xcode → upload to App Store Connect,store,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] iOS: Archive in Xcode → upload to App Store Connect
+
+Definition of Done:
+- [ ] Completed and validated
+"
+iOS: TestFlight build distributed to testers,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] iOS: TestFlight build distributed to testers
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Android: Generate signed AAB (release keystore),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Android: Generate signed AAB (release keystore)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Android: Upload to Play Console (internal test or closed track),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Android: Upload to Play Console (internal test or closed track)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Crash-free smoke tests on 3–5 devices per platform,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Crash-free smoke tests on 3–5 devices per platform
+
+Definition of Done:
+- [ ] Completed and validated
+"
+iOS: Content rating questionnaire completed,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] iOS: Content rating questionnaire completed
+
+Definition of Done:
+- [ ] Completed and validated
+"
+iOS: App Review notes + demo credentials added (if needed),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] iOS: App Review notes + demo credentials added (if needed)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Android: Content rating questionnaire completed,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Android: Content rating questionnaire completed
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Android: Target API level compliant & Play App Signing enabled,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Android: Target API level compliant & Play App Signing enabled
+
+Definition of Done:
+- [ ] Completed and validated
+"
+"Categories, age ratings, pricing set on both stores",task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Categories, age ratings, pricing set on both stores
+
+Definition of Done:
+- [ ] Completed and validated
+"
+iOS: Submit for review,store,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] iOS: Submit for review
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Android: Promote from internal/closed to production (staged rollout %),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Android: Promote from internal/closed to production (staged rollout %)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Monitor review feedback; respond to required changes,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Monitor review feedback; respond to required changes
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Post-approval: publish release notes,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Post-approval: publish release notes
+
+Definition of Done:
+- [ ] Completed and validated
+"
+"Enable production Remote Config flags (ads, events)",task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Enable production Remote Config flags (ads, events)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+"Verify analytics dashboards (events, retention proxies, ARPDAU)",task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Verify analytics dashboards (events, retention proxies, ARPDAU)
+
+Definition of Done:
+- [ ] Completed and validated
+"
+In-app review prompts gated by engagement rules,task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] In-app review prompts gated by engagement rules
+
+Definition of Done:
+- [ ] Completed and validated
+"
+Cross-promo slot updated (promote next title),task,"Auto-generated from release_train.md checklist.
+
+Acceptance Criteria:
+- [ ] Cross-promo slot updated (promote next title)
+
+Definition of Done:
+- [ ] Completed and validated
+"

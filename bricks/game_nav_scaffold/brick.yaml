@@ -1,0 +1,7 @@
+name: game_nav_scaffold
+description: Scaffold a bottom-nav game shell (Home, Upgrades, Items, Store, Quests).
+version: 0.1.0
+vars:
+  package_name:
+    type: string
+    default: app_shell

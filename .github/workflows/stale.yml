@@ -1,0 +1,16 @@
+name: Stale issue cleanup
+on:
+  schedule:
+    - cron: "0 5 * * *"
+permissions:
+  issues: write
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          stale-issue-message: "This issue is stale. Comment to keep it open."
+          days-before-stale: 14
+          days-before-close: 7
+          exempt-issue-labels: "release-train"

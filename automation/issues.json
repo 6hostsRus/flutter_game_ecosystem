@@ -1,0 +1,281 @@
+[
+  {
+    "title": "Create `release/x.y.z` branch",
+    "body": "**Section:** Versioning & Branching\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "Bump app version codes (iOS CFBundleShortVersionString/Build, Android versionName/versionCode)",
+    "body": "**Section:** Versioning & Branching\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "Update CHANGELOG.md",
+    "body": "**Section:** Versioning & Branching\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "Tag `vX.Y.Z` after store approvals",
+    "body": "**Section:** Versioning & Branching\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "Update Privacy Policy URL (hosted & reachable)",
+    "body": "**Section:** Compliance & Privacy\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "compliance"
+    ]
+  },
+  {
+    "title": "Review data collection map (SDKs, analytics, ads)",
+    "body": "**Section:** Compliance & Privacy\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "analytics"
+    ]
+  },
+  {
+    "title": "iOS: App Privacy labels updated",
+    "body": "**Section:** Compliance & Privacy\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "compliance"
+    ]
+  },
+  {
+    "title": "iOS: ATT prompt logic validated (if IDFA)",
+    "body": "**Section:** Compliance & Privacy\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "compliance"
+    ]
+  },
+  {
+    "title": "Android: Data Safety form updated (AdMob + other SDKs)",
+    "body": "**Section:** Compliance & Privacy\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "compliance",
+      "monetization"
+    ]
+  },
+  {
+    "title": "Validate AdMob unit IDs (test vs prod)",
+    "body": "**Section:** Monetization & Remote Flags\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "monetization"
+    ]
+  },
+  {
+    "title": "Rewarded/interstitial placement flags in Remote Config",
+    "body": "**Section:** Monetization & Remote Flags\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "monetization",
+      "analytics"
+    ]
+  },
+  {
+    "title": "Frequency caps verified (cooldowns respected)",
+    "body": "**Section:** Monetization & Remote Flags\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "IAP products (if any) present and in correct state (Cleared for sale/Active)",
+    "body": "**Section:** Monetization & Remote Flags\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "monetization"
+    ]
+  },
+  {
+    "title": "Icon sets generated (iOS 1024x1024, Android 512x512)",
+    "body": "**Section:** Assets Matrix\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "assets"
+    ]
+  },
+  {
+    "title": "Feature graphic (Android 1024x500)",
+    "body": "**Section:** Assets Matrix\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "assets"
+    ]
+  },
+  {
+    "title": "Screenshots (phones & tablets: iOS 6.7/5.5/iPad; Android phone/7\"/10\")",
+    "body": "**Section:** Assets Matrix\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "assets"
+    ]
+  },
+  {
+    "title": "Video preview (optional) prepared",
+    "body": "**Section:** Assets Matrix\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "assets"
+    ]
+  },
+  {
+    "title": "Store descriptions (short/full) reviewed with keywords",
+    "body": "**Section:** Assets Matrix\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "[Store] iOS: Archive in Xcode \u2192 upload to App Store Connect",
+    "body": "**Section:** Build & Validate\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store"
+    ]
+  },
+  {
+    "title": "[Store] iOS: TestFlight build distributed to testers",
+    "body": "**Section:** Build & Validate\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store"
+    ]
+  },
+  {
+    "title": "[Store] Android: Generate signed AAB (release keystore)",
+    "body": "**Section:** Build & Validate\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store"
+    ]
+  },
+  {
+    "title": "[Store] Android: Upload to Play Console (internal test or closed track)",
+    "body": "**Section:** Build & Validate\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store"
+    ]
+  },
+  {
+    "title": "Crash-free smoke tests on 3\u20135 devices per platform",
+    "body": "**Section:** Build & Validate\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "iOS: Content rating questionnaire completed",
+    "body": "**Section:** Store Config\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "compliance"
+    ]
+  },
+  {
+    "title": "iOS: App Review notes + demo credentials added (if needed)",
+    "body": "**Section:** Store Config\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "Android: Content rating questionnaire completed",
+    "body": "**Section:** Store Config\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "compliance"
+    ]
+  },
+  {
+    "title": "Android: Target API level compliant & Play App Signing enabled",
+    "body": "**Section:** Store Config\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "Categories, age ratings, pricing set on both stores",
+    "body": "**Section:** Store Config\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "compliance"
+    ]
+  },
+  {
+    "title": "[Store] iOS: Submit for review",
+    "body": "**Section:** Review & Rollout\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store"
+    ]
+  },
+  {
+    "title": "[Store] Android: Promote from internal/closed to production (staged rollout %)",
+    "body": "**Section:** Review & Rollout\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store"
+    ]
+  },
+  {
+    "title": "Monitor review feedback; respond to required changes",
+    "body": "**Section:** Review & Rollout\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "Post-approval: publish release notes",
+    "body": "**Section:** Review & Rollout\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "[Store] Enable production Remote Config flags (ads, events)",
+    "body": "**Section:** Post-Launch\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store",
+      "analytics"
+    ]
+  },
+  {
+    "title": "Verify analytics dashboards (events, retention proxies, ARPDAU)",
+    "body": "**Section:** Post-Launch\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "analytics"
+    ]
+  },
+  {
+    "title": "In-app review prompts gated by engagement rules",
+    "body": "**Section:** Post-Launch\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train"
+    ]
+  },
+  {
+    "title": "[Store] Cross-promo slot updated (promote next title)",
+    "body": "**Section:** Post-Launch\n\nChecklist item from `platform/checklists/release_train.md`.\n\n**Acceptance Criteria**\n- [ ] Complete the described task\n- [ ] Update the master checklist\n- [ ] Link related PR(s)\n",
+    "labels": [
+      "release-train",
+      "store"
+    ]
+  }
+]

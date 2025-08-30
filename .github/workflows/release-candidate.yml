@@ -1,0 +1,27 @@
+name: Release Candidate
+on:
+  repository_dispatch:
+    types: [release-candidate-command]
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create milestone and draft release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = context.payload.client_payload.slash_command.args.all.trim()
+            if (!version) { core.setFailed("Version required"); return }
+            await github.rest.issues.createMilestone({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: version
+            })
+            await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: `v${version}-rc`,
+              name: `Release Candidate v${version}`,
+              draft: true
+            })
+            core.notice(`Release Candidate ${version} created`)

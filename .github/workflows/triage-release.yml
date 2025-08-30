@@ -1,0 +1,25 @@
+name: Triage Release Train
+on:
+  issues:
+    types: [opened]
+permissions:
+  issues: write
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            if (!issue) return;
+            const title = issue.title.toLowerCase();
+            const body = (issue.body || "").toLowerCase();
+            if (title.includes("store") || body.includes("release train") || body.includes("platform/checklists/release_train.md")) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: ["release-train"]
+              });
+            }

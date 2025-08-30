@@ -1,0 +1,17 @@
+name: Policy Guard
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Banned imports check
+        run: |
+          ! grep -R "import 'dart:io'" -n packages/game_*/* || (echo "No dart:io in shared packages"; exit 1)
+      - name: TODO check on release PRs
+        if: contains(github.event.pull_request.title, '[Release]')
+        run: |
+          ! grep -R "TODO" -n || (echo "TODOs found in release PR"; exit 1)

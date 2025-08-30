@@ -1,0 +1,32 @@
+# Project Seed (Kanban)
+name: Game Ecosystem Board
+description: Unified board for core modules, templates, and release train.
+columns:
+  - name: To do
+  - name: In progress
+  - name: Blocked
+  - name: In review
+  - name: Done
+labels:
+  - task
+  - bug
+  - release-train
+  - store
+  - assets
+suggested_issues:
+  - title: Set up Firebase Analytics + Remote Config
+    labels: ["task","release-train"]
+  - title: Wire AdMob IDs (dev/prod) and frequency caps
+    labels: ["task","release-train","store"]
+  - title: Generate iOS screenshots (6.7, 5.5, iPad)
+    labels: ["assets","store"]
+  - title: Generate Android screenshots (phone, 7", 10")
+    labels: ["assets","store"]
+  - title: Prepare App Privacy (Apple) + Data Safety (Google)
+    labels: ["store","release-train"]
+  - title: Build iOS archive, upload to TestFlight
+    labels: ["store","release-train"]
+  - title: Build signed Android AAB, upload to internal track
+    labels: ["store","release-train"]
+note: |
+  Use `platform/checklists/copilot_prompts.md` to generate more issues automatically.

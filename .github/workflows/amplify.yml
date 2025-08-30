@@ -1,0 +1,12 @@
+name: Amplify Sync (Stub)
+on:
+  workflow_dispatch:
+jobs:
+  amplify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Amplify CLI
+        run: npm i -g @aws-amplify/cli
+      - name: Amplify pull (configure as needed)
+        run: echo "Stub: amplify pull --appId XXX --envName dev"

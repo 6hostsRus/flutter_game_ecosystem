@@ -1,0 +1,37 @@
+name: Hotfix Flow
+on:
+  repository_dispatch:
+    types: [hotfix]
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  hotfix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        id: parse
+        with:
+          script: |
+            const args = context.payload.client_payload.slash_command.args.trim().split(/\s+/);
+            core.setOutput('cmd', args[0]);
+            core.setOutput('ver', args[1] || '0.0.1');
+      - name: Start hotfix
+        if: steps.parse.outputs.cmd == 'start'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          branch: hotfix/v${{ steps.parse.outputs.ver }}
+          title: "[Hotfix] v${{ steps.parse.outputs.ver }}"
+          body: "Automated hotfix branch."
+      - name: Release hotfix
+        if: steps.parse.outputs.cmd == 'release'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const ver = core.getInput('ver') || '${{ steps.parse.outputs.ver }}';
+            await github.rest.git.createRef({
+              owner: context.repo.owner, repo: context.repo.repo,
+              ref: `refs/tags/v${ver}`, sha: context.sha
+            });
