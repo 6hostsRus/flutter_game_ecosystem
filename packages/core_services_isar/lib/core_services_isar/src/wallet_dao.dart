@@ -1,4 +1,3 @@
-
 import 'package:isar/isar.dart';
 
 part 'wallet_dao.g.dart';

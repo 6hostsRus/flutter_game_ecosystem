@@ -5,7 +5,8 @@ class ItemCard extends StatelessWidget {
   final String subtitle;
   final Widget? trailing;
 
-  const ItemCard({super.key, required this.title, required this.subtitle, this.trailing});
+  const ItemCard(
+      {super.key, required this.title, required this.subtitle, this.trailing});
 
   @override
   Widget build(BuildContext context) {

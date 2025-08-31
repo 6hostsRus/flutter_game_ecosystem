@@ -23,9 +23,7 @@ class CurrencyBadge extends StatelessWidget {
     );
     return GestureDetector(
       onTap: onTap,
-      child: tooltip != null
-          ? Tooltip(message: tooltip!, child: chip)
-          : chip,
+      child: tooltip != null ? Tooltip(message: tooltip!, child: chip) : chip,
     );
   }
 }

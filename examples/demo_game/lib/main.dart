@@ -1,8 +1,8 @@
-import 'package:core_services/core_services/core_services.dart';
+import 'package:core_services/core_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:game_scenes/game_scenes/game_scenes.dart';
-import 'package:game_ui/game_ui/game_ui.dart';
+import 'package:game_scenes/game_scenes.dart';
+import 'package:game_ui/game_ui.dart';
 
 void main() => runApp(const ProviderScope(child: App()));
 

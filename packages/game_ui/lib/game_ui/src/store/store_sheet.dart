@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class StoreItem {
@@ -6,10 +5,15 @@ class StoreItem {
   final String subtitle;
   final String priceText;
   final VoidCallback? onBuy;
-  const StoreItem({required this.title, required this.subtitle, required this.priceText, this.onBuy});
+  const StoreItem(
+      {required this.title,
+      required this.subtitle,
+      required this.priceText,
+      this.onBuy});
 }
 
-Future<void> showStoreSheet(BuildContext context, {required List<StoreItem> items, String title = 'Store'}) {
+Future<void> showStoreSheet(BuildContext context,
+    {required List<StoreItem> items, String title = 'Store'}) {
   return showModalBottomSheet(
     context: context,
     useSafeArea: true,
@@ -34,7 +38,8 @@ Future<void> showStoreSheet(BuildContext context, {required List<StoreItem> item
                     child: ListTile(
                       title: Text(it.title),
                       subtitle: Text(it.subtitle),
-                      trailing: FilledButton(onPressed: it.onBuy, child: Text(it.priceText)),
+                      trailing: FilledButton(
+                          onPressed: it.onBuy, child: Text(it.priceText)),
                     ),
                   );
                 },

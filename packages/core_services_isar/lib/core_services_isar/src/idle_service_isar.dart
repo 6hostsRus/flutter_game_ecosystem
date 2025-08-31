@@ -22,7 +22,8 @@ class IdleServiceIsar {
       state = await _isar.idleStateEntitys.get(0);
     });
     state ??= IdleStateEntity();
-    final delta = now.difference(state!.lastSeen).inSeconds.toDouble();
+    final delta =
+        now.difference(state!.lastSeen ?? DateTime.now()).inSeconds.toDouble();
     final clamped = delta.clamp(0, capSeconds);
     final yieldVal = clamped * state!.totalRatePerSec;
     await _isar.writeTxn(() async {

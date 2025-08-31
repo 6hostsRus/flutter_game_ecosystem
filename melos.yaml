@@ -1,0 +1,21 @@
+name: flutter_game_ecosystem
+packages:
+     - packages/*
+     - examples/*
+ide:
+     intellij: { enabled: true }
+     vscode: { enabled: true }
+
+scripts:
+     bootstrap: melos bootstrap
+     clean: melos exec -- flutter clean
+     get: melos exec -- flutter pub get
+     analyze: melos exec -- flutter analyze
+     format: melos exec -- dart format .
+     test: melos exec -- flutter test --reporter expanded
+     example: melos exec --scope="demo_game" -- flutter run
+     # run all static checks together
+     check: >
+          melos run format &&
+          melos run analyze &&
+          melos run test
