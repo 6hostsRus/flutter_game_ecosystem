@@ -1,0 +1,745 @@
+.
+├── .DS_Store
+├── .github
+│   ├── dependabot.yml
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   ├── config.yml
+│   │   ├── release_checklist.md
+│   │   ├── store_asset.md
+│   │   ├── store_release.md
+│   │   └── task.md
+│   ├── labeler.yml
+│   ├── project.yml
+│   ├── pull_request_template.md
+│   └── workflows
+│       ├── add-to-project.yml
+│       ├── amplify.yml
+│       ├── android-internal.yml
+│       ├── auto-label.yml
+│       ├── ci.yml
+│       ├── docsite.yml
+│       ├── epic-builder.yml
+│       ├── gitleaks.yml
+│       ├── golden-guard.yml
+│       ├── hotfix.yml
+│       ├── labeler.yml
+│       ├── notify.yml
+│       ├── policy-guard.yml
+│       ├── project-move.yml
+│       ├── rc-generator.yml
+│       ├── release-candidate.yml
+│       ├── release-please.yml
+│       ├── remote-config.yml
+│       ├── screenshots.yml
+│       ├── slash-commands.yml
+│       ├── stale.yml
+│       ├── store-sync.yml
+│       ├── submit-ios.yml
+│       └── triage-release.yml
+├── .gitignore
+├── .idea
+│   ├── .name
+│   ├── libraries
+│   │   ├── Dart_SDK.xml
+│   │   └── KotlinJavaRuntime.xml
+│   ├── modules.xml
+│   ├── runConfigurations
+│   │   ├── main_dart.xml
+│   │   ├── melos_bootstrap.xml
+│   │   ├── melos_clean.xml
+│   │   ├── melos_flutter_run_demo_game.xml
+│   │   ├── melos_run_analyze.xml
+│   │   ├── melos_run_bootstrap.xml
+│   │   ├── melos_run_check.xml
+│   │   ├── melos_run_clean.xml
+│   │   ├── melos_run_example.xml
+│   │   ├── melos_run_format.xml
+│   │   ├── melos_run_get.xml
+│   │   └── melos_run_test.xml
+│   └── workspace.xml
+├── .metadata
+├── ai_instructions.md
+├── analysis_options.yaml
+├── android
+│   ├── .gitignore
+│   ├── app
+│   │   ├── build.gradle.kts
+│   │   └── src
+│   │       ├── debug
+│   │       │   └── AndroidManifest.xml
+│   │       ├── main
+│   │       │   ├── AndroidManifest.xml
+│   │       │   ├── java
+│   │       │   │   └── io
+│   │       │   │       └── flutter
+│   │       │   │           └── plugins
+│   │       │   │               └── GeneratedPluginRegistrant.java
+│   │       │   ├── kotlin
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── flutter_game_ecosystem
+│   │       │   │               └── MainActivity.kt
+│   │       │   └── res
+│   │       │       ├── drawable
+│   │       │       │   └── launch_background.xml
+│   │       │       ├── drawable-v21
+│   │       │       │   └── launch_background.xml
+│   │       │       ├── mipmap-hdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-mdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xhdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xxhdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xxxhdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── values
+│   │       │       │   └── styles.xml
+│   │       │       └── values-night
+│   │       │           └── styles.xml
+│   │       └── profile
+│   │           └── AndroidManifest.xml
+│   ├── build.gradle.kts
+│   ├── flutter_game_ecosystem_android.iml
+│   ├── gradle
+│   │   └── wrapper
+│   │       ├── gradle-wrapper.jar
+│   │       └── gradle-wrapper.properties
+│   ├── gradle.properties
+│   ├── gradlew
+│   ├── gradlew.bat
+│   ├── local.properties
+│   └── settings.gradle.kts
+├── architecture
+│   ├── coding-standards.md
+│   └── overview.md
+├── automation
+│   ├── bulk_create_issues.sh
+│   ├── issues.csv
+│   ├── issues.json
+│   ├── QUICK_OPS.md
+│   ├── README.md
+│   └── secrets.example.md
+├── bricks
+│   ├── game_nav_scaffold
+│   │   ├── __brick__
+│   │   │   └── lib
+│   │   │       └── main.dart
+│   │   └── brick.yaml
+│   └── game_upgrade_panel
+│       ├── __brick__
+│       │   └── lib
+│       │       └── upgrade_panel.dart
+│       └── brick.yaml
+├── CHANGELOG_merged_v9.md
+├── docs
+│   ├── game_ecosystem_categories
+│   │   ├── 00_Ecosystem_Conventions.md
+│   │   ├── 01_Idle_Games.md
+│   │   ├── 02_Platformer.md
+│   │   ├── 03_RPG.md
+│   │   ├── 04_Match_Games.md
+│   │   ├── 05_Card_Collecting_Battle.md
+│   │   ├── 06_Survivor_Like.md
+│   │   ├── CHANGELOG_OVERLAY.md
+│   │   ├── HOW_TO_INTEGRATE_CATEGORIES.md
+│   │   ├── MERGE_INSTRUCTIONS.md
+│   │   └── README.md
+│   └── modules
+│       ├── ads.md
+│       ├── characters.md
+│       ├── controls.md
+│       ├── db.md
+│       └── items.md
+├── examples
+│   └── demo_game
+│       ├── .gitignore
+│       ├── .idea
+│       │   ├── libraries
+│       │   │   ├── Dart_SDK.xml
+│       │   │   └── KotlinJavaRuntime.xml
+│       │   ├── modules.xml
+│       │   ├── runConfigurations
+│       │   │   └── main_dart.xml
+│       │   └── workspace.xml
+│       ├── .metadata
+│       ├── analysis_options.yaml
+│       ├── android
+│       │   ├── .gitignore
+│       │   ├── app
+│       │   │   ├── build.gradle.kts
+│       │   │   └── src
+│       │   │       ├── debug
+│       │   │       │   └── AndroidManifest.xml
+│       │   │       ├── main
+│       │   │       │   ├── AndroidManifest.xml
+│       │   │       │   ├── java
+│       │   │       │   │   └── io
+│       │   │       │   │       └── flutter
+│       │   │       │   │           └── plugins
+│       │   │       │   │               └── GeneratedPluginRegistrant.java
+│       │   │       │   ├── kotlin
+│       │   │       │   │   └── com
+│       │   │       │   │       └── example
+│       │   │       │   │           └── demo_game
+│       │   │       │   │               └── MainActivity.kt
+│       │   │       │   └── res
+│       │   │       │       ├── drawable
+│       │   │       │       │   └── launch_background.xml
+│       │   │       │       ├── drawable-v21
+│       │   │       │       │   └── launch_background.xml
+│       │   │       │       ├── mipmap-hdpi
+│       │   │       │       │   └── ic_launcher.png
+│       │   │       │       ├── mipmap-mdpi
+│       │   │       │       │   └── ic_launcher.png
+│       │   │       │       ├── mipmap-xhdpi
+│       │   │       │       │   └── ic_launcher.png
+│       │   │       │       ├── mipmap-xxhdpi
+│       │   │       │       │   └── ic_launcher.png
+│       │   │       │       ├── mipmap-xxxhdpi
+│       │   │       │       │   └── ic_launcher.png
+│       │   │       │       ├── values
+│       │   │       │       │   └── styles.xml
+│       │   │       │       └── values-night
+│       │   │       │           └── styles.xml
+│       │   │       └── profile
+│       │   │           └── AndroidManifest.xml
+│       │   ├── build.gradle.kts
+│       │   ├── demo_game_android.iml
+│       │   ├── gradle
+│       │   │   └── wrapper
+│       │   │       ├── gradle-wrapper.jar
+│       │   │       └── gradle-wrapper.properties
+│       │   ├── gradle.properties
+│       │   ├── gradlew
+│       │   ├── gradlew.bat
+│       │   ├── local.properties
+│       │   └── settings.gradle.kts
+│       ├── demo_game.iml
+│       ├── devtools_options.yaml
+│       ├── ios
+│       │   ├── .gitignore
+│       │   ├── Flutter
+│       │   │   ├── AppFrameworkInfo.plist
+│       │   │   ├── Debug.xcconfig
+│       │   │   ├── flutter_export_environment.sh
+│       │   │   ├── Generated.xcconfig
+│       │   │   └── Release.xcconfig
+│       │   ├── Runner
+│       │   │   ├── AppDelegate.swift
+│       │   │   ├── Assets.xcassets
+│       │   │   │   ├── AppIcon.appiconset
+│       │   │   │   │   ├── Contents.json
+│       │   │   │   │   ├── Icon-App-1024x1024@1x.png
+│       │   │   │   │   ├── Icon-App-20x20@1x.png
+│       │   │   │   │   ├── Icon-App-20x20@2x.png
+│       │   │   │   │   ├── Icon-App-20x20@3x.png
+│       │   │   │   │   ├── Icon-App-29x29@1x.png
+│       │   │   │   │   ├── Icon-App-29x29@2x.png
+│       │   │   │   │   ├── Icon-App-29x29@3x.png
+│       │   │   │   │   ├── Icon-App-40x40@1x.png
+│       │   │   │   │   ├── Icon-App-40x40@2x.png
+│       │   │   │   │   ├── Icon-App-40x40@3x.png
+│       │   │   │   │   ├── Icon-App-60x60@2x.png
+│       │   │   │   │   ├── Icon-App-60x60@3x.png
+│       │   │   │   │   ├── Icon-App-76x76@1x.png
+│       │   │   │   │   ├── Icon-App-76x76@2x.png
+│       │   │   │   │   └── Icon-App-83.5x83.5@2x.png
+│       │   │   │   └── LaunchImage.imageset
+│       │   │   │       ├── Contents.json
+│       │   │   │       ├── LaunchImage.png
+│       │   │   │       ├── LaunchImage@2x.png
+│       │   │   │       ├── LaunchImage@3x.png
+│       │   │   │       └── README.md
+│       │   │   ├── Base.lproj
+│       │   │   │   ├── LaunchScreen.storyboard
+│       │   │   │   └── Main.storyboard
+│       │   │   ├── GeneratedPluginRegistrant.h
+│       │   │   ├── GeneratedPluginRegistrant.m
+│       │   │   ├── Info.plist
+│       │   │   └── Runner-Bridging-Header.h
+│       │   ├── Runner.xcodeproj
+│       │   │   ├── project.pbxproj
+│       │   │   ├── project.xcworkspace
+│       │   │   │   ├── contents.xcworkspacedata
+│       │   │   │   └── xcshareddata
+│       │   │   │       ├── IDEWorkspaceChecks.plist
+│       │   │   │       ├── swiftpm
+│       │   │   │       │   └── configuration
+│       │   │   │       └── WorkspaceSettings.xcsettings
+│       │   │   └── xcshareddata
+│       │   │       └── xcschemes
+│       │   │           └── Runner.xcscheme
+│       │   ├── Runner.xcworkspace
+│       │   │   ├── contents.xcworkspacedata
+│       │   │   └── xcshareddata
+│       │   │       ├── IDEWorkspaceChecks.plist
+│       │   │       ├── swiftpm
+│       │   │       │   └── configuration
+│       │   │       └── WorkspaceSettings.xcsettings
+│       │   └── RunnerTests
+│       │       └── RunnerTests.swift
+│       ├── lib
+│       │   └── main.dart
+│       ├── linux
+│       │   ├── .gitignore
+│       │   ├── CMakeLists.txt
+│       │   ├── flutter
+│       │   │   ├── CMakeLists.txt
+│       │   │   ├── generated_plugin_registrant.cc
+│       │   │   ├── generated_plugin_registrant.h
+│       │   │   └── generated_plugins.cmake
+│       │   └── runner
+│       │       ├── CMakeLists.txt
+│       │       ├── main.cc
+│       │       ├── my_application.cc
+│       │       └── my_application.h
+│       ├── macos
+│       │   ├── .gitignore
+│       │   ├── Flutter
+│       │   │   ├── ephemeral
+│       │   │   │   ├── flutter_export_environment.sh
+│       │   │   │   └── Flutter-Generated.xcconfig
+│       │   │   ├── Flutter-Debug.xcconfig
+│       │   │   ├── Flutter-Release.xcconfig
+│       │   │   └── GeneratedPluginRegistrant.swift
+│       │   ├── Runner
+│       │   │   ├── AppDelegate.swift
+│       │   │   ├── Assets.xcassets
+│       │   │   │   └── AppIcon.appiconset
+│       │   │   │       ├── app_icon_1024.png
+│       │   │   │       ├── app_icon_128.png
+│       │   │   │       ├── app_icon_16.png
+│       │   │   │       ├── app_icon_256.png
+│       │   │   │       ├── app_icon_32.png
+│       │   │   │       ├── app_icon_512.png
+│       │   │   │       ├── app_icon_64.png
+│       │   │   │       └── Contents.json
+│       │   │   ├── Base.lproj
+│       │   │   │   └── MainMenu.xib
+│       │   │   ├── Configs
+│       │   │   │   ├── AppInfo.xcconfig
+│       │   │   │   ├── Debug.xcconfig
+│       │   │   │   ├── Release.xcconfig
+│       │   │   │   └── Warnings.xcconfig
+│       │   │   ├── DebugProfile.entitlements
+│       │   │   ├── Info.plist
+│       │   │   ├── MainFlutterWindow.swift
+│       │   │   └── Release.entitlements
+│       │   ├── Runner.xcodeproj
+│       │   │   ├── project.pbxproj
+│       │   │   ├── project.xcworkspace
+│       │   │   │   └── xcshareddata
+│       │   │   │       └── IDEWorkspaceChecks.plist
+│       │   │   └── xcshareddata
+│       │   │       └── xcschemes
+│       │   │           └── Runner.xcscheme
+│       │   ├── Runner.xcworkspace
+│       │   │   ├── contents.xcworkspacedata
+│       │   │   └── xcshareddata
+│       │   │       └── IDEWorkspaceChecks.plist
+│       │   └── RunnerTests
+│       │       └── RunnerTests.swift
+│       ├── melos_demo_game.iml
+│       ├── pubspec_overrides.yaml
+│       ├── pubspec.lock
+│       ├── pubspec.yaml
+│       ├── README.md
+│       ├── test
+│       │   └── widget_test.dart
+│       ├── web
+│       │   ├── favicon.png
+│       │   ├── icons
+│       │   │   ├── Icon-192.png
+│       │   │   ├── Icon-512.png
+│       │   │   ├── Icon-maskable-192.png
+│       │   │   └── Icon-maskable-512.png
+│       │   ├── index.html
+│       │   └── manifest.json
+│       └── windows
+│           ├── .gitignore
+│           ├── CMakeLists.txt
+│           ├── flutter
+│           │   ├── CMakeLists.txt
+│           │   ├── generated_plugin_registrant.cc
+│           │   ├── generated_plugin_registrant.h
+│           │   └── generated_plugins.cmake
+│           └── runner
+│               ├── CMakeLists.txt
+│               ├── flutter_window.cpp
+│               ├── flutter_window.h
+│               ├── main.cpp
+│               ├── resource.h
+│               ├── resources
+│               │   └── app_icon.ico
+│               ├── runner.exe.manifest
+│               ├── Runner.rc
+│               ├── utils.cpp
+│               ├── utils.h
+│               ├── win32_window.cpp
+│               └── win32_window.h
+├── flutter_game_ecosystem.iml
+├── game_core
+│   └── interfaces.md
+├── ios
+│   ├── .gitignore
+│   ├── Flutter
+│   │   ├── AppFrameworkInfo.plist
+│   │   ├── Debug.xcconfig
+│   │   ├── flutter_export_environment.sh
+│   │   ├── Generated.xcconfig
+│   │   └── Release.xcconfig
+│   ├── Runner
+│   │   ├── AppDelegate.swift
+│   │   ├── Assets.xcassets
+│   │   │   ├── AppIcon.appiconset
+│   │   │   │   ├── Contents.json
+│   │   │   │   ├── Icon-App-1024x1024@1x.png
+│   │   │   │   ├── Icon-App-20x20@1x.png
+│   │   │   │   ├── Icon-App-20x20@2x.png
+│   │   │   │   ├── Icon-App-20x20@3x.png
+│   │   │   │   ├── Icon-App-29x29@1x.png
+│   │   │   │   ├── Icon-App-29x29@2x.png
+│   │   │   │   ├── Icon-App-29x29@3x.png
+│   │   │   │   ├── Icon-App-40x40@1x.png
+│   │   │   │   ├── Icon-App-40x40@2x.png
+│   │   │   │   ├── Icon-App-40x40@3x.png
+│   │   │   │   ├── Icon-App-60x60@2x.png
+│   │   │   │   ├── Icon-App-60x60@3x.png
+│   │   │   │   ├── Icon-App-76x76@1x.png
+│   │   │   │   ├── Icon-App-76x76@2x.png
+│   │   │   │   └── Icon-App-83.5x83.5@2x.png
+│   │   │   └── LaunchImage.imageset
+│   │   │       ├── Contents.json
+│   │   │       ├── LaunchImage.png
+│   │   │       ├── LaunchImage@2x.png
+│   │   │       ├── LaunchImage@3x.png
+│   │   │       └── README.md
+│   │   ├── Base.lproj
+│   │   │   ├── LaunchScreen.storyboard
+│   │   │   └── Main.storyboard
+│   │   ├── GeneratedPluginRegistrant.h
+│   │   ├── GeneratedPluginRegistrant.m
+│   │   ├── Info.plist
+│   │   └── Runner-Bridging-Header.h
+│   ├── Runner.xcodeproj
+│   │   ├── project.pbxproj
+│   │   ├── project.xcworkspace
+│   │   │   ├── contents.xcworkspacedata
+│   │   │   └── xcshareddata
+│   │   │       ├── IDEWorkspaceChecks.plist
+│   │   │       └── WorkspaceSettings.xcsettings
+│   │   └── xcshareddata
+│   │       └── xcschemes
+│   │           └── Runner.xcscheme
+│   ├── Runner.xcworkspace
+│   │   ├── contents.xcworkspacedata
+│   │   └── xcshareddata
+│   │       ├── IDEWorkspaceChecks.plist
+│   │       └── WorkspaceSettings.xcsettings
+│   └── RunnerTests
+│       └── RunnerTests.swift
+├── lib
+│   └── main.dart
+├── linux
+│   ├── .gitignore
+│   ├── CMakeLists.txt
+│   ├── flutter
+│   │   ├── CMakeLists.txt
+│   │   ├── generated_plugin_registrant.cc
+│   │   ├── generated_plugin_registrant.h
+│   │   └── generated_plugins.cmake
+│   └── runner
+│       ├── CMakeLists.txt
+│       ├── main.cc
+│       ├── my_application.cc
+│       └── my_application.h
+├── macos
+│   ├── .gitignore
+│   ├── Flutter
+│   │   ├── ephemeral
+│   │   │   ├── flutter_export_environment.sh
+│   │   │   └── Flutter-Generated.xcconfig
+│   │   ├── Flutter-Debug.xcconfig
+│   │   ├── Flutter-Release.xcconfig
+│   │   └── GeneratedPluginRegistrant.swift
+│   ├── Runner
+│   │   ├── AppDelegate.swift
+│   │   ├── Assets.xcassets
+│   │   │   └── AppIcon.appiconset
+│   │   │       ├── app_icon_1024.png
+│   │   │       ├── app_icon_128.png
+│   │   │       ├── app_icon_16.png
+│   │   │       ├── app_icon_256.png
+│   │   │       ├── app_icon_32.png
+│   │   │       ├── app_icon_512.png
+│   │   │       ├── app_icon_64.png
+│   │   │       └── Contents.json
+│   │   ├── Base.lproj
+│   │   │   └── MainMenu.xib
+│   │   ├── Configs
+│   │   │   ├── AppInfo.xcconfig
+│   │   │   ├── Debug.xcconfig
+│   │   │   ├── Release.xcconfig
+│   │   │   └── Warnings.xcconfig
+│   │   ├── DebugProfile.entitlements
+│   │   ├── Info.plist
+│   │   ├── MainFlutterWindow.swift
+│   │   └── Release.entitlements
+│   ├── Runner.xcodeproj
+│   │   ├── project.pbxproj
+│   │   ├── project.xcworkspace
+│   │   │   └── xcshareddata
+│   │   │       └── IDEWorkspaceChecks.plist
+│   │   └── xcshareddata
+│   │       └── xcschemes
+│   │           └── Runner.xcscheme
+│   ├── Runner.xcworkspace
+│   │   ├── contents.xcworkspacedata
+│   │   └── xcshareddata
+│   │       └── IDEWorkspaceChecks.plist
+│   └── RunnerTests
+│       └── RunnerTests.swift
+├── melos_flutter_game_ecosystem.iml
+├── melos.yaml
+├── modules
+│   ├── content_packs
+│   └── genres
+│       └── game_scenes
+│           ├── lib
+│           │   ├── game_scenes
+│           │   │   └── src
+│           │   │       ├── platformer
+│           │   │       │   └── platformer_game.dart
+│           │   │       └── survivor
+│           │   │           └── survivor_game.dart
+│           │   ├── game_scenes.dart
+│           │   ├── platformer.dart
+│           │   └── survivor.dart
+│           ├── melos_game_scenes.iml
+│           ├── pubspec.lock
+│           └── pubspec.yaml
+├── monetization
+│   └── monetization.md
+├── packages
+│   ├── AI_COPILOT_STUBS.md
+│   ├── game_ui
+│   │   ├── lib
+│   │   │   ├── achievements.dart
+│   │   │   ├── analytics.dart
+│   │   │   ├── cards.dart
+│   │   │   ├── game_ui
+│   │   │   │   └── src
+│   │   │   │       ├── achievements
+│   │   │   │       │   └── achievements_panel.dart
+│   │   │   │       ├── analytics
+│   │   │   │       │   └── track_mixin.dart
+│   │   │   │       ├── cards
+│   │   │   │       │   ├── item_card.dart
+│   │   │   │       │   └── upgrade_card.dart
+│   │   │   │       ├── hud
+│   │   │   │       │   ├── currency_badge.dart
+│   │   │   │       │   ├── hud_overlay.dart
+│   │   │   │       │   ├── progress_bar.dart
+│   │   │   │       │   └── timer_badge.dart
+│   │   │   │       ├── nav
+│   │   │   │       ├── quests
+│   │   │   │       │   └── quests_panel.dart
+│   │   │   │       ├── store
+│   │   │   │       │   ├── store_button.dart
+│   │   │   │       │   └── store_sheet.dart
+│   │   │   │       └── theme
+│   │   │   ├── game_ui.dart
+│   │   │   ├── hud.dart
+│   │   │   ├── quests.dart
+│   │   │   └── store.dart
+│   │   ├── melos_game_ui.iml
+│   │   ├── pubspec.lock
+│   │   ├── pubspec.yaml
+│   │   └── README.md
+│   ├── providers
+│   │   └── lib
+│   │       └── registry
+│   │           └── feature_registry.dart
+│   ├── services
+│   │   ├── analytics_firebase_adapter
+│   │   │   ├── .flutter-plugins
+│   │   │   ├── .flutter-plugins-dependencies
+│   │   │   ├── lib
+│   │   │   │   └── analytics_firebase_adapter
+│   │   │   │       ├── analytics_firebase_adapter.dart
+│   │   │   │       └── src
+│   │   │   │           ├── firebase_sink.dart
+│   │   │   │           └── providers.dart
+│   │   │   ├── melos_analytics_firebase_adapter.iml
+│   │   │   ├── pubspec_overrides.yaml
+│   │   │   ├── pubspec.lock
+│   │   │   ├── pubspec.yaml
+│   │   │   └── README.md
+│   │   ├── core_services
+│   │   │   ├── lib
+│   │   │   │   ├── analytics.dart
+│   │   │   │   ├── core_services
+│   │   │   │   │   └── src
+│   │   │   │   │       ├── analytics
+│   │   │   │   │       │   └── analytics_adapter.dart
+│   │   │   │   │       ├── liveops
+│   │   │   │   │       │   └── liveops_service.dart
+│   │   │   │   │       ├── offers
+│   │   │   │   │       │   └── offers_service.dart
+│   │   │   │   │       └── wallet
+│   │   │   │   │           └── wallet.dart
+│   │   │   │   ├── core_services.dart
+│   │   │   │   ├── liveops.dart
+│   │   │   │   ├── offers.dart
+│   │   │   │   └── wallet.dart
+│   │   │   ├── melos_core_services.iml
+│   │   │   ├── pubspec.lock
+│   │   │   └── pubspec.yaml
+│   │   ├── core_services_isar
+│   │   │   ├── .flutter-plugins
+│   │   │   ├── .flutter-plugins-dependencies
+│   │   │   ├── lib
+│   │   │   │   └── core_services_isar
+│   │   │   │       ├── core_services_isar.dart
+│   │   │   │       └── src
+│   │   │   │           ├── idle_dao.dart
+│   │   │   │           ├── idle_dao.g.dart
+│   │   │   │           ├── idle_service_isar.dart
+│   │   │   │           ├── isar_db.dart
+│   │   │   │           ├── wallet_dao.dart
+│   │   │   │           └── wallet_dao.g.dart
+│   │   │   ├── melos_core_services_isar.iml
+│   │   │   ├── pubspec.lock
+│   │   │   ├── pubspec.yaml
+│   │   │   └── README.md
+│   │   └── lib
+│   │       ├── economy
+│   │       │   └── economy_port.dart
+│   │       └── save
+│   │           └── profile_store.dart
+│   └── ui_shell
+│       └── lib
+│           ├── nav.dart
+│           ├── src
+│           │   ├── nav
+│           │   │   ├── game_nav_scaffold.dart
+│           │   │   └── nav_items.dart
+│           │   └── theme
+│           │       ├── theme_extensions.dart
+│           │       └── tokens.dart
+│           └── theme.dart
+├── platform
+│   ├── android_vs_ios.md
+│   ├── checklists
+│   │   ├── app_store.md
+│   │   ├── copilot_prompts.md
+│   │   ├── issues.csv
+│   │   ├── issues.json
+│   │   ├── meta_release.md
+│   │   ├── play_store.md
+│   │   └── release_train.md
+│   ├── dev_programs.md
+│   ├── device_targets.md
+│   ├── hosting_options.md
+│   └── store_checklists
+│       ├── app_store.md
+│       └── play_store.md
+├── pubspec.lock
+├── pubspec.yaml
+├── QUICK_OPS.md
+├── README_unified_stack.md
+├── README_v10_additions.md
+├── README_v12_additions.md
+├── README.md
+├── repo_refactor_bundle
+│   ├── .DS_Store
+│   ├── config
+│   │   ├── move_map_complete.json
+│   │   ├── move_map.json
+│   │   └── proposed_structure.json
+│   ├── RUNME.md
+│   ├── scripts
+│   │   ├── .DS_Store
+│   │   ├── bash
+│   │   │   ├── 00_detect_repo_state.sh
+│   │   │   ├── 01_create_structure.sh
+│   │   │   ├── 02_move_logic.sh
+│   │   │   ├── 03_stub_missing.sh
+│   │   │   ├── 04_fix_imports.sh
+│   │   │   └── 99_undo.sh
+│   │   └── powershell
+│   │       ├── 01_create_structure.ps1
+│   │       ├── 02_move_logic.ps1
+│   │       ├── 03_stub_missing.ps1
+│   │       └── 04_fix_imports.ps1
+│   └── stubs
+│       └── AI_COPILOT_STUBS.md
+├── repo_tree.txt
+├── roadmap
+│   └── phase-1.md
+├── secrets.example.md
+├── snippets
+│   └── dart
+│       ├── ccg
+│       │   └── card.dart
+│       ├── core
+│       │   ├── analytics_events.dart
+│       │   ├── app_config.dart
+│       │   └── category_registry.dart
+│       ├── idle
+│       │   ├── idle_models.dart
+│       │   └── idle_time_service.dart
+│       ├── match
+│       │   └── match_board.dart
+│       ├── platformer
+│       │   └── platformer_player_controller.dart
+│       ├── rpg
+│       │   └── rpg_stats.dart
+│       └── survivor
+│           └── survivor_run_state.dart
+├── templates
+│   ├── endless-runner.md
+│   ├── match-3.md
+│   ├── physics-sandbox.md
+│   └── top-down-shooter.md
+├── test
+│   └── widget_test.dart
+├── tools
+│   ├── mason_bricks.md
+│   └── README.txt
+├── web
+│   ├── favicon.png
+│   ├── icons
+│   │   ├── Icon-192.png
+│   │   ├── Icon-512.png
+│   │   ├── Icon-maskable-192.png
+│   │   └── Icon-maskable-512.png
+│   ├── index.html
+│   └── manifest.json
+└── windows
+    ├── .gitignore
+    ├── CMakeLists.txt
+    ├── flutter
+    │   ├── CMakeLists.txt
+    │   ├── generated_plugin_registrant.cc
+    │   ├── generated_plugin_registrant.h
+    │   └── generated_plugins.cmake
+    └── runner
+        ├── CMakeLists.txt
+        ├── flutter_window.cpp
+        ├── flutter_window.h
+        ├── main.cpp
+        ├── resource.h
+        ├── resources
+        │   └── app_icon.ico
+        ├── runner.exe.manifest
+        ├── Runner.rc
+        ├── utils.cpp
+        ├── utils.h
+        ├── win32_window.cpp
+        └── win32_window.h
+
+237 directories, 506 files

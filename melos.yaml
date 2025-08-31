@@ -1,9 +1,17 @@
 name: flutter_game_ecosystem
 packages:
-     - packages/*
-     - examples/*
+     - packages/* # game_ui, providers, services, ui_shell
+     - packages/*/* # services subpackages (analytics_firebase_adapter, core_services, core_services_isar)
+     - modules/genres/* # game_scenes, etc.
+     - examples/* # demo_game
+     - game_core/* # game_core
+
+ignore:
+     - '**/build/**'
+     - '**/.dart_tool/**'
+
 ide:
-     intellij: { enabled: true }
+     intellij: { enabled: false }
      vscode: { enabled: true }
 
 scripts:
@@ -19,3 +27,5 @@ scripts:
           melos run format &&
           melos run analyze &&
           melos run test
+
+          name: flutter_game_ecosystem
