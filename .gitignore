@@ -11,6 +11,14 @@
 **/.env
 **/.env.*
 
+# Ignore all .flutter-plugins and .flutter-plugins-dependencies files
+**/**/.flutter-plugins
+**/**/.flutter-plugins-dependencies
+**/**/**/.flutter-plugins
+**/**/**/.flutter-plugins-dependencies
+**/**/**/**/.flutter-plugins
+**/**/**/**/.flutter-plugins-dependencies
+
 # Node.js (if any JS tooling)
 **/node_modules/
 **/npm-debug.log*
