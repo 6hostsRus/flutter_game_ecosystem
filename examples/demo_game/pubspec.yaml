@@ -9,8 +9,8 @@ dependencies:
           sdk: flutter
      flutter_riverpod: ^2.5.1
      go_router: ^14.2.0
-     game_ui:
-          path: ../../packages/game_ui
+     ui_shell:
+          path: ../../packages/ui_shell
      core_services:
           path: ../../packages/services/core_services
      game_scenes:
