@@ -9,7 +9,7 @@ if [[ ! -f "$MAP" ]]; then
   echo "Missing $MAP"; exit 1
 fi
 
-python3 - "$1" <<'PY'
+python3 - "${1:-}" <<'PY'
 import json, os, shutil, sys
 dry = 1 if (len(sys.argv)>1 and sys.argv[1]=='--dry-run') else 0
 m = json.load(open("./repo_refactor_bundle/config/move_map.json"))
