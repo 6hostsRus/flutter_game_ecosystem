@@ -1,24 +1,23 @@
-
 name: demo_game
 description: Demo app wiring game_ui + category registry.
-publish_to: "none"
+publish_to: 'none'
 version: 0.1.0
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+     sdk: '>=3.3.0 <4.0.0'
 dependencies:
-  flutter:
-    sdk: flutter
-  flutter_riverpod: ^2.5.1
-  go_router: ^14.2.0
-  game_ui:
-    path: ../../packages/game_ui
-  core_services:
-    path: ../../packages/core_services
-  game_scenes:
-    path: ../../packages/game_scenes
+     flutter:
+          sdk: flutter
+     flutter_riverpod: ^2.5.1
+     go_router: ^14.2.0
+     game_ui:
+          path: ../../packages/game_ui
+     core_services:
+          path: ../../packages/services/core_services
+     game_scenes:
+          path: ../../modules/genres/game_scenes
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^4.0.0
+     flutter_test:
+          sdk: flutter
+     flutter_lints: ^4.0.0
 flutter:
-  uses-material-design: true
+     uses-material-design: true

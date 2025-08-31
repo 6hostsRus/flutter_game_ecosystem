@@ -44,7 +44,7 @@ packages:
   core_services:
     dependency: "direct main"
     description:
-      path: "../../packages/core_services"
+      path: "../../packages/services/core_services"
       relative: true
     source: path
     version: "0.1.0"
@@ -98,7 +98,7 @@ packages:
   game_scenes:
     dependency: "direct main"
     description:
-      path: "../../packages/game_scenes"
+      path: "../../modules/genres/game_scenes"
       relative: true
     source: path
     version: "0.1.0"

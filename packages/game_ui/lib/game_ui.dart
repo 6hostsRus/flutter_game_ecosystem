@@ -1,8 +1,5 @@
 library game_ui;
 
-// Navigation
-export 'nav.dart';
-
 // HUD
 export 'hud.dart';
 
@@ -11,9 +8,6 @@ export 'cards.dart';
 
 // Store
 export 'store.dart';
-
-// Theme
-export 'theme.dart';
 
 // Analytics
 export 'analytics.dart';

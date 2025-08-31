@@ -1,8 +1,4 @@
-# melos_managed_dependency_overrides: core_services,game_scenes,game_ui
+# melos_managed_dependency_overrides: game_ui
 dependency_overrides:
-  core_services:
-    path: ../../packages/core_services
-  game_scenes:
-    path: ../../packages/game_scenes
   game_ui:
     path: ../../packages/game_ui
