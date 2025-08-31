@@ -382,7 +382,9 @@
 │               └── win32_window.h
 ├── flutter_game_ecosystem.iml
 ├── game_core
-│   └── interfaces.md
+│   ├── interfaces.md
+│   ├── pubspec.lock
+│   └── pubspec.yaml
 ├── ios
 │   ├── .gitignore
 │   ├── Flutter
@@ -525,44 +527,17 @@
 │   └── monetization.md
 ├── packages
 │   ├── AI_COPILOT_STUBS.md
-│   ├── game_ui
-│   │   ├── lib
-│   │   │   ├── achievements.dart
-│   │   │   ├── analytics.dart
-│   │   │   ├── cards.dart
-│   │   │   ├── game_ui
-│   │   │   │   └── src
-│   │   │   │       ├── achievements
-│   │   │   │       │   └── achievements_panel.dart
-│   │   │   │       ├── analytics
-│   │   │   │       │   └── track_mixin.dart
-│   │   │   │       ├── cards
-│   │   │   │       │   ├── item_card.dart
-│   │   │   │       │   └── upgrade_card.dart
-│   │   │   │       ├── hud
-│   │   │   │       │   ├── currency_badge.dart
-│   │   │   │       │   ├── hud_overlay.dart
-│   │   │   │       │   ├── progress_bar.dart
-│   │   │   │       │   └── timer_badge.dart
-│   │   │   │       ├── nav
-│   │   │   │       ├── quests
-│   │   │   │       │   └── quests_panel.dart
-│   │   │   │       ├── store
-│   │   │   │       │   ├── store_button.dart
-│   │   │   │       │   └── store_sheet.dart
-│   │   │   │       └── theme
-│   │   │   ├── game_ui.dart
-│   │   │   ├── hud.dart
-│   │   │   ├── quests.dart
-│   │   │   └── store.dart
-│   │   ├── melos_game_ui.iml
-│   │   ├── pubspec.lock
-│   │   ├── pubspec.yaml
-│   │   └── README.md
-│   ├── providers
+│   ├── core_services_isar
 │   │   └── lib
-│   │       └── registry
-│   │           └── feature_registry.dart
+│   │       └── core_services_isar
+│   │           └── src
+│   │               └── idle_dao.dart
+│   ├── providers
+│   │   ├── lib
+│   │   │   └── registry
+│   │   │       └── feature_registry.dart
+│   │   ├── pubspec.lock
+│   │   └── pubspec.yaml
 │   ├── services
 │   │   ├── analytics_firebase_adapter
 │   │   │   ├── .flutter-plugins
@@ -615,22 +590,51 @@
 │   │   │   ├── pubspec.lock
 │   │   │   ├── pubspec.yaml
 │   │   │   └── README.md
-│   │   └── lib
-│   │       ├── economy
-│   │       │   └── economy_port.dart
-│   │       └── save
-│   │           └── profile_store.dart
+│   │   ├── lib
+│   │   │   ├── economy
+│   │   │   │   └── economy_port.dart
+│   │   │   └── save
+│   │   │       └── profile_store.dart
+│   │   ├── pubspec.lock
+│   │   └── pubspec.yaml
 │   └── ui_shell
-│       └── lib
-│           ├── nav.dart
-│           ├── src
-│           │   ├── nav
-│           │   │   ├── game_nav_scaffold.dart
-│           │   │   └── nav_items.dart
-│           │   └── theme
-│           │       ├── theme_extensions.dart
-│           │       └── tokens.dart
-│           └── theme.dart
+│       ├── lib
+│       │   ├── ui_shell
+│       │   │   ├── achievements.dart
+│       │   │   ├── analytics.dart
+│       │   │   ├── cards.dart
+│       │   │   ├── hud.dart
+│       │   │   ├── nav.dart
+│       │   │   ├── quests.dart
+│       │   │   ├── src
+│       │   │   │   ├── achievements
+│       │   │   │   │   └── achievements_panel.dart
+│       │   │   │   ├── analytics
+│       │   │   │   │   └── track_mixin.dart
+│       │   │   │   ├── cards
+│       │   │   │   │   ├── item_card.dart
+│       │   │   │   │   └── upgrade_card.dart
+│       │   │   │   ├── hud
+│       │   │   │   │   ├── currency_badge.dart
+│       │   │   │   │   ├── hud_overlay.dart
+│       │   │   │   │   ├── progress_bar.dart
+│       │   │   │   │   └── timer_badge.dart
+│       │   │   │   ├── nav
+│       │   │   │   │   ├── game_nav_scaffold.dart
+│       │   │   │   │   └── nav_items.dart
+│       │   │   │   ├── quests
+│       │   │   │   │   └── quests_panel.dart
+│       │   │   │   ├── store
+│       │   │   │   │   ├── store_button.dart
+│       │   │   │   │   └── store_sheet.dart
+│       │   │   │   └── theme
+│       │   │   │       ├── theme_extensions.dart
+│       │   │   │       └── tokens.dart
+│       │   │   ├── store.dart
+│       │   │   └── theme.dart
+│       │   └── ui_shell.dart
+│       ├── pubspec.lock
+│       └── pubspec.yaml
 ├── platform
 │   ├── android_vs_ios.md
 │   ├── checklists
@@ -742,4 +746,4 @@
         ├── win32_window.cpp
         └── win32_window.h
 
-237 directories, 506 files
+236 directories, 511 files

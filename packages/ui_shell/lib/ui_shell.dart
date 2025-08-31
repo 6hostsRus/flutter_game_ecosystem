@@ -1,21 +1,21 @@
 library ui_shell;
 
-export 'ui_shell/nav.dart';
-export 'ui_shell/theme.dart';
+export 'src/nav.dart';
+export 'src/theme.dart';
 // HUD
-export 'ui_shell/hud.dart';
+export 'src/hud.dart';
 
 // Cards
-export 'ui_shell/cards.dart';
+export 'src/cards.dart';
 
 // Store
-export 'ui_shell/store.dart';
+export 'src/store.dart';
 
 // Analytics
-export 'ui_shell/analytics.dart';
+export 'src/analytics.dart';
 
 // Quests
-export 'ui_shell/quests.dart';
+export 'src/quests.dart';
 
 // Achievements
-export 'ui_shell/achievements.dart';
+export 'src/achievements.dart';
