@@ -1,4 +1,4 @@
-import 'package:core_services/core_services/core_services.dart';
+import 'package:core_services/analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';

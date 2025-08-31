@@ -4,9 +4,11 @@ part 'idle_dao.g.dart';
 
 @collection
 class IdleStateEntity {
-  Id id = 0; // singleton
-  DateTime lastSeen;
-  double totalRatePerSec;
+  Id id = 0;
+
+  DateTime? lastSeen = DateTime.now();
+  double totalRatePerSec = 0.0;
+
   IdleStateEntity({DateTime? lastSeen, this.totalRatePerSec = 0})
       : lastSeen = lastSeen ?? DateTime.now();
 }
@@ -19,7 +21,7 @@ class GeneratorEntity {
   double multiplier;
   bool unlocked;
   GeneratorEntity(
-      {required this.id,
+      {this.id = '',
       this.level = 0,
       this.baseRatePerSec = 0,
       this.multiplier = 1,

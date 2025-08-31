@@ -1,4 +1,4 @@
-import 'package:core_services/core_services/core_services.dart';
+import 'package:core_services/analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class FirebaseAnalyticsSink implements AnalyticsSink {
