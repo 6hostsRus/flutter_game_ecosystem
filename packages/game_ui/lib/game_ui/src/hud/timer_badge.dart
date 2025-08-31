@@ -39,7 +39,9 @@ class _TimerBadgeState extends State<TimerBadge> {
 
   @override
   Widget build(BuildContext context) {
-    final text = _two(_remaining.inMinutes.remainder(60)) + ":" + _two(_remaining.inSeconds.remainder(60));
+    final text = _two(_remaining.inMinutes.remainder(60)) +
+        ":" +
+        _two(_remaining.inSeconds.remainder(60));
     return Chip(label: Text(text));
   }
 

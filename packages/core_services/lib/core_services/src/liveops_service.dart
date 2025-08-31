@@ -1,4 +1,3 @@
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LiveOpEvent {
@@ -7,7 +6,12 @@ class LiveOpEvent {
   final DateTime startAt;
   final DateTime endAt;
   final Map<String, double> multipliers; // e.g., {'idle_rate': 2.0}
-  const LiveOpEvent({required this.id, required this.name, required this.startAt, required this.endAt, this.multipliers = const {}});
+  const LiveOpEvent(
+      {required this.id,
+      required this.name,
+      required this.startAt,
+      required this.endAt,
+      this.multipliers = const {}});
 
   bool get active {
     final now = DateTime.now();
@@ -35,9 +39,15 @@ class LiveOpsService {
 final liveOpsProvider = Provider<LiveOpsService>((ref) {
   final now = DateTime.now();
   // Example: weekend double idle rate
-  final start = DateTime(now.year, now.month, now.day).subtract(const Duration(days: 1));
+  final start =
+      DateTime(now.year, now.month, now.day).subtract(const Duration(days: 1));
   final end = start.add(const Duration(days: 3));
   return LiveOpsService([
-    LiveOpEvent(id: 'weekend_double_idle', name: 'Weekend Double Idle', startAt: start, endAt: end, multipliers: {'idle_rate': 2.0}),
+    LiveOpEvent(
+        id: 'weekend_double_idle',
+        name: 'Weekend Double Idle',
+        startAt: start,
+        endAt: end,
+        multipliers: {'idle_rate': 2.0}),
   ]);
 });

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Achievement {
@@ -6,7 +5,8 @@ class Achievement {
   final String subtitle;
   final bool unlocked;
 
-  const Achievement({required this.title, required this.subtitle, this.unlocked=false});
+  const Achievement(
+      {required this.title, required this.subtitle, this.unlocked = false});
 }
 
 class AchievementsPanel extends StatelessWidget {
@@ -22,10 +22,14 @@ class AchievementsPanel extends StatelessWidget {
       itemBuilder: (context, i) {
         final a = items[i];
         return ListTile(
-          leading: Icon(a.unlocked ? Icons.emoji_events_rounded : Icons.lock_outline_rounded),
+          leading: Icon(a.unlocked
+              ? Icons.emoji_events_rounded
+              : Icons.lock_outline_rounded),
           title: Text(a.title),
           subtitle: Text(a.subtitle),
-          trailing: a.unlocked ? const Icon(Icons.check_circle, color: Colors.green) : null,
+          trailing: a.unlocked
+              ? const Icon(Icons.check_circle, color: Colors.green)
+              : null,
         );
       },
     );

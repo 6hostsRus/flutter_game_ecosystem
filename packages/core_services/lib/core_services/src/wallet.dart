@@ -1,4 +1,3 @@
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WalletState {
@@ -10,12 +9,17 @@ class WalletState {
 }
 
 class WalletNotifier extends StateNotifier<WalletState> {
-  WalletNotifier(): super(const WalletState());
-  void addCoins(double amount) => state = state.copyWith(coins: state.coins + amount);
+  WalletNotifier() : super(const WalletState());
+  void addCoins(double amount) =>
+      state = state.copyWith(coins: state.coins + amount);
   bool spendCoins(double amount) {
-    if (state.coins >= amount) { state = state.copyWith(coins: state.coins - amount); return true; }
+    if (state.coins >= amount) {
+      state = state.copyWith(coins: state.coins - amount);
+      return true;
+    }
     return false;
   }
 }
 
-final walletProvider = StateNotifierProvider<WalletNotifier, WalletState>((ref) => WalletNotifier());
+final walletProvider = StateNotifierProvider<WalletNotifier, WalletState>(
+    (ref) => WalletNotifier());

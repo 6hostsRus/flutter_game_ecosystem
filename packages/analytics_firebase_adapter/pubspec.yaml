@@ -9,6 +9,7 @@ dependencies:
      firebase_core: ^2.32.0
      firebase_analytics: ^10.10.0
      flutter_riverpod: ^2.5.1
-     core_services: core_services/core_services
+     core_services:
+          path: ../core_services
 dev_dependencies:
      flutter_lints: ^4.0.0
