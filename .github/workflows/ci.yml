@@ -1,42 +1,46 @@
-name: CI (Flutter/Melos)
+name: CI
+
 on:
-     pull_request:
      push:
-          branches: [main]
-permissions:
-     contents: read
+          branches: [main, develop, 'refactor/**', 'feat/**', 'chore/**']
+     pull_request:
+          branches: ['**']
+
 jobs:
-     build:
+     build-analyze-test-validate:
+          name: Flutter + Melos + Schema Validator
           runs-on: ubuntu-latest
+
           steps:
-               - uses: actions/checkout@v4
-               - uses: subosito/flutter-action@v2
+               - name: Checkout
+                 uses: actions/checkout@v4
+
+               # Flutter includes Dart; we’ll use it for melos & the validator.
+               - name: Set up Flutter
+                 uses: subosito/flutter-action@v2
                  with:
-                      channel: 'stable'
-               - name: Install Java
-                 uses: actions/setup-java@v4
-                 with:
-                      distribution: 'temurin'
-                      java-version: '17'
-               - name: Install tools
-                 run: |
-                      flutter --version
-                      dart --version
-                      dart pub global activate melos
-                      echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-               - name: Bootstrap
+                      channel: stable
+                      cache: true
+
+               - name: Dart Pub cache path
+                 run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+
+               - name: Activate Melos
+                 run: dart pub global activate melos
+
+               - name: Bootstrap workspace
                  run: melos bootstrap
+
+               # Optional: enforce formatting; fail if changes are needed.
                - name: Format check
-                 run: dart format --output=none --set-exit-if-changed .
+                 run: melos run format -- --set-exit-if-changed
+
                - name: Analyze
-                 run: flutter analyze
-               - name: Tests
-                 run: flutter test --coverage
-               - name: Upload coverage (optional)
-                 if: env.CODECOV_TOKEN != ''
-                 env:
-                      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-                 uses: codecov/codecov-action@v4
-                 with:
-                      token: ${{ env.CODECOV_TOKEN }}
-                      files: coverage/lcov.info
+                 run: melos run analyze
+
+               - name: Test
+                 run: melos run test
+
+               # Schema validation (uses defaults set in the CLI: templates/schemas + winter_2025)
+               - name: Validate content pack schemas
+                 run: dart run tools/schema_validator/bin/validate_schemas.dart
