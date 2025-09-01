@@ -1,0 +1,7 @@
+{
+  "winter_event": true,
+  "new_shop_ui": { "rollout": 0.5 },
+  "ios_only_feature": {
+    "conditions": { "platform": ["ios"] }
+  }
+}

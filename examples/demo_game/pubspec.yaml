@@ -11,6 +11,8 @@ dependencies:
      go_router: ^14.2.0
      ui_shell:
           path: ../../packages/ui_shell
+     services:
+          path: ../../packages/services
      core_services:
           path: ../../packages/services/core_services
      game_scenes:
