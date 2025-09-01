@@ -1,0 +1,8 @@
+[
+  {
+    "id": "daily_collect",
+    "type": "daily",
+    "reward": {"soft": 50},
+    "conditions": [{"event": "level_complete", "times": 1}]
+  }
+]

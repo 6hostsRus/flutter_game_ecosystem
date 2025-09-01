@@ -1,0 +1,13 @@
+packId: winter_2025
+version: "1.0.0"
+minApp: "0.3.0"
+assets:
+  - sprites/winter/*
+  - sfx/jingles/*
+provides:
+  economy: economy.json
+  quests: quests.json
+  scenes: scenes.yaml
+integrity:
+  algo: sha256
+  hash: deadbeef123456

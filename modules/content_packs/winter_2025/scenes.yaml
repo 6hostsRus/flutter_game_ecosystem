@@ -1,0 +1,6 @@
+- id: main_menu
+  widgets:
+    banner: "Winter Event!"
+    button: "shop"
+  ruleset: survivor_like
+  droptables: droptables/winter.yaml

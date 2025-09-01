@@ -1,0 +1,10 @@
+{
+  "currencies": ["soft", "hard"],
+  "offers": [
+    {
+      "sku": "winter_bundle_1",
+      "cost": {"hard": 500},
+      "contents": [{"item": "skin_santa", "qty": 1}]
+    }
+  ]
+}

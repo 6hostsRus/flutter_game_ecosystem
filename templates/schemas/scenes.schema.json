@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Scenes Schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "widgets", "ruleset"],
+    "properties": {
+      "id": { "type": "string" },
+      "widgets": { "type": "object" },
+      "ruleset": { "type": "string" },
+      "droptables": { "type": "string" }
+    }
+  }
+}
