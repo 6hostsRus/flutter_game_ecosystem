@@ -131,12 +131,14 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 ## Quality Gate Mapping
 
-| Gate                  | Source Script                  | Enforced In |
-| --------------------- | ------------------------------ | ----------- |
-| Manifest completeness | `tools/check_manifest.dart`    | ci.yml      |
-| Stub parity           | `tools/check_stub_parity.dart` | ci.yml      |
-| Coverage >= threshold | `tools/quality_gates.dart`     | ci.yml      |
-| Analytics tests >=2   | `tools/quality_gates.dart`     | ci.yml      |
+| Gate                  | Source Script                     | Enforced In      |
+| --------------------- | --------------------------------- | ---------------- |
+| Manifest completeness | `tools/check_manifest.dart`       | ci.yml           |
+| Stub parity           | `tools/check_stub_parity.dart`    | ci.yml           |
+| Coverage >= threshold | `tools/quality_gates.dart`        | ci.yml           |
+| Analytics tests >=2   | `tools/quality_gates.dart`        | ci.yml           |
+| Spec hashes tracked   | `tools/spec_hashes.dart`          | metrics.yml      |
+| Route registry spec   | `tools/check_route_registry.dart` | ci.yml (planned) |
 
 ## Update Procedure
 

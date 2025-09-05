@@ -1,0 +1,49 @@
+{
+     "spec_version": 1,
+     "generated": "2025-09-05T00:00:00Z",
+     "app": "demo_game",
+     "tabs": [
+          { "route": "tab:home", "widget": "HomeScreen", "deeplink": "/home" },
+          {
+               "route": "tab:upgrades",
+               "widget": "UpgradesScreen",
+               "deeplink": "/upgrades"
+          },
+          {
+               "route": "tab:items",
+               "widget": "ItemsScreen",
+               "deeplink": "/items"
+          },
+          {
+               "route": "tab:store",
+               "widget": "StoreScreen",
+               "deeplink": "/store"
+          },
+          {
+               "route": "tab:quests",
+               "widget": "QuestsScreen",
+               "deeplink": "/quests"
+          }
+     ],
+     "push_routes": [
+          {
+               "route": "modal:platformer",
+               "trigger_text": "Play Platformer",
+               "params": []
+          },
+          {
+               "route": "modal:survivor",
+               "trigger_text": "Play Survivor",
+               "params": ["mode?"],
+               "deeplink_example": "/play/normal"
+          }
+     ],
+     "deep_links": [
+          {
+               "pattern": "/play/:mode",
+               "maps_to": "modal:survivor",
+               "params": ["mode"],
+               "description": "Launch survivor run with a difficulty/mode token"
+          }
+     ]
+}

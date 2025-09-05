@@ -9,15 +9,29 @@ void main() => runApp(const ProviderScope(child: App()));
 final currencyProvider = walletProvider;
 
 class App extends ConsumerWidget {
-  const App({super.key});
+  final String? initialRoute;
+  const App({super.key, this.initialRoute});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
+      initialRoute: initialRoute,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
         extensions: const [GameTokens(hudPadding: 8)],
       ),
+      onGenerateRoute: (settings) {
+        final name = settings.name;
+        if (name != null && name.startsWith('/play/')) {
+          final mode = name.substring('/play/'.length).trim();
+          return MaterialPageRoute(
+            builder: (_) =>
+                SurvivorScreen(mode: mode.isEmpty ? 'normal' : mode),
+            settings: settings,
+          );
+        }
+        return null; // fallback to home scaffold below
+      },
       home: GameNavScaffold(
         tabs: {
           GameTab.home: (_) => const HomeScreen(),
@@ -53,10 +67,7 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 8),
             FilledButton.icon(
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => Scaffold(
-                      appBar: AppBar(title: const Text('Survivor')),
-                      body: survivorWidget()))),
+              onPressed: () => Navigator.of(context).pushNamed('/play/normal'),
               icon: const Icon(Icons.auto_awesome_rounded),
               label: const Text('Play Survivor (stub)'),
             ),
@@ -184,6 +195,27 @@ class QuestsScreen extends ConsumerWidget {
             description: 'Buy one upgrade',
             progress: 0.0),
       ],
+    );
+  }
+}
+
+class SurvivorScreen extends StatelessWidget {
+  final String mode;
+  const SurvivorScreen({super.key, required this.mode});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Survivor')),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(child: survivorWidget()),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text('Mode: $mode', textAlign: TextAlign.center),
+          ),
+        ],
+      ),
     );
   }
 }

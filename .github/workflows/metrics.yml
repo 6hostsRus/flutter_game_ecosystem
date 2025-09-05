@@ -38,13 +38,17 @@ jobs:
                       STUB_PARITY_OK: '1'
                       STUB_PARITY_SPEC_HASH: ${{ steps.spec.outputs.hash }}
                  run: dart run tools/update_metrics.dart
+               - name: Route spec hash check (strict)
+                 run: dart run tools/check_spec_hashes.dart --strict
+               - name: Generate spec hashes
+                 run: dart run tools/spec_hashes.dart --write
                - name: Commit metrics (if changed)
                  run: |
-                      if [[ "$(git status --porcelain docs/METRICS.md docs/badges)" != "" ]]; then
+                      if [[ "$(git status --porcelain docs/METRICS.md docs/badges docs/SPEC_HASHES.md)" != "" ]]; then
                         git config user.name "ci-bot"
                         git config user.email "ci-bot@example.com"
-                        git add docs/METRICS.md docs/badges || true
-                        git commit -m "chore(metrics): update metrics [skip ci]" || echo "No changes"
+                        git add docs/METRICS.md docs/badges docs/SPEC_HASHES.md || true
+                        git commit -m "chore(metrics): update metrics & spec hashes [skip ci]" || echo "No changes"
                       fi
                - name: Upload coverage artifact
                  uses: actions/upload-artifact@v4

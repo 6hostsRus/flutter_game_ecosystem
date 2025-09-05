@@ -38,3 +38,17 @@ See **`docs/WORKFLOWS.md`** for an overview of all GitHub Actions (CI, metrics, 
 Visual regression tests live under `examples/demo_game/test/goldens/` with baselines in `examples/demo_game/goldens/`. Update by running:
 `flutter test --update-goldens examples/demo_game/test/goldens`.
 See `docs/GOLDENS.md` for guidelines.
+
+## Spec Governance
+
+Contract & spec evolution is tracked via hash snapshots:
+
+-    Route registry spec: `tools/route_spec/route_registry.json` (validated in CI)
+-    Parity spec & related sources hashed in `docs/SPEC_HASHES.md`
+
+Run locally:
+
+```
+dart run tools/check_route_registry.dart
+dart run tools/spec_hashes.dart --write
+```
