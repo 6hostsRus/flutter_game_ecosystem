@@ -190,6 +190,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.1"
+  in_app_purchase:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/in_app_purchase"
+      relative: true
+    source: path
+    version: "0.0.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -278,6 +285,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  providers:
+    dependency: "direct main"
+    description:
+      path: "../../packages/providers"
+      relative: true
+    source: path
+    version: "0.1.0"
   riverpod:
     dependency: transitive
     description:

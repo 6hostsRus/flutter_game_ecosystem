@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: in_app_purchase
+dependency_overrides:
+  in_app_purchase:
+    path: ../in_app_purchase

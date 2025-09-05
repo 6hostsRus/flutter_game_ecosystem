@@ -11,10 +11,13 @@ enum PurchaseState { pending, success, cancelled, failed }
 
 /// Price details.
 class Price {
-  final int amountMicros;        // 4990000 = $4.99
-  final String currencyCode;     // e.g., 'USD'
-  final String display;          // e.g., '$4.99'
-  const Price({required this.amountMicros, required this.currencyCode, required this.display});
+  final int amountMicros; // 4990000 = $4.99
+  final String currencyCode; // e.g., 'USD'
+  final String display; // e.g., '$4.99'
+  const Price(
+      {required this.amountMicros,
+      required this.currencyCode,
+      required this.display});
 }
 
 /// Product definition.
@@ -39,16 +42,23 @@ class Sku {
 class Availability {
   final String skuId;
   final bool available;
-  final String? reason; // e.g., 'unsupported_platform', 'owned', 'region_blocked'
+  final String?
+      reason; // e.g., 'unsupported_platform', 'owned', 'region_blocked'
   const Availability(this.skuId, this.available, {this.reason});
+
+  /// Alias for [available] (some adapters/readers prefer `isAvailable`).
+  bool get isAvailable => available;
 }
 
 /// Request to purchase a SKU.
 class CheckoutRequest {
   final String skuId;
-  final int quantity; // used for consumables. For non-consumables/subs, must be 1.
-  final Map<String, Object?> payload; // custom metadata (e.g., campaign/offerId)
-  const CheckoutRequest({required this.skuId, this.quantity = 1, this.payload = const {}});
+  final int
+      quantity; // used for consumables. For non-consumables/subs, must be 1.
+  final Map<String, Object?>
+      payload; // custom metadata (e.g., campaign/offerId)
+  const CheckoutRequest(
+      {required this.skuId, this.quantity = 1, this.payload = const {}});
 }
 
 /// Purchase result.
@@ -65,6 +75,12 @@ class PurchaseResult {
     this.errorCode,
     this.errorMessage,
   });
+
+  /// Convenience flags.
+  bool get isSuccess => state == PurchaseState.success;
+  bool get isPending => state == PurchaseState.pending;
+  bool get isFailure => state == PurchaseState.failed;
+  bool get isCancelled => state == PurchaseState.cancelled;
 }
 
 /// Receipt (opaque container to caller; adapters can extend via payload).
@@ -87,7 +103,8 @@ abstract class MonetizationGatewayPort {
   Future<List<Sku>> listSkus({String? tag});
 
   /// Is the SKU available for this user/context?
-  Future<Availability> availability(String skuId, {Map<String, Object?> context = const {}});
+  Future<Availability> availability(String skuId,
+      {Map<String, Object?> context = const {}});
 
   /// Start a purchase flow.
   Future<PurchaseResult> checkout(CheckoutRequest req);

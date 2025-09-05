@@ -13,12 +13,12 @@ dependencies:
           path: ../../packages/ui_shell
      services:
           path: ../../packages/services
+     providers:
+          path: ../../packages/providers
      core_services:
           path: ../../packages/services/core_services
      game_scenes:
           path: ../../modules/genres/game_scenes
-     monetization:
-          path: ../packages/services/monetization
 dev_dependencies:
      flutter_test:
           sdk: flutter

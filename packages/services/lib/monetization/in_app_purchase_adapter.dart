@@ -2,7 +2,6 @@
 library services.monetization.adapters.in_app_purchase_adapter;
 
 import 'dart:async';
-import 'dart:io' show Platform;
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'gateway_port.dart';
 
@@ -87,7 +86,7 @@ class InAppPurchaseMonetizationAdapter implements MonetizationGatewayPort {
       price: Price(
           amountMicros: micros,
           currencyCode: p.currencyCode ?? 'USD',
-          display: p.price),
+          display: p.price.price),
       type: _guessType(p),
       tags: const [],
     );

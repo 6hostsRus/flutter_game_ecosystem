@@ -1,0 +1,20 @@
+name: in_app_purchase
+version: 0.0.1
+publish_to: 'none'
+description: Local stub of in_app_purchase plugin for testing / offline dev.
+
+environment:
+     sdk: '>=3.3.0 <4.0.0'
+     flutter:
+
+flutter:
+     plugin:
+          platforms: {}
+
+dependencies:
+     flutter:
+          sdk: flutter
+
+dev_dependencies:
+     flutter_test:
+          sdk: flutter
