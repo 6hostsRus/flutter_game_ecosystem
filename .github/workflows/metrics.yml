@@ -1,0 +1,53 @@
+name: Metrics & Parity
+on:
+     push:
+          branches:
+               - main
+               - chore/**
+     pull_request:
+          branches:
+               - main
+
+jobs:
+     metrics:
+          runs-on: ubuntu-latest
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
+               - name: Setup Flutter
+                 uses: subosito/flutter-action@v2
+                 with:
+                      channel: stable
+               - name: Flutter pub get
+                 run: flutter pub get
+               - name: Manifest completeness check
+                 run: dart run tools/check_manifest.dart
+               - name: Run all package tests with coverage
+                 run: bash tools/run_all_tests.sh
+               - name: Quality gates
+                 env:
+                      COVERAGE_MIN: '25'
+                 run: dart run tools/quality_gates.dart
+               - name: Parity check
+                 run: dart run tools/check_stub_parity.dart
+               - name: Compute parity spec hash
+                 id: spec
+                 run: echo "hash=$(dart run tools/print_parity_spec_hash.dart)" >> $GITHUB_OUTPUT
+               - name: Update metrics
+                 env:
+                      STUB_PARITY_OK: '1'
+                      STUB_PARITY_SPEC_HASH: ${{ steps.spec.outputs.hash }}
+                 run: dart run tools/update_metrics.dart
+               - name: Commit metrics (if changed)
+                 run: |
+                      if [[ "$(git status --porcelain docs/METRICS.md docs/badges)" != "" ]]; then
+                        git config user.name "ci-bot"
+                        git config user.email "ci-bot@example.com"
+                        git add docs/METRICS.md docs/badges || true
+                        git commit -m "chore(metrics): update metrics [skip ci]" || echo "No changes"
+                      fi
+               - name: Upload coverage artifact
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: coverage-lcov
+                      path: coverage/lcov.info

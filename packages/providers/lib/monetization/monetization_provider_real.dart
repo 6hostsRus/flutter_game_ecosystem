@@ -28,7 +28,7 @@ final monetizationGatewayProvider = Provider<MonetizationGatewayPort>((ref) {
   }
   // Fallback to mock adapter for dev, web, or unsupported platforms.
   return MockDevMonetizationAdapter([
-    Sku(
+    const Sku(
       id: 'pack.starter.001',
       title: 'Starter Pack',
       description: 'Small boost to get you going.',
@@ -37,7 +37,7 @@ final monetizationGatewayProvider = Provider<MonetizationGatewayPort>((ref) {
       type: SkuType.consumable,
       tags: ['starter'],
     ),
-    Sku(
+    const Sku(
       id: 'pack.winter.2025',
       title: 'Winter 2025 Bundle',
       description: 'Seasonal cosmetics.',
@@ -46,7 +46,7 @@ final monetizationGatewayProvider = Provider<MonetizationGatewayPort>((ref) {
       type: SkuType.nonConsumable,
       tags: ['holiday'],
     ),
-    Sku(
+    const Sku(
       id: 'sub.premium.monthly',
       title: 'Premium Monthly',
       description: 'Ad-free + bonus rewards.',

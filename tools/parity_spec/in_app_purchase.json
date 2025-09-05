@@ -1,0 +1,35 @@
+{
+     "package": "in_app_purchase",
+     "spec_version": 1,
+     "generated": "2025-09-04T00:00:00Z",
+     "classes": {
+          "InAppPurchase": [
+               "isAvailable",
+               "queryProductDetails",
+               "buyConsumable",
+               "buyNonConsumable",
+               "completePurchase",
+               "restorePurchases",
+               "seedProducts",
+               "setAvailable",
+               "debugEmit",
+               "debugEmitStatus"
+          ],
+          "ProductDetails": ["toString"],
+          "SubscriptionProductDetails": [],
+          "PurchaseDetails": [],
+          "PurchaseParam": [],
+          "ProductDetailsResponse": [],
+          "PurchaseVerificationData": [],
+          "IAPError": []
+     },
+     "enums": {
+          "PurchaseStatus": [
+               "pending",
+               "purchased",
+               "error",
+               "canceled",
+               "restored"
+          ]
+     }
+}

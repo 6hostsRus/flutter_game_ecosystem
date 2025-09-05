@@ -65,8 +65,9 @@ examples/
 
 -    Real store plugin integration & parity guard script.
 -    Economy & profile store finalized ports.
--    Metrics automation (coverage, package counts) into `docs/METRICS.md`.
--    Consolidated workflow summary doc.
+-    Metrics automation (coverage, package counts) into `docs/METRICS.md` (DONE).
+-    Consolidated workflow summary doc (see `docs/WORKFLOWS.md`) (DONE).
+-    Logging & analytics event conventions (see `docs/LOGGING.md`).
 
 ## Deprecation Notes
 

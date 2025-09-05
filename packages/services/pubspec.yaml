@@ -14,6 +14,11 @@ dependencies:
      # Using local stub of in_app_purchase for testing / CI without store SDKs.
      in_app_purchase:
           path: ../in_app_purchase
+     core_services:
+          path: core_services
+     core_services_isar:
+          path: core_services_isar
+     isar_flutter_libs: ^3.1.0+1
 
 dev_dependencies:
      flutter_test:

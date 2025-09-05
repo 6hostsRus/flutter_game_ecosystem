@@ -10,6 +10,7 @@ class WalletState {
 
 class WalletNotifier extends StateNotifier<WalletState> {
   WalletNotifier() : super(const WalletState());
+  void setState(WalletState newState) => state = newState;
   void addCoins(double amount) =>
       state = state.copyWith(coins: state.coins + amount);
   bool spendCoins(double amount) {

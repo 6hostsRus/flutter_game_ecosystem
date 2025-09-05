@@ -1,5 +1,5 @@
 schema_version: 1
-last_updated: '2025-09-04'
+last_updated: '2025-09-05'
 packages:
      services:
           path: packages/services
@@ -8,6 +8,69 @@ packages:
           owner: core
           domain: monetization
           notes: 'Monetization gateway, analytics, service ports'
+     core_services:
+          path: packages/services/core_services
+          role: core_services
+          status: alpha
+          owner: core
+          domain: economy
+          notes: 'Wallet, offers, base service definitions'
+     core_services_isar:
+          path: packages/services/core_services_isar
+          role: plugin
+          status: experimental
+          owner: core
+          domain: persistence
+          notes: 'Isar-backed persistence layer'
+     analytics_firebase_adapter:
+          path: packages/services/analytics_firebase_adapter
+          role: plugin
+          status: experimental
+          owner: core
+          domain: analytics
+          notes: 'Firebase analytics sink adapter'
+     ui_shell:
+          path: packages/ui_shell
+          role: ui
+          status: experimental
+          owner: ui
+          domain: interface
+          notes: 'Shared UI widgets and navigation shell'
+     providers:
+          path: packages/providers
+          role: support
+          status: experimental
+          owner: core
+          domain: di
+          notes: 'Riverpod provider layer wrappers'
+     in_app_purchase_stub:
+          path: packages/in_app_purchase
+          role: stub
+          status: experimental
+          owner: monetization
+          domain: monetization
+          notes: 'Local stub of in_app_purchase plugin'
+     game_core:
+          path: game_core
+          role: engine
+          status: experimental
+          owner: core
+          domain: gameplay
+          notes: 'Flame/Forge2D extensions and base scene lifecycle'
+     game_scenes:
+          path: modules/genres/game_scenes
+          role: content
+          status: experimental
+          owner: content
+          domain: gameplay
+          notes: 'Stub platformer & survivor scenes'
+     schema_validator:
+          path: tools/schema_validator
+          role: tool
+          status: experimental
+          owner: tools
+          domain: infra
+          notes: 'CLI to validate content pack schemas'
      demo_game:
           path: examples/demo_game
           role: example

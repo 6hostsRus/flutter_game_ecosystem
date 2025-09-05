@@ -6,7 +6,7 @@ import 'package:services/monetization/mock_dev_adapter.dart';
 
 /// Default SKUs used by the mock adapter.
 final _defaultMockSkus = <Sku>[
-  Sku(
+  const Sku(
     id: 'pack.starter.001',
     title: 'Starter Pack',
     description: 'Small boost to get you going.',
@@ -14,7 +14,7 @@ final _defaultMockSkus = <Sku>[
     type: SkuType.consumable,
     tags: ['starter'],
   ),
-  Sku(
+  const Sku(
     id: 'pack.winter.2025',
     title: 'Winter 2025 Bundle',
     description: 'Seasonal cosmetics.',
@@ -22,7 +22,7 @@ final _defaultMockSkus = <Sku>[
     type: SkuType.nonConsumable,
     tags: ['holiday'],
   ),
-  Sku(
+  const Sku(
     id: 'sub.premium.monthly',
     title: 'Premium Monthly',
     description: 'Ad-free + bonus rewards.',

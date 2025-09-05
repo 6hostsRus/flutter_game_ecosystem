@@ -74,6 +74,10 @@ class ProductDetails {
     required this.price,
     this.currencyCode,
   });
+
+  @override
+  String toString() =>
+      'ProductDetails(id: ' + id + ', price: ' + price.toString() + ')';
 }
 
 /// Subscription subclass marker (matches `is SubscriptionProductDetails` checks).

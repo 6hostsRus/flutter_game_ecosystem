@@ -20,11 +20,11 @@ class App extends ConsumerWidget {
       ),
       home: GameNavScaffold(
         tabs: {
-          GameTab.home: (_) => HomeScreen(),
-          GameTab.upgrades: (_) => UpgradesScreen(),
-          GameTab.items: (_) => ItemsScreen(),
-          GameTab.store: (_) => StoreScreen(),
-          GameTab.quests: (_) => QuestsScreen(),
+          GameTab.home: (_) => const HomeScreen(),
+          GameTab.upgrades: (_) => const UpgradesScreen(),
+          GameTab.items: (_) => const ItemsScreen(),
+          GameTab.store: (_) => const StoreScreen(),
+          GameTab.quests: (_) => const QuestsScreen(),
         },
       ),
     );
@@ -32,6 +32,7 @@ class App extends ConsumerWidget {
 }
 
 class HomeScreen extends ConsumerWidget {
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final coins = ref.watch(currencyProvider).coins;
@@ -73,6 +74,7 @@ class HomeScreen extends ConsumerWidget {
 }
 
 class UpgradesScreen extends ConsumerWidget {
+  const UpgradesScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final coins = ref.watch(currencyProvider).coins;
@@ -112,6 +114,7 @@ class UpgradesScreen extends ConsumerWidget {
 }
 
 class ItemsScreen extends StatelessWidget {
+  const ItemsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -125,6 +128,7 @@ class ItemsScreen extends StatelessWidget {
 }
 
 class StoreScreen extends ConsumerWidget {
+  const StoreScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Center(
@@ -156,6 +160,7 @@ class StoreScreen extends ConsumerWidget {
 }
 
 class QuestsScreen extends ConsumerWidget {
+  const QuestsScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return QuestsPanel(

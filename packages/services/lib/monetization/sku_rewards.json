@@ -1,0 +1,4 @@
+{
+     "coins_100": { "type": "coins", "amount": 100 },
+     "premium_5": { "type": "premium", "amount": 5 }
+}

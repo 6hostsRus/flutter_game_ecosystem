@@ -1,0 +1,7 @@
+## Coverage Policy (auto‑ratcheting)
+# Minimum project line coverage percentage enforced by quality gates.
+# Updated automatically by tools/coverage_ratchet.dart when actual coverage
+# exceeds (current_min + 1.0%). Manual decreases are NOT allowed; lowering
+# this threshold should happen only via an explicit revert / approval.
+min_coverage_pct: 28.0
+last_updated: 2025-09-05T00:00:00Z
