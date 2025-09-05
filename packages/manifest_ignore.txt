@@ -1,0 +1,7 @@
+# Manifest exclusion list
+# List relative path prefixes (directories) that should be ignored by
+# manifest drift detection. One entry per line.
+# Lines starting with # are comments.
+
+# Example (uncomment to ignore a tooling playground package):
+# tools/playground_package

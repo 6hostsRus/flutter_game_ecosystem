@@ -298,6 +298,64 @@ void main() {
       'Analytics tests: ${analyticsTestFiles.length}',
     );
   }
+  // Package status warnings (experimental age audit light version)
+  try {
+    final manifestLines =
+        manifest.existsSync() ? manifest.readAsLinesSync() : <String>[];
+    final now = DateTime.now().toUtc();
+    final maxDays =
+        int.tryParse(Platform.environment['EXPERIMENTAL_MAX_DAYS'] ?? '') ?? 60;
+    String? currentPkg;
+    String? status;
+    DateTime? since;
+    int violations = 0;
+    void flush() {
+      if (currentPkg != null && status == 'experimental') {
+        final ageDays = since == null ? 0 : now.difference(since).inDays;
+        if (ageDays > maxDays) violations++;
+      }
+    }
+
+    final pkgKeyRegex = RegExp(r'^\s{5}[A-Za-z0-9_]+:\s*\$');
+    for (final raw in manifestLines) {
+      final trimmed = raw.trim();
+      if (pkgKeyRegex.hasMatch(raw)) {
+        flush();
+        currentPkg = trimmed.substring(0, trimmed.length - 1);
+        status = null;
+        since = null;
+        continue;
+      }
+      if (trimmed.startsWith('status:')) {
+        status = trimmed.split(':').last.trim();
+      } else if (trimmed.startsWith('since:')) {
+        final v = trimmed.split(':').last.trim().replaceAll("'", '');
+        since = DateTime.tryParse(v)?.toUtc();
+      }
+      if (trimmed.startsWith('owner:')) {
+        // owner is usually last meaningful field in a block; flush imminent
+        // but flush will only count if experimental.
+      }
+    }
+    flush();
+    content = _replace(
+      content,
+      'AUTO:PACKAGE_STATUS_WARNINGS',
+      'Package status warnings: $violations',
+    );
+    if (readmeFile.existsSync()) {
+      final rd = readmeFile.readAsStringSync();
+      readmeFile.writeAsStringSync(
+        _replace(
+          rd,
+          'AUTO:README_PACKAGE_STATUS_WARNINGS',
+          'Package status warnings: $violations',
+        ),
+      );
+    }
+  } catch (_) {
+    // Non-fatal: leave marker as-is
+  }
   metricsFile.writeAsStringSync(content);
   stdout.writeln('Updated metrics (package count=$packageCount)');
 }

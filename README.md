@@ -10,6 +10,7 @@
 <!-- AUTO:README_PACKAGE_COUNT -->Package count: 11<!-- END -->
 <!-- AUTO:README_COVERAGE -->Coverage: 28.6%<!-- END -->
 <!-- AUTO:README_STUB_PARITY -->Stub parity: (run metrics)<!-- END -->
+<!-- AUTO:README_PACKAGE_STATUS_WARNINGS -->Package status warnings: 0<!-- END -->
 
 This package contains first‑pass (v1) documents to bootstrap a reusable, modular game ecosystem in Dart/Flutter,
 optimized for rapid reskinning and fast iteration.
@@ -52,3 +53,14 @@ Run locally:
 dart run tools/check_route_registry.dart
 dart run tools/spec_hashes.dart --write
 ```
+
+## Manifest Drift Hook
+
+Enable local pre-commit protection against manifest drift:
+
+```
+chmod +x tools/hooks/pre-commit.manifest
+ln -sf ../../tools/hooks/pre-commit.manifest .git/hooks/pre-commit
+```
+
+The hook blocks commits if new packages are added or removed without updating `packages/manifest.yaml` and prints YAML snippets to paste.

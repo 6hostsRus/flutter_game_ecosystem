@@ -22,6 +22,8 @@ jobs:
                  run: flutter pub get
                - name: Manifest completeness check
                  run: dart run tools/check_manifest.dart
+               - name: Package status audit (non-blocking)
+                 run: dart run tools/package_status_audit.dart
                - name: Run all package tests with coverage
                  run: bash tools/run_all_tests.sh
                - name: Quality gates

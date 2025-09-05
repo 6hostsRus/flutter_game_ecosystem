@@ -5,6 +5,7 @@ packages:
           path: packages/services
           role: core_services
           status: alpha
+          since: '2025-09-05'
           owner: core
           domain: monetization
           notes: 'Monetization gateway, analytics, service ports'
@@ -12,6 +13,7 @@ packages:
           path: packages/services/core_services
           role: core_services
           status: alpha
+          since: '2025-09-05'
           owner: core
           domain: economy
           notes: 'Wallet, offers, base service definitions'
@@ -19,6 +21,7 @@ packages:
           path: packages/services/core_services_isar
           role: plugin
           status: experimental
+          since: '2025-09-05'
           owner: core
           domain: persistence
           notes: 'Isar-backed persistence layer'
@@ -26,6 +29,7 @@ packages:
           path: packages/services/analytics_firebase_adapter
           role: plugin
           status: experimental
+          since: '2025-09-05'
           owner: core
           domain: analytics
           notes: 'Firebase analytics sink adapter'
@@ -33,6 +37,7 @@ packages:
           path: packages/ui_shell
           role: ui
           status: experimental
+          since: '2025-09-05'
           owner: ui
           domain: interface
           notes: 'Shared UI widgets and navigation shell'
@@ -40,6 +45,7 @@ packages:
           path: packages/providers
           role: support
           status: experimental
+          since: '2025-09-05'
           owner: core
           domain: di
           notes: 'Riverpod provider layer wrappers'
@@ -47,6 +53,7 @@ packages:
           path: packages/in_app_purchase
           role: stub
           status: experimental
+          since: '2025-09-05'
           owner: monetization
           domain: monetization
           notes: 'Local stub of in_app_purchase plugin'
@@ -54,6 +61,7 @@ packages:
           path: game_core
           role: engine
           status: experimental
+          since: '2025-09-05'
           owner: core
           domain: gameplay
           notes: 'Flame/Forge2D extensions and base scene lifecycle'
@@ -61,6 +69,7 @@ packages:
           path: modules/genres/game_scenes
           role: content
           status: experimental
+          since: '2025-09-05'
           owner: content
           domain: gameplay
           notes: 'Stub platformer & survivor scenes'
@@ -68,6 +77,7 @@ packages:
           path: tools/schema_validator
           role: tool
           status: experimental
+          since: '2025-09-05'
           owner: tools
           domain: infra
           notes: 'CLI to validate content pack schemas'
@@ -75,6 +85,7 @@ packages:
           path: examples/demo_game
           role: example
           status: experimental
+          since: '2025-09-05'
           owner: examples
           domain: showcase
           notes: 'Integration reference of modules'

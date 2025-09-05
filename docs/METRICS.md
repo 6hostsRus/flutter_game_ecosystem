@@ -10,6 +10,7 @@
 <!-- AUTO:ECONOMY_OFFERS -->Economy offers: 1<!-- END -->
 <!-- AUTO:ANALYTICS_EVENTS -->Analytics events (test session): 4<!-- END -->
 <!-- AUTO:ANALYTICS_TESTS -->Analytics tests: 4<!-- END -->
+<!-- AUTO:PACKAGE_STATUS_WARNINGS -->Package status warnings: 0<!-- END -->
 
 <!-- AUTO:COVERAGE_BREAKDOWN -->Per-package coverage:
 

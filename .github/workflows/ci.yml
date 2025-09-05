@@ -50,6 +50,9 @@ jobs:
                - name: Stub parity check
                  run: dart run tools/check_stub_parity.dart && echo "STUB_PARITY_OK=1" >> $GITHUB_ENV
 
+               - name: Package status audit (non-blocking)
+                 run: dart run tools/package_status_audit.dart
+
                - name: Route registry spec check
                  run: dart run tools/check_route_registry.dart
                - name: Route spec hash (strict)

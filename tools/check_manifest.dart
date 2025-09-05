@@ -21,7 +21,16 @@ void main() {
     }
   });
   // Discover actual package directories containing pubspec.yaml.
-  final discovered = <String>[];
+  final discovered = <String>{};
+  final ignoreFile = File('packages/manifest_ignore.txt');
+  final ignores = <String>[];
+  if (ignoreFile.existsSync()) {
+    for (final l in ignoreFile.readAsLinesSync()) {
+      final t = l.trim();
+      if (t.isEmpty || t.startsWith('#')) continue;
+      ignores.add(t);
+    }
+  }
   void scanDir(String root) {
     final dir = Directory(root);
     if (!dir.existsSync()) return;
@@ -33,22 +42,33 @@ void main() {
             p.contains('/.dart_tool/'))
           continue;
         final path = p.substring(0, p.length - '/pubspec.yaml'.length);
-        discovered.add(path.replaceAll('\\', '/'));
+        // Normalize relative path from repo root.
+        final rel = path.replaceAll('\\', '/');
+        // Skip root pubspec (monorepo root) if encountered.
+        if (rel == '.' || rel.isEmpty) continue;
+        final ignored = ignores.any((p) => rel.startsWith(p));
+        if (!ignored) discovered.add(rel);
       }
     }
   }
 
   scanDir('packages');
   scanDir('examples');
-  discovered.sort();
+  // Include additional roots for engine/content/tools packages.
+  scanDir('game_core');
+  scanDir('modules');
+  scanDir('tools');
+  final discoveredList = discovered.toList()..sort();
 
   final missing = <String>[];
-  for (final d in discovered) {
+  for (final d in discoveredList) {
     if (!declared.containsKey(d)) missing.add(d);
   }
   final stale = <String>[];
   for (final declPath in declared.keys) {
-    if (!discovered.contains(declPath)) stale.add(declPath);
+    if (!discovered.contains(declPath)) {
+      stale.add(declPath);
+    }
   }
 
   if (missing.isEmpty && stale.isEmpty) {
