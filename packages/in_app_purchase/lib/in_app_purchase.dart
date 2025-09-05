@@ -117,6 +117,8 @@ class InAppPurchase {
 
   // In-memory registered products (acting as a fake catalog).
   final Map<String, ProductDetails> _catalog = {};
+  final Set<String> _owned = <String>{};
+  bool _autoComplete = true;
 
   bool _available = true;
 
@@ -126,6 +128,17 @@ class InAppPurchase {
       _catalog[p.id] = p;
     }
   }
+
+  /// Reset internal state (catalog, ownership, availability, auto-complete).
+  void reset() {
+    _catalog.clear();
+    _owned.clear();
+    _available = true;
+    _autoComplete = true;
+  }
+
+  /// Control whether buy* calls automatically emit a purchase success.
+  void setAutoComplete(bool v) => _autoComplete = v;
 
   /// Simulate store availability toggle.
   void setAvailable(bool v) => _available = v;
@@ -150,16 +163,45 @@ class InAppPurchase {
     required PurchaseParam purchaseParam,
     required bool autoConsume,
   }) async {
-    _emitSuccess(purchaseParam.productDetails.id);
+    if (_autoComplete) {
+      _emitSuccess(purchaseParam.productDetails.id);
+    } else {
+      // Emit a pending status to simulate in-flight purchase.
+      debugEmitStatus(purchaseParam.productDetails.id, PurchaseStatus.pending,
+          pendingCompletePurchase: true);
+    }
   }
 
   Future<void> buyNonConsumable({required PurchaseParam purchaseParam}) async {
-    _emitSuccess(purchaseParam.productDetails.id);
+    if (_autoComplete) {
+      _emitSuccess(purchaseParam.productDetails.id);
+    } else {
+      debugEmitStatus(purchaseParam.productDetails.id, PurchaseStatus.pending,
+          pendingCompletePurchase: true);
+    }
   }
 
   Future<void> completePurchase(PurchaseDetails details) async {}
 
-  Future<void> restorePurchases() async {}
+  Future<void> restorePurchases() async {
+    if (_owned.isEmpty) return;
+    // Emit restored events for each owned product.
+    final events = <PurchaseDetails>[];
+    for (final id in _owned) {
+      events.add(PurchaseDetails(
+        productID: id,
+        purchaseID: 'restore_$id',
+        status: PurchaseStatus.restored,
+        pendingCompletePurchase: false,
+        verificationData: PurchaseVerificationData(
+          localVerificationData: 'restore_$id',
+          serverVerificationData: 'restore_$id',
+          source: 'restore',
+        ),
+      ));
+    }
+    _purchaseCtrl.add(events);
+  }
 
   // Helper to emit a purchase success event.
   void _emitSuccess(String productId) {
@@ -169,6 +211,7 @@ class InAppPurchase {
       purchaseID: 'ord_${DateTime.now().millisecondsSinceEpoch}',
       pendingCompletePurchase: false,
     );
+    _owned.add(productId);
     _purchaseCtrl.add([details]);
   }
 
@@ -185,6 +228,7 @@ class InAppPurchase {
     String? orderId,
     bool pendingCompletePurchase = false,
     IAPError? error,
+    String? serverVerificationDataOverride,
   }) {
     final id = orderId ?? 'ord_${DateTime.now().millisecondsSinceEpoch}';
     final details = PurchaseDetails(
@@ -195,7 +239,7 @@ class InAppPurchase {
       pendingCompletePurchase: pendingCompletePurchase,
       verificationData: PurchaseVerificationData(
         localVerificationData: id,
-        serverVerificationData: id,
+        serverVerificationData: serverVerificationDataOverride ?? id,
         source: 'debug',
       ),
     );

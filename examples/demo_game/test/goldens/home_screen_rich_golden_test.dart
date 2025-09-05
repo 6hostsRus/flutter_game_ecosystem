@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:core_services/core_services.dart';
-import '../../lib/main.dart' as demo;
+import 'package:demo_game/main.dart' as demo;
 
 void main() {
   testWidgets('HomeScreen rich state golden', (tester) async {

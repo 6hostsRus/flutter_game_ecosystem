@@ -8,7 +8,7 @@ void main() {
   test('MockDevMonetizationAdapter emits analytics events', () async {
     final events = <Map<String, Object?>>[];
     final skus = [
-      Sku(
+      const Sku(
         id: 'pack.small',
         title: 'Small Pack',
         description: 'Test',

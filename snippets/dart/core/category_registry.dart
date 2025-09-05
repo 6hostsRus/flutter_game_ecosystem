@@ -17,28 +17,32 @@ class CategoryDescriptor {
 
 class CategoryRegistry {
   static final List<CategoryDescriptor> all = [
-    CategoryDescriptor(
+    const CategoryDescriptor(
       id: 'idle',
       title: 'Idle',
       enabled: AppConfig.featureIdle,
     ),
-    CategoryDescriptor(
+    const CategoryDescriptor(
       id: 'platformer',
       title: 'Platformer',
       enabled: AppConfig.featurePlatformer,
     ),
-    CategoryDescriptor(id: 'rpg', title: 'RPG', enabled: AppConfig.featureRpg),
-    CategoryDescriptor(
+    const CategoryDescriptor(
+      id: 'rpg',
+      title: 'RPG',
+      enabled: AppConfig.featureRpg,
+    ),
+    const CategoryDescriptor(
       id: 'match',
       title: 'Match',
       enabled: AppConfig.featureMatch,
     ),
-    CategoryDescriptor(
+    const CategoryDescriptor(
       id: 'ccg',
       title: 'Card Battle',
       enabled: AppConfig.featureCCG,
     ),
-    CategoryDescriptor(
+    const CategoryDescriptor(
       id: 'survivor',
       title: 'Survivor',
       enabled: AppConfig.featureSurvivor,

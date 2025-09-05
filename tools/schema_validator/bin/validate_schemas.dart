@@ -22,7 +22,8 @@ Future<void> main(List<String> args) async {
 
   final manifestFile = File('$inputDir/manifest.yaml');
   final manifest = loadYaml(await manifestFile.readAsString());
-  _validate(schemas['manifest']!, jsonDecode(jsonEncode(manifest)), 'manifest.yaml');
+  _validate(
+      schemas['manifest']!, jsonDecode(jsonEncode(manifest)), 'manifest.yaml');
 
   final economyFile = File('$inputDir/economy.json');
   final economy = jsonDecode(await economyFile.readAsString());
@@ -36,7 +37,8 @@ Future<void> main(List<String> args) async {
   final scenes = loadYaml(await scenesFile.readAsString());
   _validate(schemas['scenes']!, jsonDecode(jsonEncode(scenes)), 'scenes.yaml');
 
-  print('All files validated successfully.');
+  // Use stderr to keep consistent with tooling scripts and satisfy avoid_print.
+  stderr.writeln('All files validated successfully.');
 }
 
 Future<JsonSchema> _loadSchema(String path) async {

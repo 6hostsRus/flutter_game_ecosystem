@@ -26,7 +26,7 @@ void main() {
     econ.award('coins', 5, reason: 'test');
 
     final adapter = MockDevMonetizationAdapter([
-      Sku(
+      const Sku(
         id: 'pack.tiny',
         title: 'Tiny Pack',
         description: 'desc',

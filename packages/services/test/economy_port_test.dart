@@ -3,7 +3,7 @@ import 'package:services/economy/economy_port.dart';
 
 void main() {
   test('CurrencyDelta toString doesn\'t crash', () {
-    final d = CurrencyDelta(currency: 'soft', amount: 100, reason: 'reward');
+    const d = CurrencyDelta(currency: 'soft', amount: 100, reason: 'reward');
     expect(d.currency, 'soft');
   });
 }

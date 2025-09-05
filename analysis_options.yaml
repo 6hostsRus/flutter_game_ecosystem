@@ -9,6 +9,10 @@ analyzer:
           unnecessary_import: error
           dead_code: error
           unnecessary_null_checks: error
+          avoid_relative_lib_imports: error
+          prefer_const_constructors: error
+          sort_child_properties_last: error
+          avoid_print: error
 
 linter:
      rules:

@@ -75,7 +75,7 @@ void main() {
 
       // Trigger checkout (pending result returned immediately).
       final pending =
-          await adapter.checkout(CheckoutRequest(skuId: skuCoins100));
+          await adapter.checkout(const CheckoutRequest(skuId: skuCoins100));
       expect(pending.state, PurchaseState.pending);
 
       // Allow automatic stub success event dispatch (buyConsumable triggers success).
@@ -131,7 +131,7 @@ void main() {
       final sub = adapter.purchaseStream.listen((r) {
         applyRewardForPurchase(container.read, r);
       });
-      await adapter.checkout(CheckoutRequest(skuId: skuPremium5));
+      await adapter.checkout(const CheckoutRequest(skuId: skuPremium5));
       await Future<void>.delayed(const Duration(milliseconds: 30));
       expect(container.read(walletProvider).premium, 5);
 

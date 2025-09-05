@@ -5,7 +5,7 @@ void main() {
   group('MutableFeatureRegistry', () {
     test('upsert + list adds feature', () {
       final reg = MutableFeatureRegistry();
-      final f = Feature(
+      final f = const Feature(
           id: 'home',
           title: 'Home',
           nav: [NavEntry(id: 'home', iconKey: 'home', label: 'Home')]);

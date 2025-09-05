@@ -10,12 +10,14 @@ jobs:
      build-analyze-test-validate:
           name: Flutter + Melos + Schema Validator
           runs-on: ubuntu-latest
-
+          env:
+               ANALYTICS_MIN_TESTS: '1'
+               ALLOW_COVERAGE_MISSING: '0'
+               FAIL_ON_PACKAGE_STATUS: '0'
           steps:
                - name: Checkout
                  uses: actions/checkout@v4
 
-               # Flutter includes Dart; we’ll use it for melos & the validator.
                - name: Set up Flutter
                  uses: subosito/flutter-action@v2
                  with:
@@ -31,7 +33,6 @@ jobs:
                - name: Bootstrap workspace
                  run: melos bootstrap
 
-               # Optional: enforce formatting; fail if changes are needed.
                - name: Format check
                  run: melos run format -- --set-exit-if-changed
 
@@ -47,16 +48,19 @@ jobs:
                       # Merge per-package coverage files if present
                       dart run tools/merge_coverage.dart || true
 
-               - name: Stub parity check
-                 run: dart run tools/check_stub_parity.dart && echo "STUB_PARITY_OK=1" >> $GITHUB_ENV
-
-               - name: Package status audit (non-blocking)
-                 run: dart run tools/package_status_audit.dart
-
-               - name: Route registry spec check
-                 run: dart run tools/check_route_registry.dart
-               - name: Route spec hash (strict)
-                 run: dart run tools/check_spec_hashes.dart --strict
+               - name: Quality gates consolidated
+                 id: gates
+                 run: |
+                      set -e
+                      dart run tools/run_quality_gates.dart | tee quality_gates.log
+                      HASH=$(dart run tools/print_parity_spec_hash.dart)
+                      echo "STUB_PARITY_SPEC_HASH=$HASH" >> $GITHUB_ENV
+                      echo "STUB_PARITY_OK=1" >> $GITHUB_ENV
+               - name: Upload quality gate summary
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: quality-gates-log
+                      path: quality_gates.log
 
                - name: Update metrics doc
                  run: dart run tools/update_metrics.dart
@@ -72,6 +76,5 @@ jobs:
                         git push || true
                       fi
 
-               # Schema validation (uses defaults set in the CLI: templates/schemas + winter_2025)
                - name: Validate content pack schemas
                  run: dart run tools/schema_validator/bin/validate_schemas.dart

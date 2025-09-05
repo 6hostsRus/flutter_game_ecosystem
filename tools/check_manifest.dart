@@ -72,7 +72,8 @@ void main() {
   }
 
   if (missing.isEmpty && stale.isEmpty) {
-    print('Manifest OK (${discovered.length} packages)');
+    // Logging: prefer stderr for tooling neutrality (avoid_print lint enforced).
+    stderr.writeln('Manifest OK (${discovered.length} packages)');
     return;
   }
   stderr.writeln('Manifest drift detected:');

@@ -1,4 +1,3 @@
-// coverage:ignore-file
 library services.monetization.adapters.in_app_purchase_adapter;
 
 import 'dart:async';
@@ -13,6 +12,9 @@ class InAppPurchaseMonetizationAdapter implements MonetizationGatewayPort {
   final _ctrl = StreamController<PurchaseResult>.broadcast();
   late final StreamSubscription<List<PurchaseDetails>> _sub;
   bool _initialized = false;
+  Duration purchaseTimeout = const Duration(seconds: 25);
+  bool Function(PurchaseDetails details)? verify; // return true if valid
+  final Map<String, Timer> _pendingTimers = {};
 
   InAppPurchaseMonetizationAdapter(this._skuIds, {InAppPurchase? iap})
       : _iap = iap ?? InAppPurchase.instance;
@@ -31,7 +33,12 @@ class InAppPurchaseMonetizationAdapter implements MonetizationGatewayPort {
       PurchaseState state;
       switch (d.status) {
         case PurchaseStatus.purchased:
-          state = PurchaseState.success;
+          // Optional verification hook.
+          if (verify != null && !verify!(d)) {
+            state = PurchaseState.failed;
+          } else {
+            state = PurchaseState.success;
+          }
           break;
         case PurchaseStatus.pending:
           state = PurchaseState.pending;
@@ -57,6 +64,11 @@ class InAppPurchaseMonetizationAdapter implements MonetizationGatewayPort {
         errorMessage: d.error?.message,
       );
       _ctrl.add(result);
+      // Clear timeout if any.
+      if (state != PurchaseState.pending) {
+        final t = _pendingTimers.remove(d.productID);
+        t?.cancel();
+      }
 
       // For successful purchases, you must complete the purchase.
       if (d.pendingCompletePurchase) {
@@ -147,18 +159,27 @@ class InAppPurchaseMonetizationAdapter implements MonetizationGatewayPort {
     }
 
     // The actual result will arrive via purchaseStream listener.
+    // Start timeout guard.
+    _pendingTimers[req.skuId]?.cancel();
+    _pendingTimers[req.skuId] = Timer(purchaseTimeout, () {
+      final timeoutResult = PurchaseResult(
+          state: PurchaseState.failed, skuId: req.skuId, errorCode: 'timeout');
+      _ctrl.add(timeoutResult);
+    });
     return PurchaseResult(state: PurchaseState.pending, skuId: req.skuId);
   }
 
   @override
   Future<List<PurchaseReceipt>> restorePurchases() async {
     await _iap.restorePurchases();
-    // Receipts are surfaced as purchaseStream events with status.restored.
-    // We don't have them synchronously; return empty and rely on stream.
-    return const [];
+    // We cannot synchronously obtain receipts from the stub; rely on stream events.
+    return const <PurchaseReceipt>[];
   }
 
   void dispose() {
+    for (final t in _pendingTimers.values) {
+      t.cancel();
+    }
     _sub.cancel();
     _ctrl.close();
   }
