@@ -64,3 +64,5 @@ ln -sf ../../tools/hooks/pre-commit.manifest .git/hooks/pre-commit
 ```
 
 The hook blocks commits if new packages are added or removed without updating `packages/manifest.yaml` and prints YAML snippets to paste.
+
+<!-- AUTO:README_TASK_VISIBILITY -->Open checklist items: 95 (app_store: 16, meta_release: 25, play_store: 18, release_train: 36)<!-- END -->

@@ -87,6 +87,13 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 -    Key Steps: Build static docs (future), deploy to GH Pages.
 -    Outputs: Updated documentation site.
 
+### Checklist Visibility Publisher
+
+-    File: `.github/workflows/checklist-visibility.yml`
+-    Triggers: push to main (ignores self-updates), manual dispatch
+-    Key Steps: Run `dart run tools/generate_task_checklist.dart`, commit `docs/VISIBILITY.md`, `docs/metrics/task_checklist.json`, and README marker.
+-    Outputs: Up-to-date checklist visibility report and JSON for dashboards.
+
 ### Screenshots
 
 -    File: `.github/workflows/screenshots.yml`
