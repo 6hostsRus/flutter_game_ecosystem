@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: core_services,game_scenes,in_app_purchase,services,ui_shell
+# melos_managed_dependency_overrides: core_services,game_scenes,in_app_purchase,providers,services,ui_shell
 dependency_overrides:
   core_services:
     path: ../../packages/services/core_services
@@ -6,6 +6,8 @@ dependency_overrides:
     path: ../../modules/genres/game_scenes
   in_app_purchase:
     path: ../../packages/in_app_purchase
+  providers:
+    path: ../../packages/providers
   services:
     path: ../../packages/services
   ui_shell:
