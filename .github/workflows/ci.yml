@@ -41,6 +41,29 @@ jobs:
                - name: Test
                  run: melos run test
 
+               - name: Collect coverage (aggregate)
+                 run: |
+                      flutter test --coverage
+                      # Merge per-package coverage files if present
+                      dart run tools/merge_coverage.dart || true
+
+               - name: Stub parity check
+                 run: dart run tools/check_stub_parity.dart && echo "STUB_PARITY_OK=1" >> $GITHUB_ENV
+
+               - name: Update metrics doc
+                 run: dart run tools/update_metrics.dart
+
+               - name: Commit metrics update
+                 if: github.event_name == 'push'
+                 run: |
+                      if [[ -n $(git status --porcelain docs/METRICS.md) ]]; then
+                        git config user.name 'ci-bot'
+                        git config user.email 'ci-bot@users.noreply.github.com'
+                        git add docs/METRICS.md
+                        git commit -m 'chore(metrics): update metrics after CI'
+                        git push || true
+                      fi
+
                # Schema validation (uses defaults set in the CLI: templates/schemas + winter_2025)
                - name: Validate content pack schemas
                  run: dart run tools/schema_validator/bin/validate_schemas.dart

@@ -1,0 +1,17 @@
+schema_version: 1
+last_updated: '2025-09-04'
+packages:
+     services:
+          path: packages/services
+          role: core_services
+          status: alpha
+          owner: core
+          domain: monetization
+          notes: 'Monetization gateway, analytics, service ports'
+     demo_game:
+          path: examples/demo_game
+          role: example
+          status: experimental
+          owner: examples
+          domain: showcase
+          notes: 'Integration reference of modules'

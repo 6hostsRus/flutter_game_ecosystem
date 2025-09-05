@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:providers/monetization/monetization_provider.dart';
-import 'package:services/monetization/gateway_port.dart';
 
 Future<void> bootstrapMonetization(WidgetRef ref) async {
   final gateway = ref.read(monetizationGatewayProvider);

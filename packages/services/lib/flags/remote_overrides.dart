@@ -58,8 +58,8 @@ class FirebaseRemoteConfigOverridesSource implements FlagOverridesSource {
   Future<Map<String, dynamic>> fetch() async {
     // Lazy import pattern: avoid hard dependency at compile time if not used.
     try {
-      // ignore: avoid_dynamic_calls
-      final remoteConfigLib = await Future.value(null);
+      // Placeholder for dynamic import shim (no-op to keep try block semantics)
+      await Future.value();
     } catch (_) {}
     // The following code assumes firebase_remote_config is added to the app.
     // Replace with direct imports when integrating.
@@ -89,7 +89,8 @@ class FirebaseRemoteConfigOverridesSource implements FlagOverridesSource {
 class RemoteConfigSettings {
   final Duration fetchTimeout;
   final Duration minimumFetchInterval;
-  RemoteConfigSettings({required this.fetchTimeout, required this.minimumFetchInterval});
+  RemoteConfigSettings(
+      {required this.fetchTimeout, required this.minimumFetchInterval});
 }
 
 /// shim methods: you should import the real package in your app and delete these.

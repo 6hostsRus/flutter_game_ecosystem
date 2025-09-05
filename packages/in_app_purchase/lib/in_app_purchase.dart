@@ -1,5 +1,9 @@
 library in_app_purchase;
 
+// Local stub of `in_app_purchase` plugin.
+// Upstream reference version: 3.2.x (subset only).
+// TODO(parity:2025-09-30): Re-verify symbols & adapt to any upstream API changes.
+
 import 'dart:async';
 
 /// Enum mirroring real plugin's PurchaseStatus.
@@ -39,13 +43,12 @@ class PurchaseDetails {
     this.error,
     this.pendingCompletePurchase = false,
     PurchaseVerificationData? verificationData,
-  }) : verificationData =
-           verificationData ??
-           PurchaseVerificationData(
-             localVerificationData: '',
-             serverVerificationData: purchaseID ?? '',
-             source: 'stub',
-           );
+  }) : verificationData = verificationData ??
+            PurchaseVerificationData(
+              localVerificationData: '',
+              serverVerificationData: purchaseID ?? '',
+              source: 'stub',
+            );
 }
 
 /// Product price wrapper similar to real plugin (we only need display + raw string for micros parse attempt).
@@ -161,6 +164,36 @@ class InAppPurchase {
       status: PurchaseStatus.purchased,
       purchaseID: 'ord_${DateTime.now().millisecondsSinceEpoch}',
       pendingCompletePurchase: false,
+    );
+    _purchaseCtrl.add([details]);
+  }
+
+  // --- Debug/Test Helpers ---
+  /// Emit a custom list of [PurchaseDetails] objects onto the purchase stream.
+  void debugEmit(List<PurchaseDetails> detailsList) {
+    _purchaseCtrl.add(detailsList);
+  }
+
+  /// Convenience helper to emit a single purchase event with a given [status].
+  void debugEmitStatus(
+    String productId,
+    PurchaseStatus status, {
+    String? orderId,
+    bool pendingCompletePurchase = false,
+    IAPError? error,
+  }) {
+    final id = orderId ?? 'ord_${DateTime.now().millisecondsSinceEpoch}';
+    final details = PurchaseDetails(
+      productID: productId,
+      purchaseID: id,
+      status: status,
+      error: error,
+      pendingCompletePurchase: pendingCompletePurchase,
+      verificationData: PurchaseVerificationData(
+        localVerificationData: id,
+        serverVerificationData: id,
+        source: 'debug',
+      ),
     );
     _purchaseCtrl.add([details]);
   }

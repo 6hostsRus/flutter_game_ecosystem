@@ -1,7 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:providers/monetization/monetization_provider_real.dart';
-import 'package:services/monetization/gateway_port.dart';
 
 /// Example app-level bootstrap to enable real store adapters.
 Future<void> bootstrapMonetizationReal(WidgetRef ref) async {
