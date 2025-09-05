@@ -8,7 +8,7 @@ void main() {
       (tester) async {
     await tester
         .pumpWidget(ProviderScope(child: demo.App(initialRoute: '/play/hard')));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Survivor'), findsOneWidget);
     expect(find.textContaining('Mode: hard'), findsOneWidget);
   });
@@ -16,10 +16,10 @@ void main() {
   testWidgets('pushNamed deep link navigates to survivor mode variant',
       (tester) async {
     await tester.pumpWidget(const ProviderScope(child: demo.App()));
-    await tester.pumpAndSettle();
-    final context = tester.element(find.byType(MaterialApp));
-    Navigator.of(context).pushNamed('/play/easy');
-    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 200));
+    final ctx = tester.element(find.byType(Scaffold));
+    Navigator.of(ctx).pushNamed('/play/easy');
+    await tester.pump(const Duration(milliseconds: 16));
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Survivor'), findsOneWidget);
     expect(find.textContaining('Mode: easy'), findsOneWidget);

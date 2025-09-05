@@ -8,8 +8,8 @@
 </p>
 
 <!-- AUTO:README_PACKAGE_COUNT -->Package count: 11<!-- END -->
-<!-- AUTO:README_COVERAGE -->Coverage: 28.6%<!-- END -->
-<!-- AUTO:README_STUB_PARITY -->Stub parity: (run metrics)<!-- END -->
+<!-- AUTO:README_COVERAGE -->Coverage: 56.9%<!-- END -->
+<!-- AUTO:README_STUB_PARITY -->Stub parity: OK<!-- END -->
 <!-- AUTO:README_PACKAGE_STATUS_WARNINGS -->Package status warnings: 0<!-- END -->
 
 This package contains first‑pass (v1) documents to bootstrap a reusable, modular game ecosystem in Dart/Flutter,

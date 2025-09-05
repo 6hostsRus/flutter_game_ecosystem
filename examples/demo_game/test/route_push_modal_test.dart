@@ -7,12 +7,18 @@ void main() {
   testWidgets('platformer & survivor buttons push expected modals',
       (tester) async {
     await tester.pumpWidget(const ProviderScope(child: demo.App()));
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 200));
+    // Ensure Home tab selected so buttons are visible.
+    final destFinder = find.byType(NavigationDestination);
+    if (destFinder.evaluate().isNotEmpty) {
+      await tester.tap(destFinder.at(0));
+      await tester.pump(const Duration(milliseconds: 200));
+    }
 
     Future<void> openAndVerify(String label, String expectedTitle) async {
-      final btn = find.widgetWithText(FilledButton, label).first;
-      expect(btn, findsOneWidget, reason: 'Button "$label" not found');
-      await tester.tap(btn);
+      final labelFinder = find.text(label);
+      expect(labelFinder, findsOneWidget, reason: 'Label "$label" not found');
+      await tester.tap(labelFinder);
       await tester.pump();
       // Allow push animation
       await tester.pump(const Duration(milliseconds: 300));
