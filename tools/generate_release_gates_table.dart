@@ -24,14 +24,14 @@ class Gate {
     required this.mandatory,
   });
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'script': script,
-        'workflows': workflows,
-        'mandatory': mandatory,
-        'status': status,
-        'notes': notes,
-      };
+    'id': id,
+    'name': name,
+    'script': script,
+    'workflows': workflows,
+    'mandatory': mandatory,
+    'status': status,
+    'notes': notes,
+  };
 }
 
 void main(List<String> args) {
@@ -117,25 +117,32 @@ void main(List<String> args) {
 
   // Evaluate presence and status heuristics
   final workflowsDir = Directory('.github/workflows');
-  final hasWorkflows = workflowsDir.existsSync()
-      ? workflowsDir.listSync().whereType<File>().map((f) => f.path).toSet()
-      : <String>{};
+  final hasWorkflows =
+      workflowsDir.existsSync()
+          ? workflowsDir.listSync().whereType<File>().map((f) => f.path).toSet()
+          : <String>{};
 
   // Parse METRICS for a couple of signals
-  final metrics = File('docs/METRICS.md').existsSync()
-      ? File('docs/METRICS.md').readAsStringSync()
-      : '';
-  final stubOk = RegExp(r'Stub parity:\s*OK', caseSensitive: false)
-      .hasMatch(metrics);
-  final coverageMatch = RegExp(r'Coverage:\s*([0-9]+\.[0-9]+)%')
-      .firstMatch(metrics);
+  final metrics =
+      File('docs/METRICS.md').existsSync()
+          ? File('docs/METRICS.md').readAsStringSync()
+          : '';
+  final stubOk = RegExp(
+    r'Stub parity:\s*OK',
+    caseSensitive: false,
+  ).hasMatch(metrics);
+  final coverageMatch = RegExp(
+    r'Coverage:\s*([0-9]+\.[0-9]+)%',
+  ).firstMatch(metrics);
   final coveragePct = coverageMatch != null ? coverageMatch.group(1) : null;
 
   for (final g in gates) {
     // script presence
-    final exists = File(g.script).existsSync() || Directory(g.script).existsSync();
+    final exists =
+        File(g.script).existsSync() || Directory(g.script).existsSync();
     // workflows presence
-    final wfPresent = g.workflows.where((w) => hasWorkflows.contains(w)).toList();
+    final wfPresent =
+        g.workflows.where((w) => hasWorkflows.contains(w)).toList();
     // status heuristics
     if (!exists) {
       g.status = g.id == 'golden_guard' ? 'planned' : 'missing';
@@ -155,46 +162,63 @@ void main(List<String> args) {
     }
     // Attach list of found workflows to notes if not all are missing
     if (wfPresent.isNotEmpty) {
-      g.notes = (g.notes.isEmpty ? '' : g.notes + '; ') + 'workflow: ' + wfPresent.join(', ');
+      g.notes =
+          (g.notes.isEmpty ? '' : g.notes + '; ') +
+          'workflow: ' +
+          wfPresent.join(', ');
     }
   }
 
   // Summaries
   final total = gates.length;
-  final configured = gates.where((g) => g.status == 'configured' || g.status == 'ok').length;
+  final configured =
+      gates.where((g) => g.status == 'configured' || g.status == 'ok').length;
   final planned = gates.where((g) => g.status == 'planned').length;
   final missing = gates.where((g) => g.status == 'missing').length;
-  final mandatoryConfigured = gates.where((g) => g.mandatory && (g.status == 'configured' || g.status == 'ok')).length;
+  final mandatoryConfigured =
+      gates
+          .where(
+            (g) =>
+                g.mandatory && (g.status == 'configured' || g.status == 'ok'),
+          )
+          .length;
   final mandatoryTotal = gates.where((g) => g.mandatory).length;
 
   // Write JSON
   final metricsDir = Directory('docs/metrics')..createSync(recursive: true);
-  File('${metricsDir.path}/release_gates.json').writeAsStringSync(jsonEncode({
-    'generated': DateTime.now().toUtc().toIso8601String(),
-    'summary': {
-      'total': total,
-      'configured': configured,
-      'planned': planned,
-      'missing': missing,
-      'mandatoryConfigured': mandatoryConfigured,
-      'mandatoryTotal': mandatoryTotal,
-    },
-    'gates': gates.map((g) => g.toJson()).toList(),
-  }));
+  File('${metricsDir.path}/release_gates.json').writeAsStringSync(
+    jsonEncode({
+      'generated': DateTime.now().toUtc().toIso8601String(),
+      'summary': {
+        'total': total,
+        'configured': configured,
+        'planned': planned,
+        'missing': missing,
+        'mandatoryConfigured': mandatoryConfigured,
+        'mandatoryTotal': mandatoryTotal,
+      },
+      'gates': gates.map((g) => g.toJson()).toList(),
+    }),
+  );
 
   // Write Markdown
-  final md = StringBuffer()
-    ..writeln('# Release Gates — Final Mapping')
-    ..writeln()
-    ..writeln('Generated: ${DateTime.now().toUtc().toIso8601String()}')
-    ..writeln()
-    ..writeln('Summary: configured $configured/$total (mandatory: $mandatoryConfigured/$mandatoryTotal), planned $planned, missing $missing')
-    ..writeln()
-    ..writeln('| Gate | Script | Workflow | Mandatory | Status | Notes |')
-    ..writeln('|------|--------|----------|-----------|--------|-------|');
+  final md =
+      StringBuffer()
+        ..writeln('# Release Gates — Final Mapping')
+        ..writeln()
+        ..writeln('Generated: ${DateTime.now().toUtc().toIso8601String()}')
+        ..writeln()
+        ..writeln(
+          'Summary: configured $configured/$total (mandatory: $mandatoryConfigured/$mandatoryTotal), planned $planned, missing $missing',
+        )
+        ..writeln()
+        ..writeln('| Gate | Script | Workflow | Mandatory | Status | Notes |')
+        ..writeln('|------|--------|----------|-----------|--------|-------|');
   for (final g in gates) {
     final wf = g.workflows.isEmpty ? '' : g.workflows.join('<br>');
-    md.writeln('| ${g.name} | `${g.script}` | ${wf} | ${g.mandatory ? 'Yes' : 'No'} | ${g.status} | ${g.notes} |');
+    md.writeln(
+      '| ${g.name} | `${g.script}` | ${wf} | ${g.mandatory ? 'Yes' : 'No'} | ${g.status} | ${g.notes} |',
+    );
   }
   final outFile = File('docs/RELEASE_GATES.md');
   outFile.createSync(recursive: true);
@@ -203,19 +227,28 @@ void main(List<String> args) {
   // Update README marker
   final readme = File('README.md');
   if (readme.existsSync()) {
-    final stamp = 'Gates: $configured/$total (mandatory: $mandatoryConfigured/$mandatoryTotal)';
-    final txt = _replaceMarker(readme.readAsStringSync(), 'AUTO:README_RELEASE_GATES', stamp);
+    final stamp =
+        'Gates: $configured/$total (mandatory: $mandatoryConfigured/$mandatoryTotal)';
+    final txt = _replaceMarker(
+      readme.readAsStringSync(),
+      'AUTO:README_RELEASE_GATES',
+      stamp,
+    );
     readme.writeAsStringSync(txt);
   }
 
-  stdout.writeln('Generated release gates mapping: configured=$configured total=$total');
+  stdout.writeln(
+    'Generated release gates mapping: configured=$configured total=$total',
+  );
 }
 
 String _replaceMarker(String text, String marker, String value) {
   final pattern = RegExp('<!-- $marker -->(.*?)<!-- END -->', dotAll: true);
   if (pattern.hasMatch(text)) {
     return text.replaceAllMapped(
-        pattern, (m) => '<!-- $marker -->$value<!-- END -->');
+      pattern,
+      (m) => '<!-- $marker -->$value<!-- END -->',
+    );
   }
   return text.trimRight() + '\n\n<!-- $marker -->' + value + '<!-- END -->\n';
 }

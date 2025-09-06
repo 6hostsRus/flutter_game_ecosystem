@@ -31,12 +31,14 @@ void main(List<String> args) {
   final modulesDir = Directory('docs/modules');
   final moduleFiles = <File>[];
   if (modulesDir.existsSync()) {
-    moduleFiles.addAll(modulesDir
-        .listSync()
-        .whereType<File>()
-        .where((f) => f.path.endsWith('.md'))
-        .toList()
-      ..sort((a, b) => a.path.compareTo(b.path)));
+    moduleFiles.addAll(
+      modulesDir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.md'))
+          .toList()
+        ..sort((a, b) => a.path.compareTo(b.path)),
+    );
     for (final f in moduleFiles) {
       sources[f.path] = f.readAsStringSync();
     }
@@ -88,7 +90,9 @@ void main(List<String> args) {
     if (sec.isEmpty) return '';
     // keep bullet lines only
     final lines = sec.split('\n');
-    final bullets = lines.where((l) => l.trimLeft().startsWith('- ')).join('\n');
+    final bullets = lines
+        .where((l) => l.trimLeft().startsWith('- '))
+        .join('\n');
     return bullets.trim();
   }
 
@@ -118,12 +122,13 @@ void main(List<String> args) {
   String packagesIndex() {
     final dir = Directory('packages');
     if (!dir.existsSync()) return '_No packages directory._\n';
-    final entries = dir
-        .listSync()
-        .whereType<Directory>()
-        .map((d) => d.uri.pathSegments.last.replaceAll('/', ''))
-        .toList()
-      ..sort();
+    final entries =
+        dir
+            .listSync()
+            .whereType<Directory>()
+            .map((d) => d.uri.pathSegments.last.replaceAll('/', ''))
+            .toList()
+          ..sort();
     if (entries.isEmpty) return '_No packages._\n';
     return entries.map((e) => '- $e').join('\n') + '\n';
   }
@@ -140,61 +145,80 @@ void main(List<String> args) {
     if (m != null) preservedCustom = m.group(1)!.trim();
   }
 
-  final out = StringBuffer()
-    ..writeln('# Stack Overview')
-    ..writeln()
-    ..writeln('> Canonical consolidated architecture + stack reference. (Generated ${now.toIso8601String()})')
-    ..writeln()
-    ..writeln('## Core Stack')
-    ..writeln()
-    ..writeln(coreStackBullets.isNotEmpty
-        ? coreStackBullets
-        : '- Flutter UI + GoRouter for navigation\n- Riverpod for DI/state (ProviderScope root)\n- Analytics adapter layer with pluggable sinks\n- Isar/Drift persistence options')
-    ..writeln()
-    ..writeln('## Package Topology')
-    ..writeln()
-  ..writeln('```')
-  ..writeln('packages/')
-  ..writeln('  (auto-detected)')
-  ..writeln('```')
-    ..writeln(packagesIndex())
-    ..writeln('## Modules Index')
-    ..writeln()
-    ..writeln(modulesIndex())
-    ..writeln('## Design Principles')
-    ..writeln()
-    ..writeln('- Ports & Adapters with clean boundaries')
-    ..writeln('- Data-driven definitions (levels/items)')
-    ..writeln('- Deterministic core (injectable clock/RNG)')
-    ..writeln('- Minimal singletons; prefer provider scope')
-    ..writeln()
-    ..writeln('## Riverpod Patterns')
-    ..writeln()
-    ..writeln(riverpodPatterns.isNotEmpty ? riverpodPatterns : '_See README_unified_stack.md_')
-    ..writeln()
-    ..writeln('## Folder Shape')
-    ..writeln()
-    ..writeln((){
-      if (folderShape.isEmpty) return '_See README_unified_stack.md_';
-      final b = StringBuffer();
-      b.writeln('```');
-      b.writeln(folderShape.trim());
-      b.writeln('```');
-      return b.toString();
-    }())
-    ..writeln()
-    ..writeln('## Optional Add-ons')
-    ..writeln()
-    ..writeln(optionalAddons.isNotEmpty ? optionalAddons : '_See README_unified_stack.md_')
-    ..writeln()
-    ..writeln('## Custom Notes')
-    ..writeln(customStart)
-    ..writeln(preservedCustom.isNotEmpty ? preservedCustom : '\n_Add any team-specific architecture notes here._\n')
-    ..writeln(customEnd)
-    ..writeln()
-    ..writeln('## Deprecation Notes')
-    ..writeln()
-    ..writeln('Supersedes overlapping sections in `architecture/overview.md` and `README_unified_stack.md`.');
+  final out =
+      StringBuffer()
+        ..writeln('# Stack Overview')
+        ..writeln()
+        ..writeln(
+          '> Canonical consolidated architecture + stack reference. (Generated ${now.toIso8601String()})',
+        )
+        ..writeln()
+        ..writeln('## Core Stack')
+        ..writeln()
+        ..writeln(
+          coreStackBullets.isNotEmpty
+              ? coreStackBullets
+              : '- Flutter UI + GoRouter for navigation\n- Riverpod for DI/state (ProviderScope root)\n- Analytics adapter layer with pluggable sinks\n- Isar/Drift persistence options',
+        )
+        ..writeln()
+        ..writeln('## Package Topology')
+        ..writeln()
+        ..writeln('```')
+        ..writeln('packages/')
+        ..writeln('  (auto-detected)')
+        ..writeln('```')
+        ..writeln(packagesIndex())
+        ..writeln('## Modules Index')
+        ..writeln()
+        ..writeln(modulesIndex())
+        ..writeln('## Design Principles')
+        ..writeln()
+        ..writeln('- Ports & Adapters with clean boundaries')
+        ..writeln('- Data-driven definitions (levels/items)')
+        ..writeln('- Deterministic core (injectable clock/RNG)')
+        ..writeln('- Minimal singletons; prefer provider scope')
+        ..writeln()
+        ..writeln('## Riverpod Patterns')
+        ..writeln()
+        ..writeln(
+          riverpodPatterns.isNotEmpty
+              ? riverpodPatterns
+              : '_See README_unified_stack.md_',
+        )
+        ..writeln()
+        ..writeln('## Folder Shape')
+        ..writeln()
+        ..writeln(() {
+          if (folderShape.isEmpty) return '_See README_unified_stack.md_';
+          final b = StringBuffer();
+          b.writeln('```');
+          b.writeln(folderShape.trim());
+          b.writeln('```');
+          return b.toString();
+        }())
+        ..writeln()
+        ..writeln('## Optional Add-ons')
+        ..writeln()
+        ..writeln(
+          optionalAddons.isNotEmpty
+              ? optionalAddons
+              : '_See README_unified_stack.md_',
+        )
+        ..writeln()
+        ..writeln('## Custom Notes')
+        ..writeln(customStart)
+        ..writeln(
+          preservedCustom.isNotEmpty
+              ? preservedCustom
+              : '\n_Add any team-specific architecture notes here._\n',
+        )
+        ..writeln(customEnd)
+        ..writeln()
+        ..writeln('## Deprecation Notes')
+        ..writeln()
+        ..writeln(
+          'Supersedes overlapping sections in `architecture/overview.md` and `README_unified_stack.md`.',
+        );
 
   // Write out
   stackFile.createSync(recursive: true);
@@ -203,16 +227,19 @@ void main(List<String> args) {
   // Write index JSON
   final metricsDir = Directory('docs/metrics')..createSync(recursive: true);
   final idxFile = File('${metricsDir.path}/stack_index.json');
-  idxFile.writeAsStringSync(jsonEncode({
-    'generated': now.toIso8601String(),
-    'sources': index,
-  }));
+  idxFile.writeAsStringSync(
+    jsonEncode({'generated': now.toIso8601String(), 'sources': index}),
+  );
 
   // Optional: update README marker
   final readme = File('README.md');
   if (readme.existsSync()) {
     final stamp = 'Stack consolidated: ${now.toIso8601String()}';
-    final txt = _replaceMarker(readme.readAsStringSync(), 'AUTO:README_STACK_GEN', stamp);
+    final txt = _replaceMarker(
+      readme.readAsStringSync(),
+      'AUTO:README_STACK_GEN',
+      stamp,
+    );
     readme.writeAsStringSync(txt);
   }
 
@@ -228,7 +255,9 @@ String _replaceMarker(String text, String marker, String value) {
   final pattern = RegExp('<!-- $marker -->(.*?)<!-- END -->', dotAll: true);
   if (pattern.hasMatch(text)) {
     return text.replaceAllMapped(
-        pattern, (m) => '<!-- $marker -->$value<!-- END -->');
+      pattern,
+      (m) => '<!-- $marker -->$value<!-- END -->',
+    );
   }
   return text.trimRight() + '\n\n<!-- $marker -->' + value + '<!-- END -->\n';
 }
