@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:services/economy/simple_economy.dart';
+import 'package:services/analytics/testing.dart';
 
 void main() {
   test('SimpleEconomy emits analytics events on award/spend', () {
@@ -13,9 +13,7 @@ void main() {
         'ts': DateTime.now().toUtc().toIso8601String(),
       };
       events.add(rec);
-      final log = File('build/metrics/analytics_events.ndjson');
-      log.parent.createSync(recursive: true);
-      log.writeAsStringSync(jsonEncode(rec) + '\n', mode: FileMode.append);
+      appendAnalyticsNdjsonLine(jsonEncode(rec) + '\n');
     });
     econ.award('coins', 100, reason: 'quest');
     econ.spend('coins', 40, reason: 'upgrade');

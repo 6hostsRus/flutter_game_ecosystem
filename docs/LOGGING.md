@@ -53,6 +53,11 @@ Standardizing structured logs and analytics events improves debuggability, corre
 -    Format: one JSON object per line (avoid trailing commas)
 -    Tests should prefer `jsonEncode` over `toString()` maps to guarantee parseability.
 
+Helper for tests:
+
+-    Use `appendAnalyticsNdjsonLine(String jsonLine)` from `packages/services/lib/analytics/testing.dart`.
+-    It writes to both package-local and repo-root NDJSON logs for metrics aggregation.
+
 Example line:
 
 ```json

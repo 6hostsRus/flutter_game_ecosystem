@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:services/economy/simple_economy.dart';
 import 'package:services/monetization/mock_dev_adapter.dart';
 import 'package:services/monetization/gateway_port.dart';
+import 'package:services/analytics/testing.dart';
 
 void main() {
   test('analytics NDJSON lines are valid and event names follow prefix rules',
@@ -14,14 +15,12 @@ void main() {
 
     // Generate a few events.
     final econ = SimpleEconomy(onEvent: (e, p) {
-      log.writeAsStringSync(
-          jsonEncode({
-                'event': e,
-                ...p,
-                'ts': DateTime.now().toUtc().toIso8601String(),
-              }) +
-              '\n',
-          mode: FileMode.append);
+      appendAnalyticsNdjsonLine(jsonEncode({
+            'event': e,
+            ...p,
+            'ts': DateTime.now().toUtc().toIso8601String(),
+          }) +
+          '\n');
     });
     econ.award('coins', 5, reason: 'test');
 
@@ -36,14 +35,12 @@ void main() {
         tags: const ['test'],
       )
     ], latency: const Duration(milliseconds: 1), onEvent: (e, p) {
-      log.writeAsStringSync(
-          jsonEncode({
-                'event': e,
-                ...p,
-                'ts': DateTime.now().toUtc().toIso8601String(),
-              }) +
-              '\n',
-          mode: FileMode.append);
+      appendAnalyticsNdjsonLine(jsonEncode({
+            'event': e,
+            ...p,
+            'ts': DateTime.now().toUtc().toIso8601String(),
+          }) +
+          '\n');
     });
     await adapter.checkout(const CheckoutRequest(skuId: 'pack.tiny'));
 

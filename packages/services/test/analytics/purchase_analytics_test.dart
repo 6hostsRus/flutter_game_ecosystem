@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:services/monetization/gateway_port.dart';
 import 'package:services/monetization/mock_dev_adapter.dart';
+import 'package:services/analytics/testing.dart';
 
 void main() {
   test('MockDevMonetizationAdapter emits analytics events', () async {
@@ -28,9 +28,7 @@ void main() {
           'ts': DateTime.now().toUtc().toIso8601String(),
         };
         events.add(record);
-        final log = File('build/metrics/analytics_events.ndjson');
-        log.parent.createSync(recursive: true);
-        log.writeAsStringSync(jsonEncode(record) + '\n', mode: FileMode.append);
+        appendAnalyticsNdjsonLine(jsonEncode(record) + '\n');
       },
     );
 
