@@ -94,6 +94,13 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 -    Key Steps: Run `dart run tools/generate_task_checklist.dart`, commit `docs/VISIBILITY.md`, `docs/metrics/task_checklist.json`, and README marker.
 -    Outputs: Up-to-date checklist visibility report and JSON for dashboards.
 
+### Release Gates Mapping
+
+-    File: `.github/workflows/release-gates.yml`
+-    Triggers: push to main (ignores self-updates), manual dispatch
+-    Key Steps: Run `dart run tools/generate_release_gates_table.dart`, commit `docs/RELEASE_GATES.md`, `docs/metrics/release_gates.json`, and README marker.
+-    Outputs: Up-to-date release gates mapping doc and JSON.
+
 ### Screenshots
 
 -    File: `.github/workflows/screenshots.yml`

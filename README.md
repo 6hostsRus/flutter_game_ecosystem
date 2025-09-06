@@ -68,3 +68,5 @@ The hook blocks commits if new packages are added or removed without updating `p
 <!-- AUTO:README_TASK_VISIBILITY -->Open checklist items: 95 (app_store: 16, meta_release: 25, play_store: 18, release_train: 36)<!-- END -->
 
 <!-- AUTO:README_STACK_GEN -->Stack consolidated: 2025-09-05T23:28:41.086052Z<!-- END -->
+
+<!-- AUTO:README_RELEASE_GATES -->Gates: 11/11 (mandatory: 8/8)<!-- END -->
