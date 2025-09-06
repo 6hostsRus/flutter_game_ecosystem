@@ -70,3 +70,7 @@ The hook blocks commits if new packages are added or removed without updating `p
 <!-- AUTO:README_STACK_GEN -->Stack consolidated: 2025-09-05T23:28:41.086052Z<!-- END -->
 
 <!-- AUTO:README_RELEASE_GATES -->Gates: 11/11 (mandatory: 8/8)<!-- END -->
+
+## Real Plugin Matrix
+
+See `docs/REAL_PLUGIN_MATRIX.md` for the feature-flag scaffold that will gate switching to real plugins (IAP/Ads/Analytics) per platform, with `--dart-define` overrides.

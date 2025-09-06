@@ -3,6 +3,8 @@ library providers.monetization.monetization_provider;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:services/monetization/gateway_port.dart';
 import 'package:services/monetization/mock_dev_adapter.dart';
+import 'package:services/monetization/in_app_purchase_adapter.dart';
+import '../flags/real_plugin_matrix.dart';
 
 /// Default SKUs used by the mock adapter.
 final _defaultMockSkus = <Sku>[
@@ -34,5 +36,21 @@ final _defaultMockSkus = <Sku>[
 
 /// Provider for the monetization gateway (mock by default).
 final monetizationGatewayProvider = Provider<MonetizationGatewayPort>((ref) {
-  return MockDevMonetizationAdapter(_defaultMockSkus);
+  // Default to mock adapter; upgrade to real if the matrix resolves to true.
+  final fallback = MockDevMonetizationAdapter(_defaultMockSkus);
+  final useRealAsync = ref.watch(useRealIapFromMatrixProvider);
+  return useRealAsync.maybeWhen(
+    data: (v) {
+      if (v) {
+        // In-app purchase adapter expects SKU set; use defaults here. Apps should override with their own SKUs.
+        final ids = _defaultMockSkus.map((s) => s.id).toSet();
+        final adapter = InAppPurchaseMonetizationAdapter(ids);
+        // ignore: invalid_use_of_visible_for_testing_member
+        adapter.init();
+        return adapter;
+      }
+      return fallback;
+    },
+    orElse: () => fallback,
+  );
 });

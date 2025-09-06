@@ -1,7 +1,12 @@
 {
-  "winter_event": true,
-  "new_shop_ui": { "rollout": 0.5 },
-  "ios_only_feature": {
-    "conditions": { "platform": ["ios"] }
-  }
+     "winter_event": true,
+     "new_shop_ui": { "rollout": 0.5 },
+     "ios_only_feature": {
+          "conditions": { "platform": ["ios"] }
+     },
+     "real_iap": false,
+     "real_iap_android": false,
+     "real_iap_ios": false,
+     "real_ads": false,
+     "real_analytics": false
 }
