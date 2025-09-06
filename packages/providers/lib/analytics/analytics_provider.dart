@@ -11,6 +11,7 @@ import 'package:services/analytics/adapters/amplitude_adapter.dart' as amp;
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:amplitude_flutter/configuration.dart';
+import 'package:providers/flags/real_plugin_matrix.dart';
 
 /// Choose analytics sinks by overriding these providers in your app bootstrap.
 
@@ -69,6 +70,10 @@ final debugAnalyticsAdapterProvider =
 
 /// Firebase Analytics sink (requires firebase_analytics and Firebase init).
 final firebaseAnalyticsAdapterProvider = Provider<AnalyticsPort?>((ref) {
+  final useReal = ref
+      .watch(useRealAnalyticsFromMatrixProvider)
+      .maybeWhen(data: (v) => v, orElse: () => false);
+  if (!useReal) return null;
   try {
     final instance = FirebaseAnalytics.instance;
     return fb.FirebaseAnalyticsAdapter(instance);
@@ -79,6 +84,10 @@ final firebaseAnalyticsAdapterProvider = Provider<AnalyticsPort?>((ref) {
 
 /// Amplitude sink (SDK 4 instance).
 final amplitudeAnalyticsAdapterProvider = Provider<AnalyticsPort?>((ref) {
+  final useReal = ref
+      .watch(useRealAnalyticsFromMatrixProvider)
+      .maybeWhen(data: (v) => v, orElse: () => false);
+  if (!useReal) return null;
   final ampInstance = ref.watch(amplitudeInstanceProvider);
   if (ampInstance == null) return null;
   return amp.AmplitudeAdapter(ampInstance);

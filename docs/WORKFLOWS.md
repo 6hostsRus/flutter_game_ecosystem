@@ -150,6 +150,20 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 -    Planned: Add workflow to fail if analytics event taxonomy doc out-of-sync with observed events in tests.
 -    CoverageThresholdRatcheting (P2) implemented locally via `tools/coverage_ratchet.dart` (CI auto-bump step TBD).
 
+### Coverage Ratchet
+
+-    File: `.github/workflows/coverage-ratchet.yml`
+-    Triggers: scheduled daily, manual
+-    Key Steps: run tests to generate coverage, run `tools/coverage_ratchet.dart`, commit updated `tools/coverage_policy.yaml` if bump needed.
+-    Outputs: Gradual automatic increase of minimum coverage.
+
+### Manifest Expander
+
+-    File: `.github/workflows/manifest-expander.yml`
+-    Triggers: push to main (ignores self-updates), manual
+-    Key Steps: run `dart run tools/update_manifest.dart`, commit `packages/manifest.yaml` when missing packages discovered.
+-    Outputs: Up-to-date manifest with new packages.
+
 ## Quality Gate Mapping
 
 | Gate                        | Source Script                                    | Enforced In          |
