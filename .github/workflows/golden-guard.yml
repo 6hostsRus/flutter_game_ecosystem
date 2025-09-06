@@ -15,6 +15,11 @@ jobs:
                  id: detect
                  run: |
                       if ls examples/demo_game/goldens/*.png 2>/dev/null; then echo "present=true" >> $GITHUB_OUTPUT; else echo "present=false" >> $GITHUB_OUTPUT; fi
+               - name: Flutter pub get (demo_game)
+                 if: steps.detect.outputs.present == 'true'
+                 run: |
+                      cd examples/demo_game
+                      flutter pub get
                - name: Run golden tests
                  if: steps.detect.outputs.present == 'true'
                  run: |
@@ -27,3 +32,12 @@ jobs:
                         echo "Golden baselines changed. Did you forget to update and commit?" >&2
                         exit 1
                       fi
+               - name: Upload golden diffs (on failure)
+                 if: failure() && steps.detect.outputs.present == 'true'
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: golden-diffs
+                      path: |
+                           examples/demo_game/**/failures/**
+                           examples/demo_game/flutter_test_output/**
+                      if-no-files-found: ignore
