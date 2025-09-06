@@ -11,6 +11,7 @@ class _InlineOverrides implements FlagOverridesSource {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   test('platform-specific overrides take precedence', () async {
     final container = ProviderContainer(overrides: [
       // Base local flags empty → feed via overrides instead of asset IO

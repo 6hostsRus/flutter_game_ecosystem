@@ -7,13 +7,20 @@ import 'package:services/flags/flag_evaluator.dart';
 import 'package:services/flags/remote_overrides.dart';
 
 /// Optional remote overrides source provider. Override in your app boot code.
-final flagOverridesSourceProvider = Provider<FlagOverridesSource?>((ref) => null);
+final flagOverridesSourceProvider =
+    Provider<FlagOverridesSource?>((ref) => null);
 
 /// Loads local flags, applies optional remote overrides, and exposes a FlagEvaluator.
 final flagEvaluatorProvider = FutureProvider<FlagEvaluator>((ref) async {
-  // 1) Local asset
-  final jsonStr = await rootBundle.loadString('assets/flags.local.json');
-  final local = json.decode(jsonStr) as Map<String, dynamic>;
+  // 1) Local asset (gracefully handle missing during tests/packages)
+  Map<String, dynamic> local = const {};
+  try {
+    final jsonStr = await rootBundle.loadString('assets/flags.local.json');
+    local = json.decode(jsonStr) as Map<String, dynamic>;
+  } catch (_) {
+    // No asset bundle available (e.g., unit tests in package) → default empty.
+    local = const {};
+  }
 
   // 2) Remote overrides (optional)
   final src = ref.read(flagOverridesSourceProvider);
