@@ -101,6 +101,13 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 -    Key Steps: Run `dart run tools/generate_release_gates_table.dart`, commit `docs/RELEASE_GATES.md`, `docs/metrics/release_gates.json`, and README marker.
 -    Outputs: Up-to-date release gates mapping doc and JSON.
 
+### Spec Hashes Updater
+
+-    File: `.github/workflows/spec-hashes.yml`
+-    Triggers: push to main (ignores self-updates), manual dispatch
+-    Key Steps: Run `dart run tools/spec_hashes.dart --write`, commit `docs/SPEC_HASHES.md` and `docs/metrics/spec_hashes.json` only when hashes change (diff-friendly).
+-    Outputs: Stable spec hashes doc and JSON for dashboards.
+
 ### Screenshots
 
 -    File: `.github/workflows/screenshots.yml`

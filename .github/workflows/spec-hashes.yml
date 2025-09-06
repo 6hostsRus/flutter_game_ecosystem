@@ -1,0 +1,48 @@
+name: Spec Hashes Updater
+
+on:
+     push:
+          branches: [main]
+          paths-ignore:
+               - 'docs/SPEC_HASHES.md'
+               - 'docs/metrics/spec_hashes.json'
+     workflow_dispatch: {}
+
+permissions:
+     contents: write
+
+jobs:
+     update-spec-hashes:
+          name: Generate spec hashes and commit
+          runs-on: ubuntu-latest
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
+                 with:
+                      fetch-depth: 0
+
+               - name: Setup Flutter
+                 uses: subosito/flutter-action@v2
+                 with:
+                      channel: stable
+                      cache: true
+
+               - name: Install dependencies
+                 run: flutter pub get
+
+               - name: Generate spec hashes (diff-friendly)
+                 run: dart run tools/spec_hashes.dart --write
+
+               - name: Commit spec hash updates
+                 run: |
+                      set -e
+                      CHANGED=$(git status --porcelain docs/SPEC_HASHES.md docs/metrics/spec_hashes.json | wc -l)
+                      if [ "$CHANGED" -gt 0 ]; then
+                        git config user.name 'ci-bot'
+                        git config user.email 'ci-bot@users.noreply.github.com'
+                        git add docs/SPEC_HASHES.md docs/metrics/spec_hashes.json
+                        git commit -m 'chore(spec): update SPEC_HASHES and JSON [skip ci]'
+                        git push || true
+                      else
+                        echo "No spec hash changes to commit"
+                      fi

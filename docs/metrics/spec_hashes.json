@@ -1,0 +1,25 @@
+{
+  "updated": "2025-09-06T14:47:07.173154Z",
+  "specs": [
+    {
+      "path": "packages/in_app_purchase/lib/in_app_purchase.dart",
+      "sha1": "de42f64bcca3984ac186c515675b16b5c8f3a512"
+    },
+    {
+      "path": "packages/services/core_services_isar/lib/core_services_isar/src/wallet_service_isar.dart",
+      "sha1": "1e4cb7d61b54f4baa99afbd7674058bbe660f23e"
+    },
+    {
+      "path": "tools/check_stub_parity.dart",
+      "sha1": "d58a6888283d3dca3654c9d9a41ad29a0199f639"
+    },
+    {
+      "path": "tools/parity_spec/in_app_purchase.json",
+      "sha1": "41d9a51a73bdd014a2ce8cd44bd4a2825c20825e"
+    },
+    {
+      "path": "tools/route_spec/route_registry.json",
+      "sha1": "7946f0ee19ea239468f9e1ababead424299f2295"
+    }
+  ]
+}
