@@ -307,12 +307,14 @@ void main() {
   };
   for (final e in Directory('packages').listSync(recursive: true)) {
     if (e is File && e.path.endsWith('build/metrics/analytics_events.ndjson')) {
-      final count = e.readAsLinesSync().where((l) => l.trim().isNotEmpty).length;
+      final count =
+          e.readAsLinesSync().where((l) => l.trim().isNotEmpty).length;
       analyticsEventCount += count;
       // Determine owning package by finding nearest parent package dir
       for (final entry in allPackages.entries) {
         if (e.path.startsWith(entry.value)) {
-          perPackageAnalytics[entry.key] = (perPackageAnalytics[entry.key] ?? 0) + count;
+          perPackageAnalytics[entry.key] =
+              (perPackageAnalytics[entry.key] ?? 0) + count;
           break;
         }
       }
@@ -325,13 +327,10 @@ void main() {
   );
   // Emit per-package analytics badges
   perPackageAnalytics.forEach((pkg, count) {
-    final color = count == 0
-        ? 'lightgrey'
-        : (count < 10
-            ? 'blue'
-            : (count < 50
-                ? 'green'
-                : 'brightgreen'));
+    final color =
+        count == 0
+            ? 'lightgrey'
+            : (count < 10 ? 'blue' : (count < 50 ? 'green' : 'brightgreen'));
     _writeBadge(
       'analytics_${_sanitizeFileComponent(pkg)}.json',
       label: 'analytics',
@@ -361,7 +360,9 @@ void main() {
   // Package status warnings (experimental age audit light version)
   try {
     final manifestLines =
-        manifest.existsSync() ? manifest.readAsStringSync().split('\n') : <String>[];
+        manifest.existsSync()
+            ? manifest.readAsStringSync().split('\n')
+            : <String>[];
     final now = DateTime.now().toUtc();
     final maxDays =
         int.tryParse(Platform.environment['EXPERIMENTAL_MAX_DAYS'] ?? '') ?? 60;
@@ -372,10 +373,10 @@ void main() {
 
     // Identify indentation of 'packages:' and iterate first-level package blocks.
     int packagesIndent = -1;
-  for (int i = 0; i < manifestLines.length; i++) {
+    for (int i = 0; i < manifestLines.length; i++) {
       final line = manifestLines[i];
       if (line.trim().startsWith('packages:')) {
-    packagesIndent = _leadingSpaces(line);
+        packagesIndent = _leadingSpaces(line);
         // Process subsequent lines
         int j = i + 1;
         while (j < manifestLines.length) {
@@ -384,7 +385,7 @@ void main() {
             j++;
             continue;
           }
-      final indent = _leadingSpaces(l);
+          final indent = _leadingSpaces(l);
           if (indent <= packagesIndent) break; // end of packages section
           // First-level package entry
           if (indent == packagesIndent + 2 && l.trim().endsWith(':')) {
@@ -398,7 +399,7 @@ void main() {
                 j++;
                 continue;
               }
-        final inIndent = _leadingSpaces(inner);
+              final inIndent = _leadingSpaces(inner);
               if (inIndent <= indent) break; // end of this package block
               final t = inner.trim();
               if (t.startsWith('status:')) {
