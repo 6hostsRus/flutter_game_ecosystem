@@ -4,6 +4,8 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 > Source of truth: `.github/workflows/*.yml`. Update this doc when adding/modifying workflows.
 
+Note: See `docs/CODING_STANDARDS.md` for review expectations that CI gates support.
+
 ## Core Quality Gates
 
 ### Continuous Integration

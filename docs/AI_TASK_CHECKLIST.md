@@ -17,6 +17,7 @@ Purpose: A standardized, lightweight checklist to execute tasks from `docs/AI_TA
 
 -    Batch-read only what’s needed (prefer larger, meaningful chunks).
 -    Keep a tiny contract (inputs/outputs, success criteria, 2–3 edge cases).
+-    Review against Coding Standards evaluation checklist: `docs/CODING_STANDARDS.md`.
 
 3. Execute with Cadence
 
