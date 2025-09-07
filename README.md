@@ -4,6 +4,9 @@
 <p>
 	<a href="docs/METRICS.md">
 		<img alt="Coverage" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/6hostsRus/flutter_game_ecosystem/main/docs/badges/coverage.json" />
+		<img alt="Packages" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/6hostsRus/flutter_game_ecosystem/main/docs/badges/packages.json" />
+		<img alt="Stub parity" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/6hostsRus/flutter_game_ecosystem/main/docs/badges/stub_parity.json" />
+		<img alt="Package warnings" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/6hostsRus/flutter_game_ecosystem/main/docs/badges/package_warnings.json" />
 	</a>
 </p>
 
@@ -33,6 +36,8 @@ See **`ai_instructions.md`** for how the AI should collaborate on this repo (del
 ## Automation & CI Workflows
 
 See **`docs/WORKFLOWS.md`** for an overview of all GitHub Actions (CI, metrics, releases, policy, golden tests).
+
+Quick starts for key runs: see **`README_unified_stack.md`** (Perf Metrics and Semantic Parity how-to, with local equivalents).
 
 ## Golden Images
 

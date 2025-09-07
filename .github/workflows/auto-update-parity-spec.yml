@@ -1,0 +1,38 @@
+name: Auto Update Parity Spec (optional)
+
+on:
+     workflow_dispatch:
+          inputs:
+               enable:
+                    description: 'Run auto-update parity spec workflow'
+                    required: true
+                    default: 'false'
+
+jobs:
+     auto-update:
+          if: ${{ inputs.enable == 'true' }}
+          runs-on: ubuntu-latest
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
+
+               - name: Setup Dart
+                 uses: dart-lang/setup-dart@v1
+                 with:
+                      sdk: stable
+
+               - name: Build symbol map (stub real plugin path)
+                 run: |
+                      dart run tools/build_symbol_map.dart --package in_app_purchase --out docs/metrics/in_app_purchase_symbols.json
+
+               - name: Auto-update parity spec
+                 run: |
+                      dart run tools/auto_update_parity_spec.dart --package in_app_purchase --symbols docs/metrics/in_app_purchase_symbols.json
+
+               - name: Upload artifacts
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: parity-spec-and-symbols
+                      path: |
+                           docs/metrics/in_app_purchase_symbols.json
+                           tools/parity_spec/in_app_purchase.json

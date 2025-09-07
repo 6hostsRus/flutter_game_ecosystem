@@ -1,0 +1,35 @@
+name: Perf Metrics
+
+on:
+     workflow_dispatch:
+     push:
+          branches: [main]
+     pull_request:
+
+jobs:
+     perf:
+          runs-on: ubuntu-latest
+          steps:
+               - uses: actions/checkout@v4
+               - uses: dart-lang/setup-dart@v1
+                 with:
+                      sdk: stable
+               - name: Install Flutter (minimal)
+                 uses: subosito/flutter-action@v2
+                 with:
+                      channel: stable
+                      cache: true
+               - name: Flutter doctor
+                 run: flutter --version
+               - name: Run perf simulation test to generate metrics
+                 working-directory: packages/services
+                 run: flutter test test/perf/performance_simulation_test.dart -r expanded
+               - name: Validate perf metrics thresholds
+                 run: |
+                      dart run tools/check_perf_metrics.dart --file packages/services/build/metrics/perf_simulation.json \
+                        --max-p95-us 12000 --min-spends 100 --min-awards 150 --min-purchases 50
+               - name: Upload perf metrics artifact
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: perf_simulation_metrics
+                      path: packages/services/build/metrics/perf_simulation.json

@@ -63,6 +63,13 @@ void main() {
     );
     readmeFile.writeAsStringSync(readme);
   }
+  // Badge: package count
+  _writeBadge(
+    'packages.json',
+    label: 'packages',
+    message: '$packageCount',
+    color: 'blue',
+  );
 
   // Coverage: look for top-level lcov.info (aggregate) or in coverage/.
   final lcovFile = File('coverage/lcov.info');
@@ -128,6 +135,15 @@ void main() {
       );
     }
   }
+  // Badge: stub parity status (ok/pending)
+  final parityMsg = stampParity ? 'ok' : 'pending';
+  final parityColor = stampParity ? 'brightgreen' : 'lightgrey';
+  _writeBadge(
+    'stub_parity.json',
+    label: 'stub-parity',
+    message: parityMsg,
+    color: parityColor,
+  );
 
   // SKU rewards count: prefer JSON config if present.
   int? skuCount;
@@ -353,6 +369,15 @@ void main() {
         ),
       );
     }
+    // Badge: package warnings
+    final warnColor =
+        violations == 0 ? 'brightgreen' : (violations <= 3 ? 'orange' : 'red');
+    _writeBadge(
+      'package_warnings.json',
+      label: 'pkg-warnings',
+      message: '$violations',
+      color: warnColor,
+    );
   } catch (_) {
     // Non-fatal: leave marker as-is
   }
@@ -397,6 +422,23 @@ void _writeCoverageBadge(double pct) {
   "schemaVersion": 1,
   "label": "coverage",
   "message": "${pct.toStringAsFixed(1)}%",
+  "color": "$color"
+}''');
+}
+
+void _writeBadge(
+  String fileName, {
+  required String label,
+  required String message,
+  String color = 'blue',
+}) {
+  final dir = Directory('docs/badges');
+  if (!dir.existsSync()) dir.createSync(recursive: true);
+  final file = File('${dir.path}/$fileName');
+  file.writeAsStringSync('''{
+  "schemaVersion": 1,
+  "label": "$label",
+  "message": "$message",
   "color": "$color"
 }''');
 }

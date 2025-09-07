@@ -24,4 +24,13 @@ void main() {
     expect(find.text('Survivor'), findsOneWidget);
     expect(find.textContaining('Mode: easy'), findsOneWidget);
   });
+
+  testWidgets('initial deep link with empty mode defaults to normal',
+      (tester) async {
+    await tester.pumpWidget(
+        const ProviderScope(child: demo.App(initialRoute: '/play/')));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Survivor'), findsOneWidget);
+    expect(find.textContaining('Mode: normal'), findsOneWidget);
+  });
 }
