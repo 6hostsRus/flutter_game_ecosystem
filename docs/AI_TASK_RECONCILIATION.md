@@ -70,6 +70,10 @@ Generated: 2025-09-06
 -    Analytics tests consolidate NDJSON logging via `packages/services/lib/analytics/testing.dart`, and CI enforces a minimum analytics test presence.
 -    Golden guard workflow is active with concrete goldens (home, home_rich, store) under `examples/demo_game/test/goldens/` and baselines in `examples/demo_game/goldens/`.
 
+Changelog
+
+-    Summaries of significant completed tasks are mirrored into `CHANGELOG.md` under dated sections for external visibility.
+
 ## Suggested Next PRs
 
 1. Performance Harness (P2)

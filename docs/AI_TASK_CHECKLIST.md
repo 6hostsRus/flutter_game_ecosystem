@@ -35,11 +35,15 @@ Purpose: A standardized, lightweight checklist to execute tasks from `docs/AI_TA
 -    Update metrics with `dart run tools/update_metrics.dart` (emits global and per-package badges under `docs/badges/`).
 -    Root README: keep badges minimal. Package READMEs: prefer per-package endpoints (coverage*<pkg>.json, analytics*<pkg>.json, pkg*warn*<pkg>.json).
 
-6. Reconciliation
+6. Changelog
+
+-    If user-facing or developer-visible changes were made (docs, CI gates, metrics, workflows, tests), add a brief entry to `CHANGELOG.md` under the current date, linking key scripts/workflows.
+
+7. Reconciliation
 
 -    Update `docs/AI_TASK_RECONCILIATION.md`: set Status (Done/Partial), list Artifacts, and capture Gaps/Next if any.
 
-7. Commits & PRs
+8. Commits & PRs
 
 -    Use concise, prefixed messages (e.g., `chore(metrics): …`, `docs(workflows): …`, `ci: …`).
 -    For larger changes, summarize validation (build/lint/tests PASS) and any follow-ups.

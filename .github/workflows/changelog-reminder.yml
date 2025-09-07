@@ -1,0 +1,51 @@
+name: changelog-reminder
+
+on:
+     pull_request:
+          types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+     remind:
+          runs-on: ubuntu-latest
+          steps:
+               - name: Check out
+                 uses: actions/checkout@v4
+
+               - name: Detect relevant changes
+                 id: detect
+                 run: |
+                      set -euo pipefail
+                      base_sha=$(jq -r '.pull_request.base.sha' < "$GITHUB_EVENT_PATH")
+                      head_sha=$(jq -r '.pull_request.head.sha' < "$GITHUB_EVENT_PATH")
+                      changed=$(git --no-pager diff --name-only "$base_sha".."$head_sha" | tr '\n' ' ')
+                      echo "changed=$changed" >> $GITHUB_OUTPUT
+                      echo "Changed files: $changed"
+                      need_note=0
+                      if echo "$changed" | grep -E '(\.github/workflows/|docs/|tools/|packages/.*/test/|README|METRICS|WORKFLOWS|AI_TASK|SPEC_HASHES|SEMANTIC_PARITY|STACK)'; then
+                        need_note=1
+                      fi
+                      echo "need_note=$need_note" >> $GITHUB_OUTPUT
+
+               - name: Check changelog updated
+                 id: changelog
+                 run: |
+                      set -euo pipefail
+                      base_sha=$(jq -r '.pull_request.base.sha' < "$GITHUB_EVENT_PATH")
+                      head_sha=$(jq -r '.pull_request.head.sha' < "$GITHUB_EVENT_PATH")
+                      if git --no-pager diff --name-only "$base_sha".."$head_sha" | grep -q '^CHANGELOG.md$'; then
+                        echo "has_changelog=1" >> $GITHUB_OUTPUT
+                      else
+                        echo "has_changelog=0" >> $GITHUB_OUTPUT
+                      fi
+
+               - name: Post reminder (if needed)
+                 if: steps.detect.outputs.need_note == '1' && steps.changelog.outputs.has_changelog == '0'
+                 uses: marocchino/sticky-pull-request-comment@v2
+                 with:
+                      recreate: true
+                      message: |
+                           Please add a CHANGELOG.md entry for this PR. It touches docs/CI/metrics/tests. Keep it brief and link the affected scripts/workflows.
+
+               - name: Set neutral conclusion
+                 if: steps.detect.outputs.need_note == '1' && steps.changelog.outputs.has_changelog == '0'
+                 run: echo "Reminder posted (non-blocking)."

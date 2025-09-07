@@ -10,6 +10,7 @@ This file is now an index. Canonical content lives in modular docs:
 -    Policy: `docs/AI_POLICY.md`
 -    Task Library: `docs/AI_TASK_LIBRARY.md`
 -    Task Reconciliation: `docs/AI_TASK_RECONCILIATION.md`
+-    Changelog: `CHANGELOG.md`
 -    Stack & Architecture: `docs/STACK.md`
 -    Metrics: `docs/METRICS.md`
 -    Workflows: `docs/WORKFLOWS.md`

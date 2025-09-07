@@ -112,6 +112,13 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 ### Screenshots
 
+### Changelog Reminder
+
+-    File: `.github/workflows/changelog-reminder.yml`
+-    Triggers: pull_request
+-    Key Steps: Check PR changes for workflow/doc/metrics/test alterations; if detected and `CHANGELOG.md` not modified, leave a PR comment and set a neutral status.
+-    Outputs: Friendly reminder to update changelog (non-blocking).
+
 ### Consolidate Stack Docs
 
 -    File: `.github/workflows/consolidate-stack.yml`
@@ -196,6 +203,7 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 | Package status audit (warn) | `tools/package_status_audit.dart`                | ci.yml / metrics.yml                     |
 | Perf thresholds (warn/fail) | `tools/check_perf_metrics.dart`                  | perf-metrics.yml                         |
 | Parity auto-update (opt)    | `tools/auto_update_parity_spec.dart`             | metrics.yml, auto-update-parity-spec.yml |
+| Changelog reminder (soft)   | n/a (path-based check)                           | changelog-reminder.yml                   |
 | Stack consolidation         | `tools/consolidate_stack_docs.dart`              | consolidate-stack.yml                    |
 | Semantic parity diff (opt)  | `tools/diff_parity_vs_real.dart`                 | semantic-parity.yml                      |
 
