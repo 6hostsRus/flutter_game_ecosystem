@@ -12,6 +12,28 @@ Guidelines:
 
 -    Placeholder.
 
+## 2025-09-07
+
+Highlights
+
+-    Semantic Parity
+
+     -    Added matrix support to run parity for all specs under `tools/parity_spec/*.json`.
+     -    Gated by manual dispatch or PR label `run-semantic-parity`; skips gracefully if the real plugin isn’t in `pubspec.lock`.
+     -    Uploads per-package artifacts and posts a PR summary comment linking to artifacts.
+     -    See `.github/workflows/semantic-parity.yml` and `docs/SEMANTIC_PARITY.md`.
+
+-    Roadmap & Docs
+
+     -    `docs/roadmap/phase-1.md`: added Pacing & Metrics (quality gates, perf thresholds, analytics presence, artifacts).
+     -    Consolidated Ops docs remain canonical under `docs/automation/index.md`.
+
+-    AI Task Library
+     -    Reconciled and marked completed tasks as Done in `docs/AI_TASK_RECONCILIATION.md`.
+     -    Cleaned `docs/AI_TASK_LIBRARY.md` to reflect no open items for this batch.
+
+References: `docs/WORKFLOWS.md`, `docs/AI_TASK_RECONCILIATION.md`, `docs/SEMANTIC_PARITY.md`.
+
 ## 2025-09-06
 
 Highlights
