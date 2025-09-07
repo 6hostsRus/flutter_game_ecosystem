@@ -2,7 +2,7 @@
 // ConsolidateStackDocs: Generates a canonical, consolidated architecture view.
 // Inputs:
 //  - architecture/overview.md (legacy/partial)
-//  - README_unified_stack.md (legacy guidance)
+//  - README.md#how-to-run-key-workflows (canonical), README_unified_stack.md (legacy)
 //  - docs/modules/*.md (module docs)
 //  - packages/ tree (to list packages)
 // Outputs:
@@ -25,6 +25,7 @@ void main(List<String> args) {
 
   // Load known sources
   readIfExists('architecture/overview.md');
+  // Keep legacy read path for now (file may be a stub) and prefer README section.
   readIfExists('README_unified_stack.md');
 
   // Collect module docs
@@ -97,7 +98,12 @@ void main(List<String> args) {
   }
 
   final overview = sources['architecture/overview.md'] ?? '';
-  final unified = sources['README_unified_stack.md'] ?? '';
+  // Prefer the unified guidance now embedded in README.md; fallback to legacy file if needed.
+  final unified =
+      (sources['README.md']?.contains('How to Run Key Workflows') == true
+          ? sources['README.md']
+          : sources['README_unified_stack.md']) ??
+      '';
 
   // Sections
   final coreStackBullets = bulletsFromSection(overview, 'Stack');
@@ -183,13 +189,14 @@ void main(List<String> args) {
         ..writeln(
           riverpodPatterns.isNotEmpty
               ? riverpodPatterns
-              : '_See README_unified_stack.md_',
+              : '_See README.md#how-to-run-key-workflows_',
         )
         ..writeln()
         ..writeln('## Folder Shape')
         ..writeln()
         ..writeln(() {
-          if (folderShape.isEmpty) return '_See README_unified_stack.md_';
+          if (folderShape.isEmpty)
+            return '_See README.md#how-to-run-key-workflows_';
           final b = StringBuffer();
           b.writeln('```');
           b.writeln(folderShape.trim());
@@ -202,7 +209,7 @@ void main(List<String> args) {
         ..writeln(
           optionalAddons.isNotEmpty
               ? optionalAddons
-              : '_See README_unified_stack.md_',
+              : '_See README.md#how-to-run-key-workflows_',
         )
         ..writeln()
         ..writeln('## Custom Notes')
@@ -217,7 +224,7 @@ void main(List<String> args) {
         ..writeln('## Deprecation Notes')
         ..writeln()
         ..writeln(
-          'Supersedes overlapping sections in `architecture/overview.md` and `README_unified_stack.md`.',
+          'Supersedes overlapping sections in `architecture/overview.md` and `README.md#how-to-run-key-workflows`.',
         );
 
   // Write out

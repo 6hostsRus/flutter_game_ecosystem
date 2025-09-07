@@ -63,7 +63,7 @@ Steps:
 
 Validation:
 
--    New or updated docs exist under `docs/monetization/` and are linked in `README_unified_stack.md` and `ai_instructions.md`.
+-    New or updated docs exist under `docs/monetization/` and are linked in `README.md#how-to-run-key-workflows` and `ai_instructions.md`.
 -    This Task Library lists any net-new actionable monetization tasks with priorities.
 
 ---

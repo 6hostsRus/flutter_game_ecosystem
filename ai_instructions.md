@@ -14,7 +14,8 @@ This file is now an index. Canonical content lives in modular docs:
 -    Stack & Architecture: `docs/STACK.md`
 -    Metrics: `docs/METRICS.md`
 -    Workflows: `docs/WORKFLOWS.md`
--    How to run (perf/parity): `README_unified_stack.md`
+-    Ops & Secrets (Quick Ops): `docs/automation/index.md`
+-    How to run (perf/parity): `README.md#how-to-run-key-workflows`
 -    Task Execution Checklist: `docs/AI_TASK_CHECKLIST.md`
 -    Coding Standards: `docs/CODING_STANDARDS.md`
 -    Monetization: `docs/monetization/overview.md`, `docs/monetization/testing.md`
