@@ -1,0 +1,23 @@
+{
+  "package": "in_app_purchase",
+  "generated": "2025-09-07T01:26:09.225930Z",
+  "files": {
+    "lib/in_app_purchase.dart": {
+      "classes": [
+        "IAPError",
+        "InAppPurchase",
+        "ProductDetails",
+        "ProductDetailsResponse",
+        "ProductPrice",
+        "PurchaseDetails",
+        "PurchaseParam",
+        "PurchaseVerificationData",
+        "SubscriptionProductDetails",
+        "marker"
+      ],
+      "enums": [
+        "PurchaseStatus"
+      ]
+    }
+  }
+}

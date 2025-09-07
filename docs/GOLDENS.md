@@ -43,7 +43,7 @@ Review diff of PNG (GitHub may not render—download and inspect).
 | ---------------- | -------------------------------------- | ------- |
 | home_screen      | Baseline HUD + tabs                    | Added   |
 | store_screen     | Store entry state                      | Added   |
-| home_screen_rich | Non-zero balances showcase             | Planned |
+| home_screen_rich | Non-zero balances showcase             | Added   |
 | upgrades_screen  | Scroll list with locked/unlocked costs | Planned |
 
 ## Anti-Patterns

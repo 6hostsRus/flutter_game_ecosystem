@@ -1,0 +1,51 @@
+name: semantic-parity
+
+on:
+  pull_request:
+    paths:
+      - 'tools/**'
+      - 'packages/in_app_purchase/**'
+      - 'docs/SEMANTIC_PARITY.md'
+      - '.github/workflows/semantic-parity.yml'
+  workflow_dispatch:
+    inputs:
+      enable:
+        description: 'Run semantic parity (requires real plugin present)'
+        required: false
+        default: 'false'
+
+jobs:
+  parity:
+    # Gate via manual input (workflow_dispatch) or auto-run on PRs if enable=true is set by caller/branch rule.
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.enable == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Generate symbol map (in_app_purchase)
+        run: |
+          dart --version
+          dart run tools/build_symbol_map.dart \
+            --package in_app_purchase \
+            --out docs/metrics/in_app_purchase_symbols.json
+
+      - name: Diff vs parity spec
+        run: |
+          dart run tools/diff_parity_vs_real.dart \
+            --spec tools/parity_spec/in_app_purchase.json \
+            --symbols docs/metrics/in_app_purchase_symbols.json \
+            --out docs/metrics/parity_diff_in_app_purchase.json
+
+      - name: Upload parity artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: semantic-parity-iap
+          path: |
+            docs/metrics/parity_diff_in_app_purchase.json
+            docs/metrics/in_app_purchase_symbols.json

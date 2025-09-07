@@ -1,0 +1,11 @@
+{
+  "generated": "2025-09-07T01:26:15.972893Z",
+  "specVersion": 2,
+  "package": "in_app_purchase",
+  "summary": {
+    "missingClasses": 0,
+    "missingEnums": 0
+  },
+  "missingClasses": {},
+  "missingEnums": {}
+}
