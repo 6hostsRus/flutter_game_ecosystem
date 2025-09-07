@@ -37,7 +37,7 @@ See **`docs/WORKFLOWS.md`** for an overview of all GitHub Actions (CI, metrics, 
 ## Golden Images
 
 Visual regression tests live under `examples/demo_game/test/goldens/` with baselines in `examples/demo_game/goldens/`. Update by running:
-`flutter test --update-goldens examples/demo_game/test/goldens`.
+`cd /Users/Learn/Projects/flutter_game_ecosystem/examples/demo_game && flutter test --update-goldens test/goldens`.
 See `docs/GOLDENS.md` for guidelines.
 
 ## Spec Governance

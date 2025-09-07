@@ -19,7 +19,8 @@ Golden (visual regression) tests ensure UI changes are deliberate.
 Use sparingly—only when intentional UI changes:
 
 ```
-flutter test --update-goldens examples/demo_game/test/goldens
+cd /Users/Learn/Projects/flutter_game_ecosystem/examples/demo_game
+flutter test --update-goldens test/goldens
 ```
 
 Review diff of PNG (GitHub may not render—download and inspect).

@@ -20,6 +20,52 @@ class App extends ConsumerWidget {
         useMaterial3: true,
         extensions: const [GameTokens(hudPadding: 8)],
       ),
+      onGenerateInitialRoutes: (initialRoute) {
+        // Handle initial route explicitly so unknown routes don't throw and instead
+        // render the main scaffold (home fallback). Support /play/<mode> deep links.
+        String route = initialRoute;
+        if (route == '/' || route.isEmpty) {
+          return [
+            MaterialPageRoute(
+              builder: (_) => GameNavScaffold(
+                tabs: {
+                  GameTab.home: (_) => const HomeScreen(),
+                  GameTab.upgrades: (_) => const UpgradesScreen(),
+                  GameTab.items: (_) => const ItemsScreen(),
+                  GameTab.store: (_) => const StoreScreen(),
+                  GameTab.quests: (_) => const QuestsScreen(),
+                },
+              ),
+              settings: const RouteSettings(name: '/'),
+            ),
+          ];
+        }
+        if (route.startsWith('/play/')) {
+          final mode = route.substring('/play/'.length).trim();
+          return [
+            MaterialPageRoute(
+              builder: (_) =>
+                  SurvivorScreen(mode: mode.isEmpty ? 'normal' : mode),
+              settings: RouteSettings(name: route),
+            ),
+          ];
+        }
+        // Unknown initial route: fall back to home scaffold instead of throwing.
+        return [
+          MaterialPageRoute(
+            builder: (_) => GameNavScaffold(
+              tabs: {
+                GameTab.home: (_) => const HomeScreen(),
+                GameTab.upgrades: (_) => const UpgradesScreen(),
+                GameTab.items: (_) => const ItemsScreen(),
+                GameTab.store: (_) => const StoreScreen(),
+                GameTab.quests: (_) => const QuestsScreen(),
+              },
+            ),
+            settings: const RouteSettings(name: '/'),
+          ),
+        ];
+      },
       onGenerateRoute: (settings) {
         final name = settings.name;
         if (name != null && name.startsWith('/play/')) {
@@ -32,15 +78,21 @@ class App extends ConsumerWidget {
         }
         return null; // fallback to home scaffold below
       },
-      home: GameNavScaffold(
-        tabs: {
-          GameTab.home: (_) => const HomeScreen(),
-          GameTab.upgrades: (_) => const UpgradesScreen(),
-          GameTab.items: (_) => const ItemsScreen(),
-          GameTab.store: (_) => const StoreScreen(),
-          GameTab.quests: (_) => const QuestsScreen(),
-        },
-      ),
+      onUnknownRoute: (settings) {
+        // Gracefully fallback to the home scaffold for unknown named routes.
+        return MaterialPageRoute(
+          builder: (_) => GameNavScaffold(
+            tabs: {
+              GameTab.home: (_) => const HomeScreen(),
+              GameTab.upgrades: (_) => const UpgradesScreen(),
+              GameTab.items: (_) => const ItemsScreen(),
+              GameTab.store: (_) => const StoreScreen(),
+              GameTab.quests: (_) => const QuestsScreen(),
+            },
+          ),
+          settings: settings,
+        );
+      },
     );
   }
 }
@@ -89,7 +141,7 @@ class UpgradesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final coins = ref.watch(currencyProvider).coins;
-    List<(String, String, String)> items = [
+    final items = <(String title, String description, String price)>[
       ('Double Income', 'Increase idle yield by 100%', '50'),
       ('Auto Collect', 'Collect idle every minute', '75'),
       ('Crit Chance', '+5% crit for survivor-like', '30'),
@@ -97,27 +149,33 @@ class UpgradesScreen extends ConsumerWidget {
     return ListView.builder(
       padding: const EdgeInsets.all(12),
       itemCount: items.length,
-      itemBuilder: (context, i) {
-        final it = items[i];
-        final cost = double.parse(it.$3);
-        return UpgradeCard(
-          title: it.$1,
-          subtitle: it.$2,
-          costText: it.$3,
-          disabled: coins < cost,
-          onPressed: coins >= cost
-              ? () {
-                  final ok =
-                      ref.read(currencyProvider.notifier).spendCoins(cost);
-                  if (!ok) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Not enough coins')));
-                    return;
-                  }
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Purchased ${it.$1}')));
-                }
-              : null,
+      itemBuilder: (context, index) {
+        final it = items[index];
+        final cost = double.tryParse(it.$3) ?? 0;
+        final canAfford = coins >= cost;
+        return Card(
+          child: ListTile(
+            title: Text(it.$1),
+            subtitle: Text(it.$2),
+            trailing: FilledButton(
+              onPressed: canAfford
+                  ? () {
+                      final ok =
+                          ref.read(currencyProvider.notifier).spendCoins(cost);
+                      if (!ok) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Not enough coins')),
+                        );
+                        return;
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Purchased ${it.$1}')),
+                      );
+                    }
+                  : null,
+              child: Text('${it.$3}c'),
+            ),
+          ),
         );
       },
     );

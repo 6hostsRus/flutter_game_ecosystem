@@ -34,6 +34,6 @@ void logPurchaseSuccess() {
 Run tests
 
 ```bash
-cd packages/services
+cd /Users/Learn/Projects/flutter_game_ecosystem/packages/services
 flutter test test/analytics -r expanded
 ```
