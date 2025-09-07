@@ -30,3 +30,10 @@ Cross-links
 -    Testing: `docs/monetization/testing.md`
 -    Workflows: `docs/WORKFLOWS.md` (golden-guard, analytics, perf-metrics)
 -    Packages: adapters and services in `packages/services`
+
+## Gaps & Next
+
+-    Consent flows: ensure ATT (iOS) and Data Safety (Android) are documented/linked. See `docs/platform/topics/android_vs_ios.md`.
+-    Adapter fakes for tests: prefer a deterministic fake with switchable outcomes (success/fail/cancel/timeout); see Testing.
+-    Sandbox/store configs: capture a brief checklist for using store sandboxes during manual verification (see Testing).
+-    Event taxonomy: keep analytics event names/params consistent and asserted in CI (see Coding Standards and Testing).
