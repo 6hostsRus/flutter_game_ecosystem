@@ -17,8 +17,8 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 -    File: `.github/workflows/metrics.yml`
 -    Triggers: schedule (cron), manual dispatch, post-merge
--    Key Steps: Run tests + coverage, `dart run tools/update_metrics.dart`, commit updated `docs/METRICS.md` & `docs/badges/coverage.json`.
--    Outputs: Updated metrics & shield JSON.
+-    Key Steps: Run tests + coverage, `dart run tools/update_metrics.dart`, commit updated `docs/METRICS.md` & `docs/badges/*.json`. Additionally, attempts non-blocking parity auto-update: build symbol map and regenerate `tools/parity_spec/<pkg>.json`; commits and uploads artifacts when changed.
+-    Outputs: Updated metrics & shields; optional parity spec + symbols artifacts.
 
 ### Golden Guard
 
@@ -180,19 +180,19 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 ## Quality Gate Mapping
 
-| Gate                        | Source Script                                    | Enforced In                 |
-| --------------------------- | ------------------------------------------------ | --------------------------- |
-| Manifest completeness       | `tools/check_manifest.dart`                      | ci.yml                      |
-| Stub parity                 | `tools/check_stub_parity.dart`                   | ci.yml                      |
-| Coverage >= threshold       | `tools/run_quality_gates.dart` (aggregates)      | ci.yml                      |
-| Analytics tests >=1         | `tools/run_quality_gates.dart`                   | ci.yml                      |
-| Route spec hash (strict)    | `tools/check_spec_hashes.dart --strict`          | ci.yml                      |
-| Route registry spec         | `tools/check_route_registry.dart`                | ci.yml                      |
-| Spec hashes tracked         | `tools/spec_hashes.dart`                         | metrics.yml                 |
-| Manifest drift watcher      | `tools/manifest_drift_watcher.dart` (pre-commit) | local dev                   |
-| Package status audit (warn) | `tools/package_status_audit.dart`                | ci.yml / metrics.yml        |
-| Perf thresholds (warn/fail) | `tools/check_perf_metrics.dart`                  | perf-metrics.yml            |
-| Parity auto-update (opt)    | `tools/auto_update_parity_spec.dart`             | auto-update-parity-spec.yml |
+| Gate                        | Source Script                                    | Enforced In                              |
+| --------------------------- | ------------------------------------------------ | ---------------------------------------- |
+| Manifest completeness       | `tools/check_manifest.dart`                      | ci.yml                                   |
+| Stub parity                 | `tools/check_stub_parity.dart`                   | ci.yml                                   |
+| Coverage >= threshold       | `tools/run_quality_gates.dart` (aggregates)      | ci.yml                                   |
+| Analytics tests >=1         | `tools/run_quality_gates.dart`                   | ci.yml                                   |
+| Route spec hash (strict)    | `tools/check_spec_hashes.dart --strict`          | ci.yml                                   |
+| Route registry spec         | `tools/check_route_registry.dart`                | ci.yml                                   |
+| Spec hashes tracked         | `tools/spec_hashes.dart`                         | metrics.yml                              |
+| Manifest drift watcher      | `tools/manifest_drift_watcher.dart` (pre-commit) | local dev                                |
+| Package status audit (warn) | `tools/package_status_audit.dart`                | ci.yml / metrics.yml                     |
+| Perf thresholds (warn/fail) | `tools/check_perf_metrics.dart`                  | perf-metrics.yml                         |
+| Parity auto-update (opt)    | `tools/auto_update_parity_spec.dart`             | metrics.yml, auto-update-parity-spec.yml |
 
 ## Update Procedure
 
