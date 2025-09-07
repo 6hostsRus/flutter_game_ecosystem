@@ -33,6 +33,13 @@ optimized for rapid reskinning and fast iteration.
 
 See **`ai_instructions.md`** for how the AI should collaborate on this repo (deliverable style, workflows, release commands, and quality gates).
 
+Quick links:
+
+-    Coding Standards: `docs/CODING_STANDARDS.md`
+-    Monetization: `docs/monetization/overview.md` • `docs/monetization/testing.md`
+-    Platform Guide: `docs/platform/index.md`
+-    Roadmap (Phase 1): `docs/roadmap/phase-1.md`
+
 ## Automation & CI Workflows
 
 See **`docs/WORKFLOWS.md`** for an overview of all GitHub Actions (CI, metrics, releases, policy, golden tests).

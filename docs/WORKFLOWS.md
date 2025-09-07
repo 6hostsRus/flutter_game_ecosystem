@@ -206,6 +206,14 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 | Changelog reminder (soft)   | n/a (path-based check)                           | changelog-reminder.yml                   |
 | Stack consolidation         | `tools/consolidate_stack_docs.dart`              | consolidate-stack.yml                    |
 | Semantic parity diff (opt)  | `tools/diff_parity_vs_real.dart`                 | semantic-parity.yml                      |
+| Platform release (guarded)  | n/a (build steps in workflow)                    | platform-release.yml                     |
+
+### Platform Release (Guarded)
+
+-    File: `.github/workflows/platform-release.yml`
+-    Triggers: workflow_dispatch (inputs: `enable`, `release_platform`, `release_track`)
+-    Key Steps: Guarded build for android/ios/web; artifact upload if present; does not submit by default.
+-    Outputs: Build artifacts for targeted platform; non-blocking, manual-only.
 
 ## Update Procedure
 

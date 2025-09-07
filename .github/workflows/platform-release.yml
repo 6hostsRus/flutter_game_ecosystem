@@ -1,0 +1,67 @@
+name: platform-release
+
+on:
+     workflow_dispatch:
+          inputs:
+               release_platform:
+                    description: 'android | ios | web'
+                    required: true
+                    default: 'android'
+               release_track:
+                    description: 'internal | alpha | beta | production'
+                    required: true
+                    default: 'internal'
+               enable:
+                    description: 'Set to true to run release steps'
+                    required: true
+                    default: 'false'
+
+permissions:
+     contents: read
+
+jobs:
+     build:
+          if: ${{ github.event.inputs.enable == 'true' }}
+          runs-on: ubuntu-latest
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
+
+               - name: Set up Flutter
+                 uses: subosito/flutter-action@v2
+                 with:
+                      channel: stable
+                      cache: true
+
+               - name: Build (guarded)
+                 run: |
+                      set -e
+                      PLATFORM="${{ github.event.inputs.release_platform }}"
+                      TRACK="${{ github.event.inputs.release_track }}"
+                      echo "Building for platform=$PLATFORM track=$TRACK"
+                      # Placeholder build commands; extend per platform
+                      case "$PLATFORM" in
+                        android)
+                          flutter build appbundle --release || true
+                          ;;
+                        ios)
+                          flutter build ipa --release || true
+                          ;;
+                        web)
+                          flutter build web --release || true
+                          ;;
+                        *)
+                          echo "Unknown platform: $PLATFORM"
+                          exit 1
+                          ;;
+                      esac
+
+               - name: Upload artifacts (optional)
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: platform-release-${{ github.event.inputs.release_platform }}-${{ github.event.inputs.release_track }}
+                      path: |
+                           build/app/outputs/**/*.aab
+                           build/ios/ipa/**/*.ipa
+                           build/web/**
+                      if-no-files-found: ignore

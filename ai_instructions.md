@@ -16,6 +16,10 @@ This file is now an index. Canonical content lives in modular docs:
 -    Workflows: `docs/WORKFLOWS.md`
 -    How to run (perf/parity): `README_unified_stack.md`
 -    Task Execution Checklist: `docs/AI_TASK_CHECKLIST.md`
+-    Coding Standards: `docs/CODING_STANDARDS.md`
+-    Monetization: `docs/monetization/overview.md`, `docs/monetization/testing.md`
+-    Platform Guide: `docs/platform/index.md`
+-    Roadmap (Phase 1): `docs/roadmap/phase-1.md`
 
 Conventions:
 
