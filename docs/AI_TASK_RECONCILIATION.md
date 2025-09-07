@@ -57,12 +57,12 @@ Generated: 2025-09-06
 
 ## Meta / Helper
 
-| Task                      | Status  | Artifacts                                                                                          | Gaps / Next                                                                              |
-| ------------------------- | ------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| RunQualityGateSuite       | Done    | tools/run_quality_gates.dart; ci.yml                                                               | —                                                                                        |
-| GenerateTaskChecklist     | Done    | tools/generate_task_checklist.dart; .github/workflows/checklist-visibility.yml; docs/VISIBILITY.md | —                                                                                        |
-| AutoUpdateParitySpec      | Partial | tools/auto_update_parity_spec.dart; .github/workflows/auto-update-parity-spec.yml                  | Optional manual job exists; consider wiring auto-run behind repo var when plugin present |
-| AddDiffFriendlyFormatting | Done    | tools/spec_hashes.dart (stable sort/pretty); docs/SPEC_HASHES.md                                   | —                                                                                        |
+| Task                      | Status | Artifacts                                                                                                                          | Gaps / Next |
+| ------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| RunQualityGateSuite       | Done   | tools/run_quality_gates.dart; ci.yml                                                                                               | —           |
+| GenerateTaskChecklist     | Done   | tools/generate_task_checklist.dart; .github/workflows/checklist-visibility.yml; docs/VISIBILITY.md                                 | —           |
+| AutoUpdateParitySpec      | Done   | tools/auto_update_parity_spec.dart; .github/workflows/auto-update-parity-spec.yml; metrics.yml CI integration (auto, non-blocking) | —           |
+| AddDiffFriendlyFormatting | Done   | tools/spec_hashes.dart (stable sort/pretty); docs/SPEC_HASHES.md                                                                   | —           |
 
 ## Notes
 

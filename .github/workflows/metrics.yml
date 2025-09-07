@@ -32,6 +32,18 @@ jobs:
                  run: dart run tools/quality_gates.dart
                - name: Parity check
                  run: dart run tools/check_stub_parity.dart
+               - name: Build symbol map (auto-update parity spec)
+                 continue-on-error: true
+                 run: |
+                      dart run tools/build_symbol_map.dart \
+                        --package in_app_purchase \
+                        --out docs/metrics/in_app_purchase_symbols.json
+               - name: Auto-update parity spec
+                 continue-on-error: true
+                 run: |
+                      dart run tools/auto_update_parity_spec.dart \
+                        --package in_app_purchase \
+                        --symbols docs/metrics/in_app_purchase_symbols.json
                - name: Compute parity spec hash
                  id: spec
                  run: echo "hash=$(dart run tools/print_parity_spec_hash.dart)" >> $GITHUB_OUTPUT
@@ -52,6 +64,21 @@ jobs:
                         git add docs/METRICS.md docs/badges docs/SPEC_HASHES.md docs/metrics/spec_hashes.json || true
                         git commit -m "chore(metrics): update metrics & spec hashes [skip ci]" || echo "No changes"
                       fi
+               - name: Commit parity spec (if changed)
+                 run: |
+                      if [[ "$(git status --porcelain tools/parity_spec/in_app_purchase.json docs/metrics/in_app_purchase_symbols.json)" != "" ]]; then
+                        git config user.name "ci-bot"
+                        git config user.email "ci-bot@example.com"
+                        git add tools/parity_spec/in_app_purchase.json docs/metrics/in_app_purchase_symbols.json || true
+                        git commit -m "chore(parity): auto-update parity spec & symbols [skip ci]" || echo "No changes"
+                      fi
+               - name: Upload parity artifacts
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: parity-spec-and-symbols
+                      path: |
+                           docs/metrics/in_app_purchase_symbols.json
+                           tools/parity_spec/in_app_purchase.json
                - name: Upload coverage artifact
                  uses: actions/upload-artifact@v4
                  with:
