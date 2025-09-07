@@ -2,6 +2,13 @@
 
 Reusable task blueprints.
 
+Note: Before executing any task from this library, follow the standard steps in `docs/AI_TASK_CHECKLIST.md`.
+
+## How to use this library
+
+-    Start with the standard execution steps in `docs/AI_TASK_CHECKLIST.md`.
+-    To create or extend this library, use the prompt in `docs/AI_TASK_LIBRARY_PROMPT.md` and then update this file accordingly.
+
 ## CreateOrUpdateManifest
 
 1. Read existing `packages/manifest.yaml`.

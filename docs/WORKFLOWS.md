@@ -19,6 +19,7 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 -    Triggers: schedule (cron), manual dispatch, post-merge
 -    Key Steps: Run tests + coverage, `dart run tools/update_metrics.dart`, commit updated `docs/METRICS.md` & `docs/badges/*.json`. Additionally, attempts non-blocking parity auto-update: build symbol map and regenerate `tools/parity_spec/<pkg>.json`; commits and uploads artifacts when changed.
 -    Outputs: Updated metrics & shields; optional parity spec + symbols artifacts.
+-    Notes: Also emits per-package badges under `docs/badges/` (e.g., `coverage_<pkg>.json`, `analytics_<pkg>.json`, `pkg_warn_<pkg>.json`) for use in package READMEs.
 
 ### Golden Guard
 
@@ -43,23 +44,10 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 ### Gitleaks
 
--    File: `.github/workflows/gitleaks.yml`
--    Triggers: push, pull_request
--    Key Steps: Run gitleaks scan.
--    Outputs: Fail on secret patterns.
-
 ## Release & Versioning
 
-### Release Please
-
--    File: `.github/workflows/release-please.yml`
--    Triggers: push to main
 -    Key Steps: Conventional commits parsing, draft release PR / tags.
 -    Outputs: Automated changelog & version bumps.
-
-### Release Candidate Builder
-
--    File: `.github/workflows/release-candidate.yml`
 -    Triggers: workflow_dispatch, RC branch pattern
 -    Key Steps: Build platform artifacts, (future) upload to internal channels.
 -    Outputs: RC artifacts.
@@ -124,6 +112,13 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 ### Screenshots
 
+### Consolidate Stack Docs
+
+-    File: `.github/workflows/consolidate-stack.yml`
+-    Triggers: push (main; ignores self-updates), manual dispatch
+-    Key Steps: Bootstrap workspace via Melos, run `dart run tools/consolidate_stack_docs.dart`, commit updated `docs/STACK.md`, `docs/metrics/stack_index.json`, and `README.md` if changed.
+-    Outputs: Up-to-date consolidated stack documentation. Supports the "ConsolidateStackDocs" item in the AI Task Library.
+
 -    File: `.github/workflows/screenshots.yml`
 -    Triggers: manual, future commit triggers
 -    Key Steps: Launch device matrix, capture game template screenshots.
@@ -177,6 +172,14 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 -    Triggers: push to main (ignores self-updates), manual
 -    Key Steps: run `dart run tools/update_manifest.dart`, commit `packages/manifest.yaml` when missing packages discovered.
 -    Outputs: Up-to-date manifest with new packages.
+     Notes: Implements the "CreateOrUpdateManifest" flow to prevent drift during future package additions/migrations.
+
+### Semantic Parity (Real Plugin Diff)
+
+-    File: `.github/workflows/semantic-parity.yml`
+-    Triggers: pull_request (tools/parity or IAP paths), manual dispatch with `enable=true`
+-    Key Steps: Build symbol map via `dart run tools/build_symbol_map.dart`, diff against parity spec using `dart run tools/diff_parity_vs_real.dart`, upload diff and symbols as artifacts.
+-    Outputs: Parity diff report JSON and symbol map for inspection (non-blocking by default).
 
 ## Quality Gate Mapping
 
@@ -193,6 +196,8 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 | Package status audit (warn) | `tools/package_status_audit.dart`                | ci.yml / metrics.yml                     |
 | Perf thresholds (warn/fail) | `tools/check_perf_metrics.dart`                  | perf-metrics.yml                         |
 | Parity auto-update (opt)    | `tools/auto_update_parity_spec.dart`             | metrics.yml, auto-update-parity-spec.yml |
+| Stack consolidation         | `tools/consolidate_stack_docs.dart`              | consolidate-stack.yml                    |
+| Semantic parity diff (opt)  | `tools/diff_parity_vs_real.dart`                 | semantic-parity.yml                      |
 
 ## Update Procedure
 
@@ -200,6 +205,7 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 2. Run locally (act or dry-run) if complex.
 3. Update this file with: purpose, triggers, key steps, outputs.
 4. Open PR referencing "DocumentWorkflows" task.
+5. Cross-check changes against `docs/AI_TASK_CHECKLIST.md` (tests, gates, metrics/badges, reconciliation updates).
 
 ---
 
