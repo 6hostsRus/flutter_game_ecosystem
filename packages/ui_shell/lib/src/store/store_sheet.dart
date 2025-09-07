@@ -25,21 +25,30 @@ Future<void> showStoreSheet(BuildContext context,
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: Theme.of(context).textTheme.titleLarge),
+            Text(title,
+                key: const Key('store:sheet:title'),
+                style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 12),
             Flexible(
               child: ListView.separated(
+                key: const Key('store:sheet:list'),
                 shrinkWrap: true,
                 itemCount: items.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 8),
                 itemBuilder: (context, i) {
                   final it = items[i];
                   return Card(
+                    key: Key('store:item:$i'),
                     child: ListTile(
-                      title: Text(it.title),
-                      subtitle: Text(it.subtitle),
+                      key: Key('store:item:$i:tile'),
+                      title: Text(it.title, key: Key('store:item:$i:title')),
+                      subtitle:
+                          Text(it.subtitle, key: Key('store:item:$i:subtitle')),
                       trailing: FilledButton(
-                          onPressed: it.onBuy, child: Text(it.priceText)),
+                        key: Key('store:item:$i:buy'),
+                        onPressed: it.onBuy,
+                        child: Text(it.priceText),
+                      ),
                     ),
                   );
                 },

@@ -38,12 +38,20 @@ class _GameNavScaffoldState extends State<GameNavScaffold> {
     final currentBuilder = entries.firstWhere((e) => e.key == _current).value;
 
     return Scaffold(
-      body: SafeArea(child: currentBuilder(context)),
+      key: const Key('GameNavScaffold'),
+      body: SafeArea(
+        child: KeyedSubtree(
+          key: Key('tab:${_current.name}'),
+          child: currentBuilder(context),
+        ),
+      ),
       bottomNavigationBar: NavigationBar(
+        key: const Key('nav:bar'),
         selectedIndex: _current.index,
         destinations: [
           for (final e in entries)
             NavigationDestination(
+              key: Key('nav:dest:${e.key.name}'),
               icon: Icon(e.key.icon),
               label: widget.showLabels ? e.key.label : '',
             ),

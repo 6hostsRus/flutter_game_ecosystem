@@ -14,6 +14,10 @@ class StoreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton.icon(
-        onPressed: onPressed, icon: Icon(icon), label: Text(label));
+      key: const Key('store:button'),
+      onPressed: onPressed,
+      icon: Icon(icon),
+      label: Text(label),
+    );
   }
 }
