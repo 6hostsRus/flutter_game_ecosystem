@@ -212,8 +212,9 @@ Authoritative catalog of GitHub Actions workflows powering quality gates, releas
 
 -    File: `.github/workflows/platform-release.yml`
 -    Triggers: workflow_dispatch (inputs: `enable`, `release_platform`, `release_track`)
--    Key Steps: Guarded build for android/ios/web; artifact upload if present; does not submit by default.
+-    Key Steps: Guarded build for android/ios/web; artifact upload if present. Optional store uploads when secrets are configured (`PLAY_JSON_KEY` for Android; `APPSTORE_KEY_ID`, `APPSTORE_ISSUER_ID`, `APPSTORE_P8` for iOS).
 -    Outputs: Build artifacts for targeted platform; non-blocking, manual-only.
+     See: `docs/platform/release.md` for inputs, secrets, and examples.
 
 ## Update Procedure
 

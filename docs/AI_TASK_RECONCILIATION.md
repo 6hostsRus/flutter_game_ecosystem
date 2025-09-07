@@ -16,9 +16,10 @@ Generated: 2025-09-07
 | ----------------------------------- | ------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | ArchitectureStandardsReconciliation | Missing | docs/CODING_STANDARDS.md; links from ai_instructions.md and docs/WORKFLOWS.md                  | Reconcile `architecture/coding-standards.md` vs docs; add evaluation checklist |
 | MonetizationDocsReconciliation      | Missing | docs/monetization/overview.md; docs/monetization/testing.md; updated AI tasks for monetization | Identify gaps from `monetization/monetization.md`; add concrete follow-ups     |
-| PlatformDocsMigration               | Missing | docs/platform/index.md (+ migrated pages); updated links in README/ai_instructions             | Inventory `platform/` and migrate; remove duplication                          |
-| PlatformReleaseCIIntegration        | Missing | .github/workflows/platform-release.yml; docs/platform/release.md; entry in docs/WORKFLOWS.md   | Add guarded CI with repo vars/inputs; document triggers                        |
+| PlatformDocsMigration               | Done    | docs/platform/index.md (+ migrated topics); stubs under `platform/`                            | Verify cross-links in README/ai_instructions (minor follow-up)                 |
+| PlatformReleaseCIIntegration        | Done    | .github/workflows/platform-release.yml; docs/platform/release.md; entry in docs/WORKFLOWS.md   | Future: refine tracks, signing, lanes                                          |
 | RoadmapMigrationAndPacingDoc        | Missing | docs/roadmap/phase-1.md (pacing & metrics); links from README and ai_instructions              | Migrate `roadmap/phase-1.md`; add goals, metrics, and references               |
+| OpsDocsReconciliation               | Partial | docs/automation/index.md (canonical), root stubs for QUICK_OPS.md & secrets.example.md         | Mirror secret names (done); align README/ai_instructions links (follow-up)     |
 
 ## P2 — Strategic Hardening
 

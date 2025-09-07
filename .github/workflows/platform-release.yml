@@ -3,16 +3,20 @@ name: platform-release
 on:
      workflow_dispatch:
           inputs:
-               release_platform:
-                    description: 'android | ios | web'
-                    required: true
-                    default: 'android'
-               release_track:
-                    description: 'internal | alpha | beta | production'
-                    required: true
-                    default: 'internal'
                enable:
-                    description: 'Set to true to run release steps'
+                    description: Set to true to run release steps
+                    required: true
+                    default: 'false'
+               release_platform:
+                    description: android | ios | web
+                    required: true
+                    default: android
+               release_track:
+                    description: internal | alpha | beta | production
+                    required: true
+                    default: internal
+               upload_store:
+                    description: Attempt store upload when inputs/secrets are configured
                     required: true
                     default: 'false'
 
@@ -20,8 +24,8 @@ permissions:
      contents: read
 
 jobs:
-     build:
-          if: ${{ github.event.inputs.enable == 'true' }}
+     build_android_web:
+          if: ${{ github.event.inputs.enable == 'true' && github.event.inputs.release_platform != 'ios' }}
           runs-on: ubuntu-latest
           steps:
                - name: Checkout
@@ -33,35 +37,101 @@ jobs:
                       channel: stable
                       cache: true
 
-               - name: Build (guarded)
+               - name: Build (android/web)
                  run: |
                       set -e
-                      PLATFORM="${{ github.event.inputs.release_platform }}"
-                      TRACK="${{ github.event.inputs.release_track }}"
+                      PLATFORM='${{ github.event.inputs.release_platform }}'
+                      TRACK='${{ github.event.inputs.release_track }}'
                       echo "Building for platform=$PLATFORM track=$TRACK"
-                      # Placeholder build commands; extend per platform
                       case "$PLATFORM" in
                         android)
                           flutter build appbundle --release || true
-                          ;;
-                        ios)
-                          flutter build ipa --release || true
                           ;;
                         web)
                           flutter build web --release || true
                           ;;
                         *)
-                          echo "Unknown platform: $PLATFORM"
-                          exit 1
+                          echo "Unknown platform for this job: $PLATFORM"; exit 1;
                           ;;
                       esac
 
                - name: Upload artifacts (optional)
+                 if: always()
                  uses: actions/upload-artifact@v4
                  with:
                       name: platform-release-${{ github.event.inputs.release_platform }}-${{ github.event.inputs.release_track }}
                       path: |
                            build/app/outputs/**/*.aab
-                           build/ios/ipa/**/*.ipa
                            build/web/**
                       if-no-files-found: ignore
+
+               - name: Upload to Google Play (optional)
+                 if: ${{ github.event.inputs.release_platform == 'android' && github.event.inputs.upload_store == 'true' }}
+                 continue-on-error: true
+                 uses: r0adkll/upload-google-play@v1
+                 with:
+                      serviceAccountJsonPlainText: ${{ secrets.PLAY_JSON_KEY }}
+                      packageName: com.example.runnerdemo
+                      releaseFiles: build/app/outputs/**/*.aab
+                      track: ${{ github.event.inputs.release_track }}
+                      inAppUpdatePriority: 2
+
+     build_ios:
+          if: ${{ github.event.inputs.enable == 'true' && github.event.inputs.release_platform == 'ios' }}
+          runs-on: macos-latest
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
+
+               - name: Set up Flutter
+                 uses: subosito/flutter-action@v2
+                 with:
+                      channel: stable
+                      cache: true
+
+               - name: Build (ios)
+                 run: |
+                      set -e
+                      flutter build ipa --release || true
+
+               - name: Upload artifacts (optional)
+                 if: always()
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: platform-release-ios-${{ github.event.inputs.release_track }}
+                      path: |
+                           build/ios/ipa/**/*.ipa
+                      if-no-files-found: ignore
+
+               - name: Install Fastlane
+                 if: ${{ github.event.inputs.upload_store == 'true' }}
+                 run: gem install fastlane --no-document
+
+               - name: Prepare ASC API key
+                 if: ${{ github.event.inputs.upload_store == 'true' }}
+                 env:
+                      APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+                      APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+                      APPSTORE_P8: ${{ secrets.APPSTORE_P8 }}
+                 run: |
+                      set -e
+                      echo "$APPSTORE_P8" | base64 --decode > asc_key.p8
+                      python3 - <<'PY'
+                      import json, os
+                      key = open('asc_key.p8').read()
+                      data = {
+                        "key_id": os.environ.get("APPSTORE_KEY_ID",""),
+                        "issuer_id": os.environ.get("APPSTORE_ISSUER_ID",""),
+                        "key": key,
+                        "in_house": False
+                      }
+                      open('asc_api_key.json','w').write(json.dumps(data))
+                      PY
+
+               - name: Upload to TestFlight
+                 if: ${{ github.event.inputs.upload_store == 'true' }}
+                 run: |
+                      set -e
+                      IPA_PATH=$(find build/ios/ipa -name '*.ipa' -print -quit || true)
+                      if [ -z "$IPA_PATH" ]; then echo "No IPA found, skipping upload."; exit 0; fi
+                      fastlane pilot upload --api_key_path asc_api_key.json --ipa "$IPA_PATH" || true

@@ -68,42 +68,6 @@ Validation:
 
 ---
 
-## PlatformDocsMigration (P1)
-
-Purpose: Reconcile `platform/` contents and migrate into `docs/` with an instruction set for developers.
-
-Steps:
-
-1. Inventory `platform/` (android_vs_ios.md, device_targets.md, hosting_options.md, dev_programs.md, checklists/ etc.).
-2. Create a `docs/platform/` tree; migrate content with unified structure and cross-links to build/release workflows.
-3. Add an index page summarizing targets, env setup, and checklists; ensure duplication is removed.
-4. Update `docs/WORKFLOWS.md` links to point to migrated docs.
-
-Validation:
-
--    `docs/platform/*` mirrors relevant guidance; old files point to new locations or are removed in a follow-up PR.
--    Links in `README.md`/`ai_instructions.md` resolve to the new docs.
-
----
-
-## PlatformReleaseCIIntegration (P1)
-
-Purpose: Develop CI integrations for platform release toggled by repository variables/inputs.
-
-Steps:
-
-1. Add or update a workflow (e.g., `.github/workflows/platform-release.yml`) with inputs/vars: `release_platform`, `release_track`, and `ENABLE_PLATFORM_RELEASE`.
-2. Implement guarded jobs (only run when enabled) to build and, optionally, upload artifacts (manual steps acceptable initially).
-3. Document variables and invocation in `docs/WORKFLOWS.md` and `docs/platform/release.md`.
-4. Keep non-blocking by default; surface artifacts for audit.
-
-Validation:
-
--    Dry-run or build-only job passes with vars disabled; with vars enabled (manual dispatch), jobs execute expected steps.
--    `docs/WORKFLOWS.md` includes the workflow entry and gate mapping.
-
----
-
 ## RoadmapMigrationAndPacingDoc (P1)
 
 Purpose: Migrate `roadmap/*.md` to `docs/` and produce a phase pacing document defining key goals and metrics.
@@ -119,6 +83,24 @@ Validation:
 
 -    `docs/roadmap/phase-1.md` exists with a metrics checklist and references to CI artifacts.
 -    Links resolve from README and AI instructions.
+
+---
+
+## OpsDocsReconciliation (P1)
+
+Purpose: Reconcile operational quick ops and secrets documentation; consolidate under docs and remove redundant root files.
+
+Steps:
+
+1. Review root `QUICK_OPS.md` and `secrets.example.md` alongside `automation/README.md`, `automation/secrets.example.md`, and `docs/WORKFLOWS.md`.
+2. Decide target locations (e.g., `docs/platform/release.md`, `docs/WORKFLOWS.md`, or `docs/automation/`), migrate content, and create clear pointers.
+3. Ensure examples avoid real secrets and demonstrate environment variables/secrets usage for CI and local runs.
+4. Remove duplicated root files or replace with stubs linking to the new canonical docs.
+
+Validation:
+
+-    Docs consolidated; links in README and ai_instructions updated.
+-    Redundant root entries removed or stubbed with pointers.
 
 ---
 
