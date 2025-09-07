@@ -191,6 +191,7 @@ void main() {
 
   // Per-package coverage breakdown (best-effort: look for packages/**/coverage/lcov.info)
   final breakdown = <String>[];
+  final perPackageCoverage = <String, double>{};
   final pkgsDir = Directory('packages');
   if (pkgsDir.existsSync()) {
     for (final entity in pkgsDir.listSync(recursive: true)) {
@@ -208,6 +209,7 @@ void main() {
         final lines = entity.readAsLinesSync();
         final pct = _parseLcovCoverage(lines);
         breakdown.add('$pkgName: ${pct.toStringAsFixed(1)}%');
+        perPackageCoverage[pkgName] = pct;
       }
     }
   }
@@ -226,6 +228,10 @@ void main() {
       'AUTO:COVERAGE_BREAKDOWN',
       'Per-package coverage:\n' + breakdown.join('\\n'),
     );
+    // Emit per-package coverage badges
+    perPackageCoverage.forEach((pkg, pct) {
+      _writeCoverageBadgeForPackage(pkg, pct);
+    });
   }
 
   // Economy metrics (best-effort): look for modules/content_packs/**/economy.json or top-level economy schema usage.
@@ -283,11 +289,33 @@ void main() {
             .where((l) => l.trim().isNotEmpty)
             .length;
   }
-  // Scan package-level build metrics logs.
+  // Discover package directories (those with a pubspec.yaml)
+  final allPackages = <String, String>{}; // name -> dir path
+  final pkgRootDir = Directory('packages');
+  if (pkgRootDir.existsSync()) {
+    for (final e in pkgRootDir.listSync(recursive: true)) {
+      if (e is File && e.path.endsWith('/pubspec.yaml')) {
+        final dir = File(e.path).parent;
+        final pkgName = dir.path.split('/').last;
+        allPackages[pkgName] = dir.path;
+      }
+    }
+  }
+  // Scan package-level build metrics logs and record per-package analytics
+  final perPackageAnalytics = <String, int>{
+    for (final k in allPackages.keys) k: 0,
+  };
   for (final e in Directory('packages').listSync(recursive: true)) {
     if (e is File && e.path.endsWith('build/metrics/analytics_events.ndjson')) {
-      analyticsEventCount +=
-          e.readAsLinesSync().where((l) => l.trim().isNotEmpty).length;
+      final count = e.readAsLinesSync().where((l) => l.trim().isNotEmpty).length;
+      analyticsEventCount += count;
+      // Determine owning package by finding nearest parent package dir
+      for (final entry in allPackages.entries) {
+        if (e.path.startsWith(entry.value)) {
+          perPackageAnalytics[entry.key] = (perPackageAnalytics[entry.key] ?? 0) + count;
+          break;
+        }
+      }
     }
   }
   content = _replace(
@@ -295,6 +323,22 @@ void main() {
     'AUTO:ANALYTICS_EVENTS',
     'Analytics events (test session): $analyticsEventCount',
   );
+  // Emit per-package analytics badges
+  perPackageAnalytics.forEach((pkg, count) {
+    final color = count == 0
+        ? 'lightgrey'
+        : (count < 10
+            ? 'blue'
+            : (count < 50
+                ? 'green'
+                : 'brightgreen'));
+    _writeBadge(
+      'analytics_${_sanitizeFileComponent(pkg)}.json',
+      label: 'analytics',
+      message: '$count',
+      color: color,
+    );
+  });
   // Analytics test count: look for *_analytics_test.dart files.
   final analyticsTestFiles = <String>[];
   final pkRoot = Directory('packages');
@@ -317,43 +361,70 @@ void main() {
   // Package status warnings (experimental age audit light version)
   try {
     final manifestLines =
-        manifest.existsSync() ? manifest.readAsLinesSync() : <String>[];
+        manifest.existsSync() ? manifest.readAsStringSync().split('\n') : <String>[];
     final now = DateTime.now().toUtc();
     final maxDays =
         int.tryParse(Platform.environment['EXPERIMENTAL_MAX_DAYS'] ?? '') ?? 60;
-    String? currentPkg;
-    String? status;
-    DateTime? since;
     int violations = 0;
-    void flush() {
-      if (currentPkg != null && status == 'experimental') {
-        final ageDays = since == null ? 0 : now.difference(since).inDays;
-        if (ageDays > maxDays) violations++;
-      }
-    }
+    final perPackageWarnings = <String, int>{
+      for (final k in allPackages.keys) k: 0,
+    };
 
-    final pkgKeyRegex = RegExp(r'^\s{5}[A-Za-z0-9_]+:\s*\$');
-    for (final raw in manifestLines) {
-      final trimmed = raw.trim();
-      if (pkgKeyRegex.hasMatch(raw)) {
-        flush();
-        currentPkg = trimmed.substring(0, trimmed.length - 1);
-        status = null;
-        since = null;
-        continue;
-      }
-      if (trimmed.startsWith('status:')) {
-        status = trimmed.split(':').last.trim();
-      } else if (trimmed.startsWith('since:')) {
-        final v = trimmed.split(':').last.trim().replaceAll("'", '');
-        since = DateTime.tryParse(v)?.toUtc();
-      }
-      if (trimmed.startsWith('owner:')) {
-        // owner is usually last meaningful field in a block; flush imminent
-        // but flush will only count if experimental.
+    // Identify indentation of 'packages:' and iterate first-level package blocks.
+    int packagesIndent = -1;
+  for (int i = 0; i < manifestLines.length; i++) {
+      final line = manifestLines[i];
+      if (line.trim().startsWith('packages:')) {
+    packagesIndent = _leadingSpaces(line);
+        // Process subsequent lines
+        int j = i + 1;
+        while (j < manifestLines.length) {
+          final l = manifestLines[j];
+          if (l.trim().isEmpty) {
+            j++;
+            continue;
+          }
+      final indent = _leadingSpaces(l);
+          if (indent <= packagesIndent) break; // end of packages section
+          // First-level package entry
+          if (indent == packagesIndent + 2 && l.trim().endsWith(':')) {
+            final pkgName = l.trim().substring(0, l.trim().length - 1);
+            String? status;
+            DateTime? since;
+            j++;
+            while (j < manifestLines.length) {
+              final inner = manifestLines[j];
+              if (inner.trim().isEmpty) {
+                j++;
+                continue;
+              }
+        final inIndent = _leadingSpaces(inner);
+              if (inIndent <= indent) break; // end of this package block
+              final t = inner.trim();
+              if (t.startsWith('status:')) {
+                status = t.split(':').last.trim();
+              } else if (t.startsWith('since:')) {
+                final v = t.split(':').last.trim().replaceAll("'", '');
+                since = DateTime.tryParse(v)?.toUtc();
+              }
+              j++;
+            }
+            if (status == 'experimental') {
+              final ageDays = since == null ? 0 : now.difference(since).inDays;
+              if (ageDays > maxDays) {
+                violations++;
+                if (perPackageWarnings.containsKey(pkgName)) {
+                  perPackageWarnings[pkgName] = 1;
+                }
+              }
+            }
+            continue; // continue scanning at current j
+          }
+          j++;
+        }
+        break;
       }
     }
-    flush();
     content = _replace(
       content,
       'AUTO:PACKAGE_STATUS_WARNINGS',
@@ -378,6 +449,17 @@ void main() {
       message: '$violations',
       color: warnColor,
     );
+    // Per-package warnings badges (default 0 for packages without a warning)
+    allPackages.keys.forEach((pkg) {
+      final cnt = perPackageWarnings[pkg] ?? 0;
+      final color = cnt == 0 ? 'brightgreen' : (cnt <= 3 ? 'orange' : 'red');
+      _writeBadge(
+        'pkg_warn_${_sanitizeFileComponent(pkg)}.json',
+        label: 'pkg-warn',
+        message: '$cnt',
+        color: color,
+      );
+    });
   } catch (_) {
     // Non-fatal: leave marker as-is
   }
@@ -424,6 +506,47 @@ void _writeCoverageBadge(double pct) {
   "message": "${pct.toStringAsFixed(1)}%",
   "color": "$color"
 }''');
+}
+
+void _writeCoverageBadgeForPackage(String pkg, double pct) {
+  final dir = Directory('docs/badges');
+  if (!dir.existsSync()) dir.createSync(recursive: true);
+  final color = () {
+    if (pct < 30) return 'red';
+    if (pct < 60) return 'orange';
+    if (pct < 80) return 'yellow';
+    if (pct < 95) return 'green';
+    return 'brightgreen';
+  }();
+  final safe = _sanitizeFileComponent(pkg);
+  final file = File('${dir.path}/coverage_${safe}.json');
+  file.writeAsStringSync('''{
+  "schemaVersion": 1,
+  "label": "coverage",
+  "message": "${pct.toStringAsFixed(1)}%",
+  "color": "$color"
+}''');
+}
+
+String _sanitizeFileComponent(String name) {
+  final sb = StringBuffer();
+  for (final r in name.runes) {
+    final ch = String.fromCharCode(r);
+    if (RegExp(r'[A-Za-z0-9_\-]').hasMatch(ch)) {
+      sb.write(ch);
+    } else {
+      sb.write('_');
+    }
+  }
+  return sb.toString();
+}
+
+int _leadingSpaces(String s) {
+  int i = 0;
+  while (i < s.length && s[i] == ' ') {
+    i++;
+  }
+  return i;
 }
 
 void _writeBadge(
