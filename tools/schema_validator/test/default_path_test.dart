@@ -3,9 +3,10 @@ import 'package:test/test.dart';
 
 void main() {
   test('default schema dir exists in-core', () async {
-    // Prefer repo-root-relative path used by CI; fallback to package-relative when running tests from this folder.
-    final rootRelative = Directory('game_core/assets/schemas');
-    final packageRelative = Directory('../../game_core/assets/schemas');
+    // Prefer repo-root-relative new path; fallback to package-relative when running tests from this folder.
+    final rootRelative = Directory('packages/game_core/assets/schemas');
+    final packageRelative =
+        Directory('../../packages/game_core/assets/schemas');
     final dir = await rootRelative.exists() ? rootRelative : packageRelative;
     expect(await dir.exists(), isTrue,
         reason:

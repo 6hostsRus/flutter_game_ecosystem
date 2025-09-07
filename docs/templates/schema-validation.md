@@ -14,7 +14,7 @@ Validate a pack folder (e.g., modules/content_packs/sample_pack):
 dart run tools/schema_validator/bin/validate_schemas.dart --input-dir modules/content_packs/sample_pack
 ```
 
-The CLI uses schemas from `game_core/assets/schemas/` by default. It validates:
+The CLI uses schemas from `packages/game_core/assets/schemas/` by default. It validates:
 
 -    manifest.yaml (converted to JSON for validation)
 -    economy.json

@@ -11,7 +11,7 @@ void main() {
         'run',
         'tools/schema_validator/bin/validate_schemas.dart',
         '--schema-dir',
-        'game_core/assets/schemas',
+        'packages/game_core/assets/schemas',
         '--input-dir',
         'modules/content_packs/sample_pack',
       ],

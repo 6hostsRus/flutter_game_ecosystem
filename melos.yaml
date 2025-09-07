@@ -5,7 +5,7 @@ packages:
      - packages/*/* # services subpackages (analytics_firebase_adapter, core_services, core_services_isar)
      - modules/genres/* # game_scenes, etc.
      - examples/* # demo_game
-     - game_core # game_core package
+     # game_core relocated under packages/
 
 ignore:
      - '**/build/**'

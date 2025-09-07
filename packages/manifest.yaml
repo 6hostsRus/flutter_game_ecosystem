@@ -58,7 +58,7 @@ packages:
           domain: monetization
           notes: 'Local stub of in_app_purchase plugin'
      game_core:
-          path: game_core
+          path: packages/game_core
           role: engine
           status: experimental
           since: '2025-09-05'

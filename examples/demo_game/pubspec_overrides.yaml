@@ -1,7 +1,9 @@
-# melos_managed_dependency_overrides: core_services,game_scenes,in_app_purchase,providers,services,ui_shell
+# melos_managed_dependency_overrides: core_services,game_scenes,in_app_purchase,providers,services,ui_shell,core_services_isar
 dependency_overrides:
   core_services:
     path: ../../packages/services/core_services
+  core_services_isar:
+    path: ../../packages/services/core_services_isar
   game_scenes:
     path: ../../modules/genres/game_scenes
   in_app_purchase:

@@ -6,8 +6,8 @@ import 'package:json_schema2/json_schema2.dart';
 
 Future<void> main(List<String> args) async {
   final parser = ArgParser()
-    // Schemas moved in-core under game_core/assets/schemas
-    ..addOption('schema-dir', defaultsTo: 'game_core/assets/schemas')
+    // Schemas moved under packages/game_core/assets/schemas
+    ..addOption('schema-dir', defaultsTo: 'packages/game_core/assets/schemas')
     ..addOption('input-dir', defaultsTo: 'modules/content_packs/winter_2025');
 
   final results = parser.parse(args);
