@@ -30,3 +30,14 @@ Generated: 2025-09-07
 ## Notes
 
 -    For completed work prior to this date, see `CHANGELOG.md` under the matching date section.
+
+## New Batch — Core consolidation and schemas
+
+| Task                               | Status  | Artifacts (current)                                                                                                  | Gaps / Next                                                                                            |
+| ---------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| TemplatesAndSchemasRefactor        | Partial | game_core/assets/schemas/\*.schema.json; game_core/lib/schemas/validator.dart; CLI default updated to new schema dir | Remove legacy `templates/schemas/*.schema.json` after consumers updated; doc pointers; add sample test |
+| SnippetsReconciliationToGameCore   | Partial | snippets/MIGRATION.md pre-populated with destinations                                                                | Execute migrations with tests; update exports and docs                                                 |
+| GameCoreRelocationAndConsolidation | Planned | —                                                                                                                    | Move to `packages/game_core/`; update melos, imports, labeler/workflow path filters                    |
+| GameCoreInterfacesImplementation   | Planned | —                                                                                                                    | Implement initial contracts + tests; export via `lib/game_core.dart`                                   |
+| DocsAndOpsAlignmentForMoves        | Planned | —                                                                                                                    | Update ops/workflow docs and filters to reflect new paths                                              |
+| ExampleIntegrationUpdate           | Planned | —                                                                                                                    | Update examples/genre modules to use new APIs and migrated utilities                                   |
