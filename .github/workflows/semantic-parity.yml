@@ -14,38 +14,123 @@ on:
                     required: false
                     default: 'false'
 
+permissions:
+     contents: read
+     actions: read
+     pull-requests: write
+
 jobs:
-     parity:
-          # Gate via manual input (workflow_dispatch) or auto-run on PRs if enable=true is set by caller/branch rule.
-          if: ${{ github.event_name == 'workflow_dispatch' && inputs.enable == 'true' }}
+     prepare:
+          # Only run if manually enabled or labeled on PR
+          if: ${{ (github.event_name == 'workflow_dispatch' && inputs.enable == 'true') || (github.event_name == 'pull_request' && contains(join(github.event.pull_request.labels.*.name, ','), 'run-semantic-parity')) }}
           runs-on: ubuntu-latest
+          outputs:
+               spec_matrix: ${{ steps.gen.outputs.spec_matrix }}
           steps:
                - name: Checkout
                  uses: actions/checkout@v4
+               - name: Generate matrix from specs
+                 id: gen
+                 uses: actions/github-script@v7
+                 with:
+                      script: |
+                           const path = require('path');
+                           const glob = require('glob');
+                           const files = glob.sync('tools/parity_spec/*.json');
+                           const include = files.map(f => ({ package: path.basename(f, '.json'), spec: f }));
+                           const matrix = { include };
+                           core.info(`Matrix: ${JSON.stringify(matrix)}`);
+                           core.setOutput('spec_matrix', JSON.stringify(matrix));
 
+     parity:
+          needs: prepare
+          if: ${{ needs.prepare.result == 'success' }}
+          runs-on: ubuntu-latest
+          strategy:
+               fail-fast: false
+               matrix: ${{ fromJson(needs.prepare.outputs.spec_matrix) }}
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
                - name: Setup Dart
                  uses: dart-lang/setup-dart@v1
                  with:
                       sdk: stable
-
-               - name: Generate symbol map (in_app_purchase)
+               - name: Check real plugin presence
+                 id: check
                  run: |
+                      if grep -q "${{ matrix.package }}" pubspec.lock; then
+                        echo "skip=false" >> $GITHUB_OUTPUT
+                      else
+                        echo "skip=true" >> $GITHUB_OUTPUT
+                      fi
+               - name: Generate symbol map
+                 if: ${{ steps.check.outputs.skip == 'false' }}
+                 run: |
+                      set -e
                       dart --version
-                      dart run tools/build_symbol_map.dart \
-                        --package in_app_purchase \
-                        --out docs/metrics/in_app_purchase_symbols.json
-
+                      dart pub get
+                      mkdir -p docs/metrics
+                      dart run tools/build_symbol_map.dart --package "${{ matrix.package }}" --out "docs/metrics/${{ matrix.package }}_symbols.json"
                - name: Diff vs parity spec
+                 if: ${{ steps.check.outputs.skip == 'false' }}
                  run: |
-                      dart run tools/diff_parity_vs_real.dart \
-                        --spec tools/parity_spec/in_app_purchase.json \
-                        --symbols docs/metrics/in_app_purchase_symbols.json \
-                        --out docs/metrics/parity_diff_in_app_purchase.json
-
+                      set -e
+                      dart run tools/diff_parity_vs_real.dart --spec "${{ matrix.spec }}" --symbols "docs/metrics/${{ matrix.package }}_symbols.json" --out "docs/metrics/parity_diff_${{ matrix.package }}.json"
                - name: Upload parity artifacts
+                 if: ${{ steps.check.outputs.skip == 'false' }}
                  uses: actions/upload-artifact@v4
                  with:
-                      name: semantic-parity-iap
+                      name: semantic-parity-${{ matrix.package }}
                       path: |
-                           docs/metrics/parity_diff_in_app_purchase.json
-                           docs/metrics/in_app_purchase_symbols.json
+                           docs/metrics/parity_diff_${{ matrix.package }}.json
+                           docs/metrics/${{ matrix.package }}_symbols.json
+               - name: Note skipped parity
+                 if: ${{ steps.check.outputs.skip == 'true' }}
+                 run: echo "Parity run skipped for ${{ matrix.package }}."
+
+     summarize:
+          needs: [parity]
+          if: ${{ github.event_name == 'pull_request' }}
+          runs-on: ubuntu-latest
+          steps:
+               - name: Post summary comment
+                 uses: actions/github-script@v7
+                 with:
+                      script: |
+                           const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+                           const { data } = await github.rest.actions.listWorkflowRunArtifacts({
+                             owner: context.repo.owner,
+                             repo: context.repo.repo,
+                             run_id: context.runId,
+                             per_page: 100
+                           });
+                           const artifacts = data.artifacts || [];
+                           const lines = artifacts
+                             .filter(a => a.name.startsWith('semantic-parity-'))
+                             .map(a => `- [${a.name}](${a.archive_download_url})`);
+                           const body = `<!-- semantic-parity-summary -->\n**Semantic Parity Artifacts**\n\nRun: ${runUrl}\n\n${lines.length ? lines.join('\n') : '- (none found)'}`;
+                           const issue_number = context.payload.pull_request.number;
+                           // Find existing summary comment
+                           const existing = await github.rest.issues.listComments({
+                             owner: context.repo.owner,
+                             repo: context.repo.repo,
+                             issue_number,
+                             per_page: 100
+                           });
+                           const match = existing.data.find(c => c.body && c.body.includes('<!-- semantic-parity-summary -->'));
+                           if (match) {
+                             await github.rest.issues.updateComment({
+                               owner: context.repo.owner,
+                               repo: context.repo.repo,
+                               comment_id: match.id,
+                               body
+                             });
+                           } else {
+                             await github.rest.issues.createComment({
+                               owner: context.repo.owner,
+                               repo: context.repo.repo,
+                               issue_number,
+                               body
+                             });
+                           }

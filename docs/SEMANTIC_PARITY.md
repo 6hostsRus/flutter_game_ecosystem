@@ -20,4 +20,14 @@ Artifacts:
 -    docs/metrics/in_app_purchase_symbols.json — discovered real plugin symbols
 -    docs/metrics/parity_diff_in_app_purchase.json — parity gaps summary
 
-CI note: If the real plugin isn’t present, the builder will produce an empty map; the diff report will show all symbols as missing. Use the Real Plugin Matrix flags to control when to enforce this check.
+CI triggers:
+
+-    Manual: Run the "semantic-parity" workflow with input enable=true.
+-    PR label: Add the label run-semantic-parity to a pull request that touches the paths listed at the top of the workflow; the job will run and upload artifacts.
+
+Matrix support:
+
+-    All specs under tools/parity_spec/\*.json are run in a matrix; add more spec files to include additional plugins.
+-    Artifacts are uploaded per package (semantic-parity-<package>). A summary comment with links to artifacts is posted on the PR.
+
+CI note: If the real plugin isn’t present, the job will skip gracefully. To generate artifacts locally, follow the commands above.
