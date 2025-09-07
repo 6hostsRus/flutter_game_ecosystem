@@ -1,0 +1,8 @@
+[
+     {
+          "id": "q1",
+          "type": "daily",
+          "reward": { "coins": 50 },
+          "conditions": [{ "event": "complete_run", "times": 1 }]
+     }
+]

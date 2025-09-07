@@ -27,6 +27,7 @@ Process
      - Add exports to `packages/game_core/lib/game_core.dart` (for core utilities) or relevant module exports.
      - Delete or replace original snippet with a pointer comment and update this table.
 3. Update references in templates/docs.
+     - Template design docs have moved to `docs/templates/`.
 
 Status tracker
 

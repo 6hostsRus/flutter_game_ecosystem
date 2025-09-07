@@ -1,18 +1,18 @@
 packages-core:
-  - "packages/game_core/**"
+     - 'packages/game_core/**'
 packages-characters:
-  - "packages/game_characters/**"
+     - 'packages/game_characters/**'
 packages-items:
-  - "packages/game_items/**"
+     - 'packages/game_items/**'
 packages-controls:
-  - "packages/game_controls/**"
+     - 'packages/game_controls/**'
 packages-ads:
-  - "packages/game_ads/**"
+     - 'packages/game_ads/**'
 packages-db:
-  - "packages/game_db/**"
+     - 'packages/game_db/**'
 templates:
-  - "templates/**"
+     - 'docs/templates/**'
 platform:
-  - "platform/**"
+     - 'platform/**'
 automation:
-  - "automation/**"
+     - 'automation/**'

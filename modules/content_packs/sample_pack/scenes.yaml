@@ -1,0 +1,6 @@
+- id: main_menu
+  widgets: {}
+  ruleset: basic
+- id: game
+  widgets: {}
+  ruleset: endless_runner

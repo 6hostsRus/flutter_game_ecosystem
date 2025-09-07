@@ -1,0 +1,14 @@
+packId: sample_pack
+version: '0.1.0'
+minApp: '>=1.0.0'
+assets:
+     - economy.json
+     - quests.json
+     - scenes.yaml
+provides:
+     economy: economy.json
+     quests: quests.json
+     scenes: scenes.yaml
+integrity:
+     algo: sha256
+     hash: '0000000000000000000000000000000000000000000000000000000000000000'

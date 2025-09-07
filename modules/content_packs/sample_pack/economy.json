@@ -1,0 +1,10 @@
+{
+     "currencies": ["coins"],
+     "offers": [
+          {
+               "sku": "starter_bundle",
+               "cost": { "coins": 100 },
+               "contents": ["booster_hammer", "skin_basic"]
+          }
+     ]
+}

@@ -40,6 +40,7 @@ Quick links:
 -    Monetization: `docs/monetization/overview.md` • `docs/monetization/testing.md`
 -    Platform Guide: `docs/platform/index.md`
 -    Roadmap (Phase 1): `docs/roadmap/phase-1.md`
+-    Game Templates: `docs/templates/`
 
 ## Automation & CI Workflows
 
