@@ -40,6 +40,9 @@ jobs:
                - name: Run checklist generator
                  run: dart run tools/generate_task_checklist.dart
 
+               - name: Stamp doc dates
+                 run: dart run tools/stamp_doc_dates.dart
+
                - name: Commit README/docs updates
                  run: |
                       set -e
