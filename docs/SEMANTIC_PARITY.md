@@ -16,7 +16,8 @@ dart run tools/diff_parity_vs_real.dart \
 ```
 
 Artifacts:
-- docs/metrics/in_app_purchase_symbols.json — discovered real plugin symbols
-- docs/metrics/parity_diff_in_app_purchase.json — parity gaps summary
+
+-    docs/metrics/in_app_purchase_symbols.json — discovered real plugin symbols
+-    docs/metrics/parity_diff_in_app_purchase.json — parity gaps summary
 
 CI note: If the real plugin isn’t present, the builder will produce an empty map; the diff report will show all symbols as missing. Use the Real Plugin Matrix flags to control when to enforce this check.

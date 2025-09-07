@@ -48,7 +48,6 @@ String? _argValue(List<String> args, String name) {
 }
 
 List<String> _matchAll(String content, RegExp re) {
-  return [
-    for (final m in re.allMatches(content)) m.group(1)!
-  ].toSet().toList()..sort();
+  return [for (final m in re.allMatches(content)) m.group(1)!].toSet().toList()
+    ..sort();
 }

@@ -84,11 +84,11 @@ class PerfHarness {
       }
 
       // Light CPU work to emulate processing cost without slowing too much.
-  _spin(200 + _rng.nextInt(200));
-  sw.stop();
-  final us = sw.elapsedMicroseconds;
-  _tickMicros.add(us);
-  _bucket(us);
+      _spin(200 + _rng.nextInt(200));
+      sw.stop();
+      final us = sw.elapsedMicroseconds;
+      _tickMicros.add(us);
+      _bucket(us);
     }
   }
 
@@ -109,7 +109,8 @@ class PerfHarness {
   void writeMetrics() {
     final out = File('build/metrics/perf_simulation.json');
     out.parent.createSync(recursive: true);
-    out.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(snapshot()));
+    out.writeAsStringSync(
+        const JsonEncoder.withIndent('  ').convert(snapshot()));
   }
 
   static void _spin(int n) {
@@ -141,6 +142,7 @@ class PerfHarness {
       final idx = ((percentile / 100) * (sorted.length - 1)).round();
       return sorted[idx];
     }
+
     return {
       'avg': avg,
       'p50': p(50),

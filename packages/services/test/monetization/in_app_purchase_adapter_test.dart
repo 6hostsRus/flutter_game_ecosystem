@@ -84,7 +84,8 @@ void main() {
       expect(s.type, SkuType.consumable);
     });
 
-    test('availability returns true for known SKU, false for unknown', () async {
+    test('availability returns true for known SKU, false for unknown',
+        () async {
       final ok = await adapter.availability(sku);
       expect(ok.isAvailable, true);
       final bad = await adapter.availability('missing.sku');
@@ -153,7 +154,8 @@ void main() {
       expect(r.orderId?.startsWith('restore_') ?? true, true);
     });
 
-    test('store unavailable: listSkus empty, availability false, checkout fails',
+    test(
+        'store unavailable: listSkus empty, availability false, checkout fails',
         () async {
       iap.InAppPurchase.instance.setAvailable(false);
       final skus = await adapter.listSkus();
@@ -194,9 +196,8 @@ void main() {
         rawMicros: '2000000',
       );
       iap.InAppPurchase.instance.setAutoComplete(false);
-      final slowAdapter =
-          InAppPurchaseMonetizationAdapter({'sku.slow'})
-            ..purchaseTimeout = const Duration(milliseconds: 60);
+      final slowAdapter = InAppPurchaseMonetizationAdapter({'sku.slow'})
+        ..purchaseTimeout = const Duration(milliseconds: 60);
       await slowAdapter.init();
       final events = <PurchaseResult>[];
       final sub = slowAdapter.purchaseStream.listen(events.add);
@@ -209,4 +210,3 @@ void main() {
     });
   });
 }
-

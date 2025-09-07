@@ -89,7 +89,8 @@ class PerfHarness {
   void writeMetrics() {
     final out = File('build/metrics/perf_simulation.json');
     out.parent.createSync(recursive: true);
-    out.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(snapshot()));
+    out.writeAsStringSync(
+        const JsonEncoder.withIndent('  ').convert(snapshot()));
   }
 
   static void _spin(int n) {

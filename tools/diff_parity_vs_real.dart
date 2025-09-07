@@ -7,9 +7,14 @@ import 'dart:convert';
 import 'dart:io';
 
 void main(List<String> args) {
-  final specPath = _argValue(args, '--spec') ?? 'tools/parity_spec/in_app_purchase.json';
-  final symbolsPath = _argValue(args, '--symbols') ?? 'docs/metrics/in_app_purchase_symbols.json';
-  final out = _argValue(args, '--out') ?? 'docs/metrics/parity_diff_in_app_purchase.json';
+  final specPath =
+      _argValue(args, '--spec') ?? 'tools/parity_spec/in_app_purchase.json';
+  final symbolsPath =
+      _argValue(args, '--symbols') ??
+      'docs/metrics/in_app_purchase_symbols.json';
+  final out =
+      _argValue(args, '--out') ??
+      'docs/metrics/parity_diff_in_app_purchase.json';
 
   final spec = _readJson(specPath);
   final symbols = _readJson(symbolsPath);
