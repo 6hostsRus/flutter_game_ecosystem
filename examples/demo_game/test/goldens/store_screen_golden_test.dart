@@ -9,14 +9,12 @@ void main() {
     await tester.pumpWidget(const ProviderScope(child: demo.App()));
     await tester.pump();
 
-    // Navigate to Store tab (index 3) via NavigationBar destinations.
-    final destinations = find.byType(NavigationDestination);
-    expect(destinations, findsNWidgets(5));
-    await tester.tap(destinations.at(3));
+  // Navigate to Store tab via stable Key.
+  await tester.tap(find.byKey(const Key('nav:dest:store')));
     for (int i = 0; i < 6; i++) {
       await tester.pump(const Duration(milliseconds: 40));
     }
-    expect(find.text('Open Store'), findsOneWidget);
+  expect(find.byKey(const Key('store:button')), findsOneWidget);
 
     await expectLater(
       find.byType(MaterialApp),

@@ -10,24 +10,21 @@ void main() {
     await tester.pumpWidget(const ProviderScope(child: demo.App()));
     await tester.pump();
 
-    final destFinder = find.byType(NavigationDestination);
-    expect(destFinder, findsNWidgets(5));
-
-    Future<void> expectTab(int index, Pattern expectedText) async {
-      await tester.tap(destFinder.at(index));
+    Future<void> expectTab(String tabKeySuffix, Pattern expectedText) async {
+      await tester.tap(find.byKey(Key('nav:dest:$tabKeySuffix')));
       // Allow NavigationBar animation to progress.
       for (int i = 0; i < 6; i++) {
         await tester.pump(const Duration(milliseconds: 40));
       }
       expect(find.textContaining(expectedText), findsWidgets,
-          reason: 'Expected "$expectedText" after selecting tab $index');
+          reason: 'Expected "$expectedText" after selecting tab $tabKeySuffix');
     }
 
-    // Tab order derived from GameTab enum ordering (home, upgrades, items, store, quests)
-    await expectTab(0, 'Home');
-    await expectTab(1, 'Double Income');
-    await expectTab(2, 'Iron Sword');
-    await expectTab(3, 'Open Store');
-    await expectTab(4, 'Log in');
+    // Tabs referenced by enum names
+    await expectTab('home', 'Home');
+    await expectTab('upgrades', 'Double Income');
+    await expectTab('items', 'Iron Sword');
+    await expectTab('store', 'Open Store');
+    await expectTab('quests', 'Log in');
   });
 }

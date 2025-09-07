@@ -8,10 +8,9 @@ void main() {
       (tester) async {
     await tester.pumpWidget(const ProviderScope(child: demo.App()));
     await tester.pump(const Duration(milliseconds: 200));
-    // Ensure Home tab selected so buttons are visible.
-    final destFinder = find.byType(NavigationDestination);
-    if (destFinder.evaluate().isNotEmpty) {
-      await tester.tap(destFinder.at(0));
+    // Ensure Home tab selected so buttons are visible (via stable key).
+    if (find.byKey(const Key('nav:dest:home')).evaluate().isNotEmpty) {
+      await tester.tap(find.byKey(const Key('nav:dest:home')));
       await tester.pump(const Duration(milliseconds: 200));
     }
 

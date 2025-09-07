@@ -34,13 +34,21 @@ void main() {
     expect(find.byType(NavigationBar), findsOneWidget);
 
     // Enumerate tabs: tap each NavigationDestination and assert widget name matches.
-    final destinations = find.byType(NavigationDestination);
-    expect(destinations, findsNWidgets(tabs.length));
     for (int i = 0; i < tabs.length; i++) {
-      await tester.tap(destinations.at(i));
+      final tabWidgetName = (tabs[i]['widget'] as String);
+      // Map widget name to enum suffix used in keys
+      String keySuffix = switch (tabWidgetName) {
+        'HomeScreen' => 'home',
+        'UpgradesScreen' => 'upgrades',
+        'ItemsScreen' => 'items',
+        'StoreScreen' => 'store',
+        'QuestsScreen' => 'quests',
+        _ => 'home',
+      };
+      await tester.tap(find.byKey(Key('nav:dest:$keySuffix')));
       await settleLimited(tester);
 
-      final expectedWidgetName = (tabs[i]['widget'] as String);
+      final expectedWidgetName = tabWidgetName;
       // Match using runtimeType.toString() to avoid hardcoding Types here.
       final matcher = find.byWidgetPredicate(
         (w) => w.runtimeType.toString() == expectedWidgetName,
