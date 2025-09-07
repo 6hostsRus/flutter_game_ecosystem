@@ -8,9 +8,9 @@ void main() {
     final packageRelative =
         Directory('../../packages/game_core/assets/schemas');
     final dir = await rootRelative.exists() ? rootRelative : packageRelative;
-    expect(await dir.exists(), isTrue,
-        reason:
-            'Expected game_core/assets/schemas to exist relative to repo root or package');
+  expect(await dir.exists(), isTrue,
+    reason:
+      'Expected packages/game_core/assets/schemas to exist (repo root or package relative)');
 
     final files = await dir.list().toList();
     expect(

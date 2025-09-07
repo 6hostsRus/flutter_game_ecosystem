@@ -10,7 +10,7 @@ High-level templates for starter game loops and their systems. These are design 
 Related:
 
 -    Schemas live in-core at `packages/game_core/assets/schemas/`.
--    Minimal runtime validator: `game_core/lib/schemas/validator.dart`.
+-    Minimal runtime validator: `packages/game_core/lib/schemas/validator.dart`.
 -    Validation how-to: `docs/templates/schema-validation.md`.
 
 Sample content pack fixture:

@@ -15,12 +15,12 @@ void main() {
     final appSrc = File('lib/main.dart').readAsStringSync();
     final tabRegex =
         RegExp(r'GameTab\.([a-zA-Z0-9_]+): \(_\) => const ([A-Za-z0-9_]+)\(');
-  final found = <String>[];
+    final found = <String>[];
     for (final m in tabRegex.allMatches(appSrc)) {
       found.add(m.group(2)!);
     }
-  final foundUnique = found.toSet();
-  expect(foundUnique.length, tabs.length, reason: 'Mismatch tab count');
-  expect(foundUnique, tabs.toSet(), reason: 'Mismatch tab widget names');
+    final foundUnique = found.toSet();
+    expect(foundUnique.length, tabs.length, reason: 'Mismatch tab count');
+    expect(foundUnique, tabs.toSet(), reason: 'Mismatch tab widget names');
   });
 }
