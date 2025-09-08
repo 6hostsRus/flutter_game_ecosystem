@@ -34,7 +34,7 @@ jobs:
                  run: melos bootstrap
 
                - name: Format check
-                 run: melos run format -- --set-exit-if-changed
+                 run: melos run format:check
 
                - name: Analyze
                  run: melos run analyze

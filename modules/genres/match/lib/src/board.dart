@@ -31,6 +31,15 @@ class MatchBoard {
     return matched;
   }
 
+  /// Swap and, if a match occurs, resolve cascades and refill the board.
+  /// Returns the total number of cells cleared (including cascades), or 0 if no match.
+  int swapAndResolveCascades(int x1, int y1, int x2, int y2, Rng rng) {
+    final matched = trySwap(x1, y1, x2, y2);
+    if (matched.isEmpty) return 0;
+    // The swap yielded a match; resolve all cascades and refill.
+    return matched.length + resolveCascades(rng);
+  }
+
   /// Fill empty cells (-1) or initialize board using provided RNG.
   void fill(Rng rng) {
     for (var y = 0; y < height; y++) {

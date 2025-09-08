@@ -65,12 +65,13 @@ class _MatchBoardViewState extends State<MatchBoardView> {
       return;
     }
     if (_adjacent(_selected!, current)) {
-      final matched =
-          _board.trySwap(_selected!.dx.toInt(), _selected!.dy.toInt(), x, y);
-      if (matched.isNotEmpty) {
-        _board.clearAndGravity(matched);
-        _board.resolveCascades(_rng);
-      }
+      _board.swapAndResolveCascades(
+        _selected!.dx.toInt(),
+        _selected!.dy.toInt(),
+        x,
+        y,
+        _rng,
+      );
       setState(() => _selected = null);
     } else {
       // Select new cell if not adjacent

@@ -23,6 +23,7 @@ scripts:
      get: melos exec -- flutter pub get
      analyze: melos exec -- dart analyze .
      format: melos exec -- dart format .
+     format:check: melos exec -- dart format --output=none . --set-exit-if-changed
      flutter:warm: flutter --version
      test: melos run flutter:warm && melos exec --concurrency=1 -- flutter test --reporter expanded
      example: melos exec --scope="demo_game" -- flutter run

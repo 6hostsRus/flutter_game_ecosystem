@@ -116,5 +116,45 @@ void main() {
       expect(total >= 3, isTrue); // At least one match cleared
       expect(b.findMatches().isEmpty, isTrue); // Stable
     });
+
+    test('swapAndResolveCascades triggers cascades and refills', () {
+      final b = MatchBoard(5, 5, kinds: 3);
+      // Layout chosen so swapping (1,2)<->(2,2) forms horizontal match at row 2
+      final layout = [
+        0,
+        1,
+        2,
+        0,
+        1,
+        2,
+        0,
+        1,
+        2,
+        0,
+        1,
+        2,
+        1,
+        1,
+        0,
+        0,
+        1,
+        2,
+        0,
+        1,
+        2,
+        0,
+        1,
+        2,
+        0,
+      ];
+      for (var i = 0; i < b.cells.length; i++) {
+        b.cells[i] = layout[i];
+      }
+      final rng = DeterministicRng(7);
+      final cleared = b.swapAndResolveCascades(1, 2, 2, 2, rng);
+      expect(cleared, greaterThanOrEqualTo(3)); // At least the initial match
+      expect(b.findMatches().isEmpty, isTrue); // Board is stable after cascades
+      expect(b.cells.where((v) => v < 0), isEmpty); // Board is refilled
+    });
   });
 }
