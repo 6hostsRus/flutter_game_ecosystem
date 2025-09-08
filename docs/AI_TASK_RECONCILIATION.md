@@ -33,11 +33,33 @@ Generated: 2025-09-07
 
 ## New Batch — Core consolidation and schemas
 
-| Task                               | Status  | Artifacts (current)                                                                                                                 | Gaps / Next                                                                          |
-| ---------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| TemplatesAndSchemasRefactor        | Done    | packages/game_core/assets/schemas/_.schema.json; packages/game_core/lib/schemas/validator.dart; CLI default; docs/templates/_ moved | Monitor adoption; expand samples as needed                                           |
-| SnippetsReconciliationToGameCore   | Partial | snippets/MIGRATION.md pre-populated with destinations                                                                               | Execute migrations with tests; update exports and docs                               |
-| GameCoreRelocationAndConsolidation | Done    | packages/game_core/ in melos; imports audited; legacy removed; docs updated                                                         | Ensure all downstream references stay clean; add note to CHANGELOG                   |
-| GameCoreInterfacesImplementation   | Planned | —                                                                                                                                   | Implement initial contracts + tests; export via `lib/game_core.dart`                 |
-| DocsAndOpsAlignmentForMoves        | Partial | .github/labeler.yml updated; tools/schema_validator default path updated                                                            | Review workflow path filters (ci, metrics, golden-guard) for packages/game_core/\*\* |
-| ExampleIntegrationUpdate           | Planned | —                                                                                                                                   | Update examples/genre modules to use new APIs and migrated utilities                 |
+| Task                               | Status  | Artifacts (current)                                                                                                                 | Gaps / Next                                                                                           |
+| ---------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| TemplatesAndSchemasRefactor        | Done    | packages/game*core/assets/schemas/*.schema.json; packages/game*core/lib/schemas/validator.dart; CLI default; docs/templates/* moved | Monitor adoption; expand samples as needed                                                            |
+| SnippetsReconciliationToGameCore   | Partial | snippets/MIGRATION.md updated; migrated: analytics_events, category_registry, idle_time_service, app_config; idle_models → module   | Migrate remaining: platformer_player_controller, rpg_stats, match_board, ccg/card, survivor_run_state |
+| GameCoreRelocationAndConsolidation | Done    | packages/game_core/ in melos; imports audited; legacy removed; docs updated                                                         | Ensure all downstream references stay clean; add note to CHANGELOG                                    |
+| GameCoreInterfacesImplementation   | Done    | packages/game_core/lib/core/{clock,logger,rng,save_driver}.dart (+ tests); exports via game_core.dart                               | Consider persistence adapters in follow-ups (e.g., shared_prefs, file, isar)                          |
+| DocsAndOpsAlignmentForMoves        | Partial | tools/schema_validator default path updated; docs refreshed                                                                         | Audit CI workflow path filters for packages/… (repo snapshot lacks .github here)                      |
+| ExampleIntegrationUpdate           | Partial | modules/genres/game_scenes SceneDiagnostics uses Logger/Rng; demo example shows AppConfig flags; idle module has ECS stub + tests   | Optional: add a small ECS-driven idle demo screen under demo_game                                     |
+
+## Next Tasks (concrete)
+
+1. Snippets migration — remaining items (with tests)
+
+     - platformer_player_controller → modules/genres/game_scenes (or platformer module) with Flame input adapter and a tiny test
+     - rpg_stats → modules/genres/rpg with simple balance model + tests
+     - match_board → modules/genres/match with deterministic RNG and a solver sanity test
+     - ccg/card → modules/genres/ccg with model + serialization test
+     - survivor_run_state → modules/genres/survivor with basic state machine + tick contract
+
+2. Example wiring
+
+     - Add an optional demo screen that spins IdleIncomeSystem over time and displays accumulating currency; guard with AppConfig.featureIdle
+
+3. Docs & Ops alignment
+
+     - If CI workflows are present, ensure path filters include packages/game_core/** and modules/genres/**
+     - Add short note in CHANGELOG for the completed migrations and new modules
+
+4. Persistence adapters (follow-up)
+     - Provide a basic shared_preferences SaveDriver adapter and tests; keep InMemory as default in tests

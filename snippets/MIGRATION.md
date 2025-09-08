@@ -31,18 +31,18 @@ Process
 
 Status tracker
 
-| Path                                                       | Class         | Destination                       | PR  | Notes                                       |
-| ---------------------------------------------------------- | ------------- | --------------------------------- | --- | ------------------------------------------- |
-| snippets/dart/core/analytics_events.dart                   | Core utility  | packages/game_core/lib/telemetry/ | ✅  | Migrated as canonical AnalyticsEvents       |
-| snippets/dart/core/app_config.dart                         | Core utility  | packages/game_core/lib/config/    | ✅  | Migrated as AppConfig with overrides        |
-| snippets/dart/core/category_registry.dart                  | Core utility  | packages/game_core/lib/content/   | ✅  | Migrated as generic registry (no AppConfig) |
-| snippets/dart/platformer/platformer_player_controller.dart | Genre example | modules/genres/platformer/lib/    |     | Ensure Flame input adapter present          |
-| snippets/dart/rpg/rpg_stats.dart                           | Genre example | modules/genres/rpg/lib/           |     | Balance model + tests                       |
-| snippets/dart/idle/idle_models.dart                        | Genre example | modules/genres/idle/lib/          | ✅  | Basic models + tests; ECS later             |
-| snippets/dart/idle/idle_time_service.dart                  | Core service  | packages/game_core/lib/time/      | ✅  | Migrated with Clock injection + tests       |
-| snippets/dart/match/match_board.dart                       | Genre example | modules/genres/match/lib/         |     | Deterministic RNG; add simple solver test   |
-| snippets/dart/ccg/card.dart                                | Genre example | modules/genres/ccg/lib/           |     | Card model + serialization                  |
-| snippets/dart/survivor/survivor_run_state.dart             | Genre example | modules/genres/survivor/lib/      |     | State machine; ensure tick/update contract  |
+| Path                                                       | Class         | Destination                       | PR  | Notes                                           |
+| ---------------------------------------------------------- | ------------- | --------------------------------- | --- | ----------------------------------------------- |
+| snippets/dart/core/analytics_events.dart                   | Core utility  | packages/game_core/lib/telemetry/ | ✅  | Migrated as canonical AnalyticsEvents           |
+| snippets/dart/core/app_config.dart                         | Core utility  | packages/game_core/lib/config/    | ✅  | Migrated as AppConfig with overrides            |
+| snippets/dart/core/category_registry.dart                  | Core utility  | packages/game_core/lib/content/   | ✅  | Migrated as generic registry (no AppConfig)     |
+| snippets/dart/platformer/platformer_player_controller.dart | Genre example | modules/genres/game_scenes/lib/   | ✅  | PlayerController moved; input adapter via tests |
+| snippets/dart/rpg/rpg_stats.dart                           | Genre example | modules/genres/rpg/lib/           | ✅  | Stats model + serialization + tests             |
+| snippets/dart/idle/idle_models.dart                        | Genre example | modules/genres/idle/lib/          | ✅  | Basic models + tests; ECS later                 |
+| snippets/dart/idle/idle_time_service.dart                  | Core service  | packages/game_core/lib/time/      | ✅  | Migrated with Clock injection + tests           |
+| snippets/dart/match/match_board.dart                       | Genre example | modules/genres/match/lib/         | ✅  | Deterministic RNG; tests for swap/clear/gravity |
+| snippets/dart/ccg/card.dart                                | Genre example | modules/genres/ccg/lib/           |     | Card model + serialization                      |
+| snippets/dart/survivor/survivor_run_state.dart             | Genre example | modules/genres/survivor/lib/      |     | State machine; ensure tick/update contract      |
 
 Done criteria
 

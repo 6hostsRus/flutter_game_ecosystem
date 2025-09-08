@@ -1,2 +1,2 @@
-
-class Stats { int str, dex, intl, vit; Stats({this.str=1,this.dex=1,this.intl=1,this.vit=1}); }
+// Moved to modules/genres/rpg/lib/src/stats.dart
+// Use: import 'package:rpg/rpg.dart'; then use `Stats`.

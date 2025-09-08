@@ -1,5 +1,3 @@
-
-class MatchBoard { final int width; final int height; late List<int> cells;
-  MatchBoard(this.width, this.height){ cells = List<int>.filled(width*height, 0); }
-  int index(int x,int y)=> y*width + x;
-}
+// This snippet has moved into the modular codebase.
+// See: modules/genres/match/lib/src/board.dart and public export at modules/genres/match/lib/match.dart
+// Tests live in: modules/genres/match/test/board_test.dart
