@@ -25,6 +25,8 @@ dependencies:
           path: ../../modules/genres/match
      survivor:
           path: ../../modules/genres/survivor
+     idle:
+          path: ../../modules/genres/idle
 dev_dependencies:
      flutter_test:
           sdk: flutter

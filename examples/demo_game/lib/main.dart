@@ -7,6 +7,7 @@ import 'package:ui_shell/ui_shell.dart';
 import 'package:match/match.dart';
 import 'package:survivor/survivor.dart';
 import 'package:game_core/game_core.dart';
+import 'package:idle/idle.dart';
 
 void main() => runApp(const ProviderScope(child: App()));
 
@@ -24,6 +25,12 @@ const bool kDemoSurvivorButton =
 final survivorDemoEnabledProvider = Provider<bool>((ref) {
   final cfg = ref.watch(appConfigProvider);
   return cfg.featureSurvivor && kDemoSurvivorButton;
+});
+const bool kDemoIdleButton =
+    bool.fromEnvironment('DEMO_IDLE_BUTTON', defaultValue: false);
+final idleDemoEnabledProvider = Provider<bool>((ref) {
+  final cfg = ref.watch(appConfigProvider);
+  return cfg.featureIdle && kDemoIdleButton;
 });
 
 class App extends ConsumerWidget {
@@ -172,6 +179,24 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     icon: const Icon(Icons.grid_on_rounded),
                     label: const Text('Play Match-3 (demo)'),
+                  ),
+                ],
+              ),
+            ),
+            Visibility(
+              visible: ref.watch(idleDemoEnabledProvider),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 8),
+                  FilledButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const IdleDemoScreen(),
+                      ),
+                    ),
+                    icon: const Icon(Icons.timelapse_rounded),
+                    label: const Text('Play Idle (demo)'),
                   ),
                 ],
               ),
@@ -390,6 +415,72 @@ class _SurvivorHudDemoState extends State<_SurvivorHudDemo>
               'DPS: ${_state.effectiveDps.toStringAsFixed(2)}  xSpawn: ${_state.spawnRateMultiplier.toStringAsFixed(2)}',
               style: const TextStyle(color: Colors.white70)),
         ],
+      ),
+    );
+  }
+}
+
+class IdleDemoScreen extends StatefulWidget {
+  const IdleDemoScreen({super.key});
+  @override
+  State<IdleDemoScreen> createState() => _IdleDemoScreenState();
+}
+
+class _IdleDemoScreenState extends State<IdleDemoScreen>
+    with SingleTickerProviderStateMixin {
+  late Ticker _ticker;
+  late World _world;
+
+  @override
+  void initState() {
+    super.initState();
+    _world = World();
+    // Create state entity
+    final state = IdleState(softCurrency: 0.0, generators: [
+      Generator(
+          id: 'gen1', baseRatePerSec: 1.0, multiplier: 1.0, unlocked: true),
+      Generator(
+          id: 'gen2', baseRatePerSec: 0.2, multiplier: 1.0, unlocked: true),
+    ]);
+    final sEntity = _world.createEntity();
+    sEntity.set<IdleStateComponentData>(state.toComponent());
+    // Create generator entities
+    for (final g in state.generators) {
+      final e = _world.createEntity();
+      e.set<GeneratorComponentData>(g.toComponent());
+    }
+    _ticker = createTicker((elapsed) {
+      setState(() {
+        IdleIncomeSystem.tick(_world, 1 / 60);
+      });
+    })
+      ..start();
+  }
+
+  @override
+  void dispose() {
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final s = _world
+        .query([IdleStateComponentData])
+        .cast<Entity>()
+        .first
+        .get<IdleStateComponentData>()!;
+    return Scaffold(
+      appBar: AppBar(title: const Text('Idle Demo')),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('ECS Idle Income Demo'),
+            const SizedBox(height: 8),
+            Text('Soft Currency: ${s.softCurrency.toStringAsFixed(2)}'),
+          ],
+        ),
       ),
     );
   }

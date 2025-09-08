@@ -228,6 +228,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.1"
+  idle:
+    dependency: "direct main"
+    description:
+      path: "../../modules/genres/idle"
+      relative: true
+    source: path
+    version: "0.1.0"
   in_app_purchase:
     dependency: "direct overridden"
     description:
