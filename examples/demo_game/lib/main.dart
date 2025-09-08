@@ -1,9 +1,11 @@
 import 'package:core_services/core_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:game_scenes/game_scenes.dart';
 import 'package:ui_shell/ui_shell.dart';
 import 'package:match/match.dart';
+import 'package:survivor/survivor.dart';
 import 'package:game_core/game_core.dart';
 
 void main() => runApp(const ProviderScope(child: App()));
@@ -16,6 +18,12 @@ const bool kDemoMatchButton =
 final matchDemoEnabledProvider = Provider<bool>((ref) {
   final cfg = ref.watch(appConfigProvider);
   return cfg.featureMatch && kDemoMatchButton;
+});
+const bool kDemoSurvivorButton =
+    bool.fromEnvironment('DEMO_SURVIVOR_BUTTON', defaultValue: false);
+final survivorDemoEnabledProvider = Provider<bool>((ref) {
+  final cfg = ref.watch(appConfigProvider);
+  return cfg.featureSurvivor && kDemoSurvivorButton;
 });
 
 class App extends ConsumerWidget {
@@ -306,11 +314,81 @@ class SurvivorScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(child: survivorWidget()),
+          Expanded(
+            child: _SurvivorHudDemo(mode: mode),
+          ),
           Padding(
             padding: const EdgeInsets.all(12),
             child: Text('Mode: $mode', textAlign: TextAlign.center),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SurvivorHudDemo extends StatefulWidget {
+  final String mode;
+  const _SurvivorHudDemo({required this.mode});
+  @override
+  State<_SurvivorHudDemo> createState() => _SurvivorHudDemoState();
+}
+
+class _SurvivorHudDemoState extends State<_SurvivorHudDemo>
+    with SingleTickerProviderStateMixin {
+  late Ticker _ticker;
+  SurvivorRunState _state = const SurvivorRunState(
+    health: 100,
+    damagePerSec: 2,
+    dpsGrowthPerWave: 0.15,
+    spawnGrowthPerWave: 0.25,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _ticker = createTicker((elapsed) {
+      // ~60 FPS
+      setState(() {
+        _state = _state.tick(1 / 60);
+      });
+    })
+      ..start();
+  }
+
+  @override
+  void dispose() {
+    _ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hpPct = (_state.health / 100).clamp(0.0, 1.0);
+    return Container(
+      color: Colors.black,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Wave ${_state.wave}',
+              style: const TextStyle(color: Colors.white)),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: LinearProgressIndicator(
+              value: hpPct,
+              minHeight: 12,
+              backgroundColor: Colors.red[200],
+              color: Colors.greenAccent,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text('HP: ${_state.health.toStringAsFixed(1)}',
+              style: const TextStyle(color: Colors.white70)),
+          const SizedBox(height: 8),
+          Text(
+              'DPS: ${_state.effectiveDps.toStringAsFixed(2)}  xSpawn: ${_state.spawnRateMultiplier.toStringAsFixed(2)}',
+              style: const TextStyle(color: Colors.white70)),
         ],
       ),
     );

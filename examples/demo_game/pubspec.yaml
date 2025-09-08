@@ -23,6 +23,8 @@ dependencies:
           path: ../../packages/game_core
      match:
           path: ../../modules/genres/match
+     survivor:
+          path: ../../modules/genres/survivor
 dev_dependencies:
      flutter_test:
           sdk: flutter
