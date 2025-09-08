@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:demo_game/main.dart' as demo;
+import 'golden_test_helper.dart';
 
 void main() {
   testWidgets('StoreScreen golden', (tester) async {
     await tester.binding.setSurfaceSize(const Size(400, 800));
     await tester.pumpWidget(const ProviderScope(child: demo.App()));
-    await tester.pump();
+  await loadFonts();
+  await prepareGoldenTest(tester);
 
     // Navigate to Store tab via stable Key.
     await tester.tap(find.byKey(const Key('nav:dest:store')));

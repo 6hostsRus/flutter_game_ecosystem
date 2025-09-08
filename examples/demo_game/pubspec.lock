@@ -228,6 +228,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.8.1"
+  golden_toolkit:
+    dependency: "direct dev"
+    description:
+      name: golden_toolkit
+      sha256: b33ef1d04f804f98e61fbacbe3461e8d5ba30cc4db37b670413d96d9da263ca7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.12.0"
   hooks_riverpod:
     dependency: transitive
     description:
@@ -409,14 +417,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
   platform:
     dependency: transitive
     description:

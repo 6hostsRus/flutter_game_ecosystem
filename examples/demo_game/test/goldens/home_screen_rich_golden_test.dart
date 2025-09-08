@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:core_services/core_services.dart';
 import 'package:demo_game/main.dart' as demo;
+import 'golden_test_helper.dart';
 
 void main() {
   testWidgets('HomeScreen rich state golden', (tester) async {
@@ -18,7 +19,8 @@ void main() {
       container: container,
       child: const demo.App(),
     ));
-    await tester.pump();
+  await loadFonts();
+  await prepareGoldenTest(tester);
     expect(find.textContaining('Home'), findsWidgets);
     expect(find.text('1234'), findsOneWidget);
     await expectLater(

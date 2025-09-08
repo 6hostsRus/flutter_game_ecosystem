@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:demo_game/main.dart' as demo;
+import 'golden_test_helper.dart';
 
 void main() {
   testWidgets('HomeScreen golden', (tester) async {
@@ -10,7 +11,8 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(width, height));
 
     await tester.pumpWidget(const ProviderScope(child: demo.App()));
-    await tester.pump();
+  await loadFonts();
+  await prepareGoldenTest(tester);
 
     // Ensure expected primary text present before capturing.
     expect(find.textContaining('Home'), findsWidgets);

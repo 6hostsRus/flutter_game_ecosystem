@@ -1,0 +1,52 @@
+name: Golden Guardian
+
+on:
+  pull_request:
+
+jobs:
+  compare-diffs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install imagemagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+      - name: Find failure diffs
+        id: find
+        run: |
+          files=$(find examples/demo_game/test/goldens/failures -name '*isolatedDiff.png' -print | tr '\n' ' ')
+          echo "files=$files" >> $GITHUB_OUTPUT
+      - name: Compute pixel diffs
+        id: compare
+        if: steps.find.outputs.files != ''
+        run: |
+          set -e
+          TOTAL_PIXELS=0
+          DIFF_PIXELS=0
+          for f in ${{ steps.find.outputs.files }}; do
+            master=${f/_isolatedDiff.png/_masterImage.png}
+            testimg=${f/_isolatedDiff.png/_testImage.png}
+            if [ ! -f "$master" ] || [ ! -f "$testimg" ]; then
+              echo "Missing pair for $f" >&2
+              continue
+            fi
+            diff_pixels=$(compare -metric AE "$master" "$testimg" null: 2>&1 || true)
+            w=$(identify -format "%w" "$master")
+            h=$(identify -format "%h" "$master")
+            pixels=$((w*h))
+            TOTAL_PIXELS=$((TOTAL_PIXELS + pixels))
+            DIFF_PIXELS=$((DIFF_PIXELS + diff_pixels))
+          done
+          if [ $TOTAL_PIXELS -eq 0 ]; then
+            echo "No master images found" && exit 0
+          fi
+          percent=$(awk "BEGIN {printf \"%.2f\", ($DIFF_PIXELS/$TOTAL_PIXELS)*100}")
+          echo "TotalPixels=$TOTAL_PIXELS" >> $GITHUB_OUTPUT
+          echo "DiffPixels=$DIFF_PIXELS" >> $GITHUB_OUTPUT
+          echo "DiffPercent=$percent" >> $GITHUB_OUTPUT
+          echo "DiffPercent=$percent"
+      - name: Fail on high diff
+        if: ${{ steps.find.outputs.files != '' && steps.compare.outputs.DiffPercent != '' }}
+        run: |
+          percent=${{ steps.compare.outputs.DiffPercent }}
+          max=0.5
+          awk -v p="$percent" -v m="$max" 'BEGIN{ if (p+0 > m+0) { print "Golden diffs exceed tolerance: " p "% (max " m "% )"; exit 1 } else { print "Golden diff within tolerance: " p "%"; exit 0 } }'
