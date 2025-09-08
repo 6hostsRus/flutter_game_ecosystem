@@ -19,6 +19,8 @@ dependencies:
           path: ../../packages/services/core_services
      game_scenes:
           path: ../../modules/genres/game_scenes
+     game_core:
+          path: ../../packages/game_core
 dev_dependencies:
      flutter_test:
           sdk: flutter
