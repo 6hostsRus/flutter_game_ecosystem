@@ -21,6 +21,8 @@ Guidelines:
 -    game_scenes: Added SceneDiagnostics using Logger and Rng; test covers deterministic logging
 -    Docs: Updated paths to packages/game_core; reconciled task statuses
 
+-    Tasks: Archived completed AI task library items into the changelog and pruned `docs/AI_TASK_LIBRARY.md` and `docs/AI_TASK_RECONCILIATION.md` to list only current open/partial items.
+
 ## 2025-09-07
 
 Highlights
