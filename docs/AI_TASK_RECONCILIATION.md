@@ -12,9 +12,9 @@ This reconciliation snapshot reflects the current open and partially-complete it
 
 ## Current Partial / Open Items
 
-| Task                     | Status  | Artifacts (current)                                                                               | Gaps / Next                                                               |
-| ------------------------ | ------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| ExampleIntegrationUpdate | Partial | Demo app uses AppConfig flags; match demo updated with cascades; idle module has ECS stub + tests | Add idle ECS demo screen behind feature flag and document example README  |
+| Task                     | Status  | Artifacts (current)                                                                                                                                                                                                                                                                              | Gaps / Next                                                              |
+| ------------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| ExampleIntegrationUpdate | Partial | Demo app uses AppConfig flags; match demo updated with cascades; idle module has ECS stub + tests                                                                                                                                                                                                | Add idle ECS demo screen behind feature flag and document example README |
 | Small Snippets Backlog   | Done    | platformer_player_controller (modules/genres/game_scenes/src/platformer/player_controller.dart + tests), rpg_stats (modules/genres/rpg/src/stats.dart + tests), ccg card (modules/genres/ccg/lib/src/card.dart + tests), survivor run_state (modules/genres/survivor/src/run_state.dart + tests) | Archived: tests and READMEs added; no remaining small snippet migrations |
 
 ## Next Tasks (concrete)
