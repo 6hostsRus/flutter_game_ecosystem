@@ -12,6 +12,7 @@ Related:
 -    Schemas live in-core at `packages/game_core/assets/schemas/`.
 -    Minimal runtime validator: `packages/game_core/lib/schemas/validator.dart`.
 -    Validation how-to: `docs/templates/schema-validation.md`.
+-    Quick reference: see README → "How to Run Key Workflows" → "Schema Validation".
 -    Environment flags how-to: `docs/templates/environment-flags.md`.
 
 Sample content pack fixture:

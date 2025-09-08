@@ -26,6 +26,12 @@ Extras
 
 -    `/epic "Runner MVP" children: #12 #34` • `/project to Game Ecosystem Board/In progress`.
 
+Schema Validation
+
+-    Validate content packs locally against in-core schemas:
+-    CLI: `dart run tools/schema_validator/bin/validate_schemas.dart --input-dir <pack_dir>`
+-    Schemas live at `packages/game_core/assets/schemas/`; CI also runs this check.
+
 ## Secrets to Configure
 
 Google Play / Android

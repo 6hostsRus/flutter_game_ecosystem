@@ -15,6 +15,7 @@ This file is now an index. Canonical content lives in modular docs:
 -    Metrics: `docs/METRICS.md`
 -    Workflows: `docs/WORKFLOWS.md`
 -    Ops & Secrets (Quick Ops): `docs/automation/index.md`
+-    Templates & Schemas: `docs/templates/README.md`, `docs/templates/schema-validation.md`
 -    How to run (perf/parity): `README.md#how-to-run-key-workflows`
 -    Task Execution Checklist: `docs/AI_TASK_CHECKLIST.md`
 -    Coding Standards: `docs/CODING_STANDARDS.md`

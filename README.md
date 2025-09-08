@@ -80,6 +80,13 @@ For day-to-day release commands and required secrets, see the canonical Ops & Se
 -    Auto-update spec:
 -    dart run tools/auto_update_parity_spec.dart --package in_app_purchase --symbols docs/metrics/in_app_purchase_symbols.json
 
+### Schema Validation
+
+-    CI validates content packs against in-core schemas using the CLI in `tools/schema_validator`.
+-    Local CLI (from repo root):
+-    dart run tools/schema_validator/bin/validate_schemas.dart --input-dir modules/content_packs/<pack>
+-    Schemas live at `packages/game_core/assets/schemas/` and are accessible at runtime via `package:game_core/schemas/validator.dart`.
+
 ## Golden Images
 
 Visual regression tests live under `examples/demo_game/test/goldens/` with baselines in `examples/demo_game/goldens/`. Update by running:

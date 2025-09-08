@@ -2,6 +2,8 @@
 
 This guide shows two ways to validate content pack data against the in‑core schemas.
 
+-    Quick reference: also see README → "How to Run Key Workflows" → "Schema Validation" for a one‑line CLI.
+
 -    CLI (full JSON Schema validation via json_schema2)
 -    Runtime (lightweight checks via game_core validator)
 

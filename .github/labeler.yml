@@ -16,3 +16,8 @@ platform:
      - 'platform/**'
 automation:
      - 'automation/**'
+
+# Schemas and validation tooling
+schemas:
+     - 'packages/game_core/assets/schemas/**'
+     - 'tools/schema_validator/**'

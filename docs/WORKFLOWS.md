@@ -12,7 +12,8 @@ Note: See `docs/CODING_STANDARDS.md` for review expectations that CI gates suppo
 
 -    File: `.github/workflows/ci.yml`
 -    Triggers: push (main), pull_request
--    Key Steps: Dart/Flutter setup, run `tools/quality_gates.dart` (parity, manifest, coverage, analytics tests), run unit tests & coverage merge, upload coverage artifact.
+-    Key Steps: Dart/Flutter setup, run `tools/quality_gates.dart` (parity, manifest, coverage, analytics tests), run unit tests & coverage merge, validate content pack schemas against `packages/game_core/assets/schemas/`, upload coverage artifact.
+     Quick local usage: see [README](../README.md#schema-validation).
 -    Outputs: Fails PR if any gate fails.
 
 ### Metrics Publisher
