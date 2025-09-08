@@ -41,7 +41,7 @@ Status tracker
 | snippets/dart/idle/idle_models.dart                        | Genre example | modules/genres/idle/lib/          | ✅  | Basic models + tests; ECS later                 |
 | snippets/dart/idle/idle_time_service.dart                  | Core service  | packages/game_core/lib/time/      | ✅  | Migrated with Clock injection + tests           |
 | snippets/dart/match/match_board.dart                       | Genre example | modules/genres/match/lib/         | ✅  | Deterministic RNG; tests for swap/clear/gravity |
-| snippets/dart/ccg/card.dart                                | Genre example | modules/genres/ccg/lib/           |     | Card model + serialization                      |
+| snippets/dart/ccg/card.dart                                | Genre example | modules/genres/ccg/lib/           | ✅  | Card model + serialization + tests (CcgCard)    |
 | snippets/dart/survivor/survivor_run_state.dart             | Genre example | modules/genres/survivor/lib/      |     | State machine; ensure tick/update contract      |
 
 Done criteria

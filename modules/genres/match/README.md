@@ -47,3 +47,16 @@ final cleared = board.resolveCascades(DeterministicRng(999));
 ## Testing
 
 See `test/board_test.dart` for examples covering deterministic fill, swap/match, clear/gravity, and cascades.
+
+### Demo integration in examples/demo_game
+
+-    The demo app includes an optional Match-3 screen using `MatchBoardView`.
+-    Visibility is controlled via AppConfig and a compile-time flag to keep goldens stable by default.
+
+Enable the button at runtime:
+
+```sh
+flutter run --dart-define=FEATURE_MATCH=true --dart-define=DEMO_MATCH_BUTTON=true
+```
+
+Or navigate directly to a scaffold hosting `MatchBoardView` in tests for deterministic goldens (seeded RNG).
