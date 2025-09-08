@@ -31,8 +31,10 @@ class FlagEvaluator {
         final conditions = flag['conditions'] as Map<String, dynamic>;
         for (final entry in conditions.entries) {
           final key = entry.key;
-          final allowed = (entry.value as List).map((e) => e.toString()).toList();
-          if (context[key] == null || !allowed.contains(context[key].toString())) {
+          final allowed =
+              (entry.value as List).map((e) => e.toString()).toList();
+          if (context[key] == null ||
+              !allowed.contains(context[key].toString())) {
             return false;
           }
         }
@@ -44,7 +46,8 @@ class FlagEvaluator {
   }
 
   /// Merge two flag maps (remote overrides take precedence).
-  static Map<String, dynamic> merge(Map<String, dynamic> base, Map<String, dynamic> override) {
+  static Map<String, dynamic> merge(
+      Map<String, dynamic> base, Map<String, dynamic> override) {
     final out = Map<String, dynamic>.from(base);
     override.forEach((k, v) => out[k] = v);
     return out;

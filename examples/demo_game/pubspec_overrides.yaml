@@ -1,16 +1,24 @@
-# melos_managed_dependency_overrides: core_services,game_scenes,in_app_purchase,providers,services,ui_shell,core_services_isar
+# melos_managed_dependency_overrides: core_services,core_services_isar,game_core,game_scenes,idle,in_app_purchase,match,providers,services,survivor,ui_shell
 dependency_overrides:
   core_services:
     path: ../../packages/services/core_services
   core_services_isar:
     path: ../../packages/services/core_services_isar
+  game_core:
+    path: ../../packages/game_core
   game_scenes:
     path: ../../modules/genres/game_scenes
+  idle:
+    path: ../../modules/genres/idle
   in_app_purchase:
     path: ../../packages/in_app_purchase
+  match:
+    path: ../../modules/genres/match
   providers:
     path: ../../packages/providers
   services:
     path: ../../packages/services
+  survivor:
+    path: ../../modules/genres/survivor
   ui_shell:
     path: ../../packages/ui_shell

@@ -4,7 +4,8 @@ class CurrencyDelta {
   final String currency;
   final int amount;
   final String reason;
-  const CurrencyDelta({required this.currency, required this.amount, required this.reason});
+  const CurrencyDelta(
+      {required this.currency, required this.amount, required this.reason});
 }
 
 class Offer {
@@ -19,7 +20,8 @@ class InsufficientFunds implements Exception {
   final int available;
   const InsufficientFunds(this.currency, this.needed, this.available);
   @override
-  String toString() => 'InsufficientFunds(currency=$currency, needed=$needed, available=$available)';
+  String toString() =>
+      'InsufficientFunds(currency=$currency, needed=$needed, available=$available)';
 }
 
 class UnknownCurrency implements Exception {
@@ -38,5 +40,6 @@ abstract class EconomyPort {
     if (amount <= 0) throw ArgumentError.value(amount, 'amount', 'must be > 0');
     apply(CurrencyDelta(currency: currency, amount: -amount, reason: reason));
   }
+
   List<Offer> offerCatalog();
 }

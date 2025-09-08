@@ -7,7 +7,8 @@ class AnalyticsEvent {
   const AnalyticsEvent(this.name, [this.props = const {}]);
 
   @override
-  String toString() => 'AnalyticsEvent(name: ' + name + ', props: ' + props.toString() + ')';
+  String toString() =>
+      'AnalyticsEvent(name: ' + name + ', props: ' + props.toString() + ')';
 }
 
 /// Public sink interface for analytics events.

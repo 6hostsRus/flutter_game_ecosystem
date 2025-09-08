@@ -7,7 +7,11 @@ class NavEntry {
   final String iconKey;
   final String label;
   final String? badgeKey;
-  const NavEntry({required this.id, required this.iconKey, required this.label, this.badgeKey});
+  const NavEntry(
+      {required this.id,
+      required this.iconKey,
+      required this.label,
+      this.badgeKey});
 }
 
 class Feature {
@@ -15,7 +19,11 @@ class Feature {
   final String title;
   final List<NavEntry> nav;
   final Map<String, Object?> meta;
-  const Feature({required this.id, required this.title, required this.nav, this.meta = const {}});
+  const Feature(
+      {required this.id,
+      required this.title,
+      required this.nav,
+      this.meta = const {}});
 }
 
 abstract class FeatureRegistry {

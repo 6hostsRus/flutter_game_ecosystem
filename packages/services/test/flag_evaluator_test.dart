@@ -9,7 +9,9 @@ void main() {
   });
 
   test('rollout flag ~50%', () {
-    final f = FlagEvaluator({"exp": {"rollout": 0.5}});
+    final f = FlagEvaluator({
+      "exp": {"rollout": 0.5}
+    });
     var enabledCount = 0;
     for (int i = 0; i < 1000; i++) {
       if (f.isEnabled("exp")) enabledCount++;
@@ -21,10 +23,13 @@ void main() {
   test('contextual flag', () {
     final f = FlagEvaluator({
       "ios_only_feature": {
-        "conditions": {"platform": ["ios"]}
+        "conditions": {
+          "platform": ["ios"]
+        }
       }
     });
     expect(f.isEnabled("ios_only_feature", context: {"platform": "ios"}), true);
-    expect(f.isEnabled("ios_only_feature", context: {"platform": "android"}), false);
+    expect(f.isEnabled("ios_only_feature", context: {"platform": "android"}),
+        false);
   });
 }
