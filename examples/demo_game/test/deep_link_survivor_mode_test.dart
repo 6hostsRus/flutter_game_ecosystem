@@ -6,8 +6,8 @@ import 'package:demo_game/main.dart' as demo;
 void main() {
   testWidgets('initial deep link builds survivor screen with mode',
       (tester) async {
-    await tester
-        .pumpWidget(ProviderScope(child: demo.App(initialRoute: '/play/hard')));
+    await tester.pumpWidget(
+        const ProviderScope(child: demo.App(initialRoute: '/play/hard')));
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Survivor'), findsOneWidget);
     expect(find.textContaining('Mode: hard'), findsOneWidget);

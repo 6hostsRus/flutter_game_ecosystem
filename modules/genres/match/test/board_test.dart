@@ -1,6 +1,6 @@
-import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:match/match.dart';
+import 'package:game_core/game_core.dart';
 
 void main() {
   group('MatchBoard', () {
@@ -10,7 +10,7 @@ void main() {
       for (var i = 0; i < board.cells.length; i++) {
         board.cells[i] = -1;
       }
-      final rng = Random(42);
+      final rng = DeterministicRng(42);
       board.fill(rng);
 
       final snapshot = List<int>.from(board.cells);
@@ -20,7 +20,7 @@ void main() {
       for (var i = 0; i < board2.cells.length; i++) {
         board2.cells[i] = -1;
       }
-      board2.fill(Random(42));
+      board2.fill(DeterministicRng(42));
 
       expect(board2.cells, equals(snapshot));
     });
@@ -56,7 +56,7 @@ void main() {
       b.clearAndGravity(matched);
       // After clear, those positions are -1 before gravity resolves
       // Gravity compacts; fill new with deterministic RNG
-      final rng = Random(7);
+      final rng = DeterministicRng(7);
       b.fill(rng);
 
       // Board should have no -1 after fill
@@ -84,6 +84,37 @@ void main() {
       final matched = b.trySwap(0, 0, 1, 0);
       expect(matched, isEmpty);
       expect(b.cells, equals(before));
+    });
+
+    test('resolveCascades repeats until stable and returns total cleared', () {
+      final b = MatchBoard(4, 4, kinds: 3);
+      // Construct a board with both a horizontal and vertical match that will cascade
+      // Use -1 to mark empties that will be filled deterministically
+      final layout = <int>[
+        // y=0
+        0, 0, 0, -1,
+        // y=1
+        1, 2, 1, -1,
+        // y=2 (vertical match in column 3 after first fill likely)
+        -1, -1, -1, -1,
+        // y=3
+        2, 1, 2, -1,
+      ];
+      for (var i = 0; i < b.cells.length; i++) {
+        b.cells[i] = layout[i];
+      }
+      // Initial fill to remove -1s deterministically, then force a cascade via trySwap
+      final rng = DeterministicRng(99);
+      b.fill(rng);
+      // Create a match via swap to kick off cascades
+      final initial = b.findMatches();
+      if (initial.isEmpty) {
+        // Try a local swap to produce a match
+        final _ = b.trySwap(0, 1, 1, 1);
+      }
+      final total = b.resolveCascades(DeterministicRng(99));
+      expect(total >= 3, isTrue); // At least one match cleared
+      expect(b.findMatches().isEmpty, isTrue); // Stable
     });
   });
 }

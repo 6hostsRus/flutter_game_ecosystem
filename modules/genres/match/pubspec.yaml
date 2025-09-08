@@ -1,11 +1,14 @@
 name: match
 description: Minimal match-3 board with deterministic RNG for tests.
 version: 0.1.0
+publish_to: 'none'
 environment:
      sdk: '>=3.3.0 <4.0.0'
 dependencies:
      flutter:
           sdk: flutter
+     game_core:
+          path: ../../../packages/game_core
 dev_dependencies:
      flutter_test:
           sdk: flutter

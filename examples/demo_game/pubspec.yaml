@@ -21,6 +21,8 @@ dependencies:
           path: ../../modules/genres/game_scenes
      game_core:
           path: ../../packages/game_core
+     match:
+          path: ../../modules/genres/match
 dev_dependencies:
      flutter_test:
           sdk: flutter

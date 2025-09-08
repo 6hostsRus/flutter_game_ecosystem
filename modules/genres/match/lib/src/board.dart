@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'package:game_core/game_core.dart';
 
 class MatchBoard {
   final int width;
@@ -32,7 +32,7 @@ class MatchBoard {
   }
 
   /// Fill empty cells (-1) or initialize board using provided RNG.
-  void fill(Random rng) {
+  void fill(Rng rng) {
     for (var y = 0; y < height; y++) {
       for (var x = 0; x < width; x++) {
         final i = index(x, y);
@@ -103,5 +103,41 @@ class MatchBoard {
         }
       }
     }
+  }
+
+  /// Repeatedly resolves cascades: find matches -> clear -> gravity -> fill, until no matches remain.
+  /// Returns the total number of cells cleared across all cascades.
+  int resolveCascades(Rng rng, {int maxIterations = 100}) {
+    var totalCleared = 0;
+    for (var i = 0; i < maxIterations; i++) {
+      final matched = findMatches();
+      if (matched.isEmpty) break;
+      totalCleared += matched.length;
+      clearAndGravity(matched);
+      fill(rng);
+    }
+    return totalCleared;
+  }
+
+  /// Returns true if the board has no current matches.
+  bool isStable() => findMatches().isEmpty;
+
+  /// Fills empties and, if any immediate matches appear, re-rolls only those
+  /// matched cells until the board is stable or maxIterations reached.
+  /// Returns the number of iterations performed.
+  int fillUntilNoMatches(Rng rng, {int maxIterations = 1000}) {
+    var iterations = 0;
+    // First ensure empties are filled at least once.
+    fill(rng);
+    while (!isStable() && iterations < maxIterations) {
+      final matched = findMatches();
+      // Re-roll only matched positions, keep others fixed.
+      for (final i in matched) {
+        cells[i] = -1;
+      }
+      fill(rng);
+      iterations++;
+    }
+    return iterations;
   }
 }

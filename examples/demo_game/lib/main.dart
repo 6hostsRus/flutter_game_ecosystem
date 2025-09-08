@@ -3,10 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game_scenes/game_scenes.dart';
 import 'package:ui_shell/ui_shell.dart';
+import 'package:match/match.dart';
+import 'package:game_core/game_core.dart';
 
 void main() => runApp(const ProviderScope(child: App()));
 
 final currencyProvider = walletProvider;
+final appConfigProvider =
+    Provider<AppConfig>((ref) => AppConfig.fromEnvironment());
+const bool kDemoMatchButton =
+    bool.fromEnvironment('DEMO_MATCH_BUTTON', defaultValue: false);
+final matchDemoEnabledProvider = Provider<bool>((ref) {
+  final cfg = ref.watch(appConfigProvider);
+  return cfg.featureMatch && kDemoMatchButton;
+});
 
 class App extends ConsumerWidget {
   final String? initialRoute;
@@ -103,6 +113,12 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final coins = ref.watch(currencyProvider).coins;
     return HudOverlay(
+      trailing: [
+        CurrencyBadge(
+            icon: Icons.monetization_on_rounded,
+            value: coins.toStringAsFixed(0),
+            tooltip: 'Coins'),
+      ],
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -123,15 +139,38 @@ class HomeScreen extends ConsumerWidget {
               icon: const Icon(Icons.auto_awesome_rounded),
               label: const Text('Play Survivor (stub)'),
             ),
+            Visibility(
+              visible: ref.watch(matchDemoEnabledProvider),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 8),
+                  FilledButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => Scaffold(
+                          appBar: AppBar(title: const Text('Match-3 Demo')),
+                          body: const Center(
+                            child: MatchBoardView(
+                              width: 8,
+                              height: 8,
+                              kinds: 6,
+                              seed: 42,
+                              cellSize: 32,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    icon: const Icon(Icons.grid_on_rounded),
+                    label: const Text('Play Match-3 (demo)'),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
-      trailing: [
-        CurrencyBadge(
-            icon: Icons.monetization_on_rounded,
-            value: coins.toStringAsFixed(0),
-            tooltip: 'Coins'),
-      ],
     );
   }
 }
