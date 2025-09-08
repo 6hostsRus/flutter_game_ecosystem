@@ -19,5 +19,6 @@ linter:
           - avoid_print
           - prefer_const_constructors
           - prefer_final_locals
+          - unawaited_futures
           - unnecessary_this
           - sort_child_properties_last

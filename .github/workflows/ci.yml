@@ -33,6 +33,11 @@ jobs:
                - name: Bootstrap workspace
                  run: melos bootstrap
 
+               - name: Check per-package analysis includes
+                 run: |
+                      # Ensure per-package analysis_options.yaml reference the repo root
+                      dart run tools/check_package_analysis_includes.dart
+
                - name: Format check
                  run: melos run format:check
 

@@ -13,6 +13,17 @@ Linting & Language
 -    Adopt repo lints: see `analysis_options.yaml` (flutter_lints + very_good_analysis where applicable).
 -    Prefer small, noun-based public classes; verbs as methods; avoid leaking engine-specific types outside adapters.
 
+-    Use the project-recommended helpers for common analyzer patterns instead of
+     inline ignore comments. For example, prefer `unawaited(...)` to intentionally
+     discard a Future rather than adding `// ignore: unawaited_futures` on the call.
+-    Recommended sources: `package:pedantic` or `package:async` which provide
+     `unawaited(...)`. Add as a dependency where runtime code needs it.
+-    Prefer `const` for compile-time constant values (including local variables)
+     to satisfy lints such as `prefer_const_declarations`. Use `const` where the
+     initializer is a compile-time constant.
+-    Avoid broad inline analyzer ignores in production code; use them sparingly
+     and document the reason in a nearby comment when necessary.
+
 Design Conventions
 
 -    Events: prefer Stream or a lightweight bus; keep UI decoupled from simulation.

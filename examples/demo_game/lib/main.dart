@@ -1,6 +1,8 @@
 import 'package:core_services/core_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:services/analytics/analytics_port.dart';
+import 'package:providers/analytics/analytics_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:game_scenes/game_scenes.dart';
 import 'package:ui_shell/ui_shell.dart';
@@ -8,8 +10,36 @@ import 'package:match/match.dart';
 import 'package:survivor/survivor.dart';
 import 'package:game_core/game_core.dart';
 import 'package:idle/idle.dart';
+import 'dart:convert';
+import 'package:shared_utils/shared_utils.dart';
 
-void main() => runApp(const ProviderScope(child: App()));
+void main() {
+  // Create a top-level ProviderContainer so we can obtain the analytics port
+  // and register a default unhandled-error handler that emits an analytics
+  // event when unawaited futures fail.
+  final container = ProviderContainer();
+  try {
+    final analytics = container.read(analyticsPortProvider);
+    setUnhandledErrorHandler((error, stack) {
+      try {
+        analytics.send(AnalyticsEvent('unawaited_error', {
+          'error': error.toString(),
+          'stack': stack?.toString(),
+          'source': 'demo_app',
+        }));
+      } catch (_) {
+        // ignore errors from analytics sending
+      }
+    });
+  } catch (_) {
+    // If analytics provider isn't available, skip registering a handler.
+  }
+
+  // Use the regular ProviderScope for the app; the temporary container used
+  // above is only for locating a sensible default analytics sink to register
+  // as the handler.
+  runApp(const ProviderScope(child: App()));
+}
 
 final currencyProvider = walletProvider;
 final appConfigProvider =
@@ -437,22 +467,48 @@ class _SurvivorHudDemoState extends State<_SurvivorHudDemo>
   }
 }
 
-class IdleDemoScreen extends StatefulWidget {
+class IdleDemoScreen extends ConsumerStatefulWidget {
   const IdleDemoScreen({super.key});
   @override
-  State<IdleDemoScreen> createState() => _IdleDemoScreenState();
+  ConsumerState<IdleDemoScreen> createState() => _IdleDemoScreenState();
 }
 
-class _IdleDemoScreenState extends State<IdleDemoScreen>
+class _IdleDemoScreenState extends ConsumerState<IdleDemoScreen>
     with SingleTickerProviderStateMixin {
   late Ticker _ticker;
   late World _world;
+  static const _saveKey = 'demo_idle_state_v1';
+  double _saveAccumulator = 0.0;
+  static const _saveInterval = 5.0; // seconds
 
   @override
   void initState() {
     super.initState();
     _world = World();
-    // Create state entity
+    // Initialize with a default state; loadSavedState will replace it if persisted.
+    _ensureDefaultState();
+    // Attempt to load persisted state asynchronously.
+    _loadSavedState();
+
+    _ticker = createTicker((elapsed) {
+      setState(() {
+        const dt = 1 / 60;
+        IdleIncomeSystem.tick(_world, dt);
+        _saveAccumulator += dt;
+        if (_saveAccumulator >= _saveInterval) {
+          _saveAccumulator = 0.0;
+          unawaited(_saveState());
+        }
+      });
+    })
+      ..start();
+  }
+
+  void _ensureDefaultState() {
+    // Create state entity with default generators if none present.
+    final existing =
+        _world.query([IdleStateComponentData]).cast<Entity>().firstOrNull;
+    if (existing != null) return;
     final state = IdleState(softCurrency: 0.0, generators: [
       Generator(
           id: 'gen1', baseRatePerSec: 1.0, multiplier: 1.0, unlocked: true),
@@ -461,22 +517,72 @@ class _IdleDemoScreenState extends State<IdleDemoScreen>
     ]);
     final sEntity = _world.createEntity();
     sEntity.set<IdleStateComponentData>(state.toComponent());
-    // Create generator entities
     for (final g in state.generators) {
       final e = _world.createEntity();
       e.set<GeneratorComponentData>(g.toComponent());
     }
-    _ticker = createTicker((elapsed) {
-      setState(() {
-        IdleIncomeSystem.tick(_world, 1 / 60);
-      });
-    })
-      ..start();
+  }
+
+  Future<void> _loadSavedState() async {
+    final driver = ref.read(saveDriverProvider);
+    try {
+      final raw = await driver.load(_saveKey);
+      if (raw == null) return;
+      final m = jsonDecode(raw) as Map<String, dynamic>;
+      final state = IdleState.fromJson(Map<String, Object?>.from(m));
+      // Clear world and recreate from saved state
+      _world = World();
+      final sEntity = _world.createEntity();
+      sEntity.set<IdleStateComponentData>(state.toComponent());
+      for (final g in state.generators) {
+        final e = _world.createEntity();
+        e.set<GeneratorComponentData>(g.toComponent());
+      }
+      setState(() {});
+    } catch (_) {
+      // ignore decode errors and keep default state
+    }
+  }
+
+  IdleState _gatherIdleStateFromWorld() {
+    final sEntity =
+        _world.query([IdleStateComponentData]).cast<Entity>().firstOrNull;
+    if (sEntity == null) return IdleState();
+    final comp = sEntity.get<IdleStateComponentData>()!;
+    final generators = <Generator>[];
+    for (final e in _world.query([GeneratorComponentData]).cast<Entity>()) {
+      final gd = e.get<GeneratorComponentData>()!;
+      generators.add(Generator(
+        id: gd.id,
+        level: gd.level,
+        baseRatePerSec: gd.ratePerSec,
+        multiplier: gd.multiplier,
+        unlocked: gd.unlocked,
+      ));
+    }
+    return IdleState(
+      lastSeen: DateTime.fromMillisecondsSinceEpoch(comp.epochMillis),
+      softCurrency: comp.softCurrency,
+      prestigePoints: comp.prestigePoints,
+      generators: generators,
+    );
+  }
+
+  Future<void> _saveState() async {
+    final driver = ref.read(saveDriverProvider);
+    try {
+      final st = _gatherIdleStateFromWorld();
+      final raw = jsonEncode(st.toJson());
+      await driver.save(_saveKey, raw);
+    } catch (_) {
+      // ignore save errors for demo
+    }
   }
 
   @override
   void dispose() {
     _ticker.dispose();
+    unawaited(_saveState());
     super.dispose();
   }
 
@@ -496,6 +602,8 @@ class _IdleDemoScreenState extends State<IdleDemoScreen>
             const Text('ECS Idle Income Demo'),
             const SizedBox(height: 8),
             Text('Soft Currency: ${s.softCurrency.toStringAsFixed(2)}'),
+            const SizedBox(height: 8),
+            const Text('Persistence: Saved to demo_local storage if available'),
           ],
         ),
       ),

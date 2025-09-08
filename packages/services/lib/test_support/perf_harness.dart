@@ -137,7 +137,7 @@ class PerfHarness {
   static Map<String, num> _stats(List<int> values) {
     if (values.isEmpty) return {'avg': 0, 'p50': 0, 'p95': 0};
     final sorted = [...values]..sort();
-    num avg = sorted.reduce((a, b) => a + b) / sorted.length;
+    final num avg = sorted.reduce((a, b) => a + b) / sorted.length;
     int p(int percentile) {
       final idx = ((percentile / 100) * (sorted.length - 1)).round();
       return sorted[idx];

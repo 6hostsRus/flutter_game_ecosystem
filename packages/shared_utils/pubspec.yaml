@@ -1,0 +1,13 @@
+name: shared_utils
+description: Small utilities shared across the monorepo (thin wrapper for unawaited).
+version: 0.0.1
+publish_to: 'none'
+environment:
+     sdk: '>=3.3.0 <4.0.0'
+dependencies:
+     async: ^2.10.0
+     # pedantic removed; using a local shim for `unawaited` to avoid an extra runtime dependency
+
+dev_dependencies:
+     flutter_test:
+          sdk: flutter
