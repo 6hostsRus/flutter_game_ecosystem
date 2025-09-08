@@ -12,3 +12,5 @@ dev_dependencies:
      flutter_test:
           sdk: flutter
      flutter_lints: ^4.0.0
+     game_core:
+          path: ../../../packages/game_core

@@ -10,7 +10,16 @@ Guidelines:
 
 ## [Unreleased]
 
--    Placeholder.
+-    game_core: Added core interfaces and utilities
+     -    Clock (SystemClock, FakeClock)
+     -    Logger (ConsoleLogger, MemoryLogger)
+     -    Rng (SystemRng, DeterministicRng)
+     -    SaveDriver (InMemorySaveDriver)
+     -    IdleTimeService (migrated from snippets; Clock injected)
+     -    CategoryRegistry (migrated from snippets; generic)
+     -    AnalyticsEvents (migrated from snippets)
+-    game_scenes: Added SceneDiagnostics using Logger and Rng; test covers deterministic logging
+-    Docs: Updated paths to packages/game_core; reconciled task statuses
 
 ## 2025-09-07
 
