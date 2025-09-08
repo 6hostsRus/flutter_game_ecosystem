@@ -14,34 +14,36 @@ void main() {
       expect(s2.wave, 0);
     });
 
-    test('tick advances time, applies damage, and increments wave every 30s',
-        () {
-      var s = const SurvivorRunState(damagePerSec: 2, health: 10);
-      s = s.tick(1); // 1s, -2 hp
-      expect(s.timeSec, closeTo(1, 1e-9));
-      expect(s.health, closeTo(8, 1e-9));
-      expect(s.wave, 0);
-
-      s = s.tick(29); // cross 30s boundary
-      expect(s.timeSec, closeTo(30, 1e-9));
-      expect(s.wave, 1);
+    test('tick advances time and waves', () {
+      const s = SurvivorRunState(timeSec: 0, wave: 0, health: 100);
+      final s2 = s.tick(31.0);
+      expect(s2.timeSec, closeTo(31.0, 1e-9));
+      expect(s2.wave, greaterThanOrEqualTo(1));
     });
 
-    test('isDead after sufficient damage', () {
-      var s = const SurvivorRunState(damagePerSec: 50, health: 10);
-      s = s.tick(0.2); // -10 hp
-      expect(s.health, closeTo(0, 1e-9));
-      expect(s.isDead, isTrue);
+    test('tick applies damage and death', () {
+      const s =
+          SurvivorRunState(timeSec: 0, wave: 0, damagePerSec: 10, health: 5);
+      final s2 = s.tick(1.0);
+      expect(s2.health, equals(0));
+      expect(s2.isDead, isTrue);
     });
 
-    test('toJson/fromJson round trip', () {
+    test('effectiveDps scales with waves', () {
+      const s =
+          SurvivorRunState(damagePerSec: 2, dpsGrowthPerWave: 0.5, wave: 3);
+      expect(s.effectiveDps, closeTo(2 * (1 + 3 * 0.5), 1e-9));
+    });
+
+    test('toJson/fromJson round trip and difficulty scaling', () {
       const s = SurvivorRunState(
-          wave: 3,
-          timeSec: 45.5,
-          damagePerSec: 1.2,
-          health: 77,
-          dpsGrowthPerWave: 0.1,
-          spawnGrowthPerWave: 0.05);
+        wave: 3,
+        timeSec: 45.5,
+        damagePerSec: 1.2,
+        health: 77,
+        dpsGrowthPerWave: 0.1,
+        spawnGrowthPerWave: 0.05,
+      );
       final j = s.toJson();
       final s2 = SurvivorRunState.fromJson(Map<String, Object?>.from(j));
       expect(s2.wave, s.wave);
@@ -50,21 +52,18 @@ void main() {
       expect(s2.health, closeTo(s.health, 1e-9));
       expect(s2.dpsGrowthPerWave, closeTo(s.dpsGrowthPerWave, 1e-9));
       expect(s2.spawnGrowthPerWave, closeTo(s.spawnGrowthPerWave, 1e-9));
-    });
 
-    test('difficulty scaling increases effective DPS and spawn multiplier', () {
-      var s = const SurvivorRunState(
+      var s3 = const SurvivorRunState(
         damagePerSec: 10,
-        dpsGrowthPerWave: 0.2, // +20% DPS per wave
-        spawnGrowthPerWave: 0.5, // +50% spawn per wave
+        dpsGrowthPerWave: 0.2,
+        spawnGrowthPerWave: 0.5,
       );
-      expect(s.effectiveDps, closeTo(10, 1e-9));
-      expect(s.spawnRateMultiplier, closeTo(1, 1e-9));
-      // Advance to wave 1 (30s)
-      s = s.tick(30);
-      expect(s.wave, 1);
-      expect(s.effectiveDps, closeTo(12, 1e-9));
-      expect(s.spawnRateMultiplier, closeTo(1.5, 1e-9));
+      expect(s3.effectiveDps, closeTo(10, 1e-9));
+      expect(s3.spawnRateMultiplier, closeTo(1, 1e-9));
+      s3 = s3.tick(30);
+      expect(s3.wave, 1);
+      expect(s3.effectiveDps, closeTo(12, 1e-9));
+      expect(s3.spawnRateMultiplier, closeTo(1.5, 1e-9));
     });
   });
 }

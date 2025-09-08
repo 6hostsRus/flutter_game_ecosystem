@@ -40,7 +40,6 @@ Validation:
 
 These are smaller follow-ups that remain after the large consolidation work:
 
--    Snippets migration remaining items: platformer_player_controller, rpg_stats, ccg/card serialization, survivor_run_state follow-ups (each should include a test and tiny README).
 -    Example wiring: add optional Idle demo screen behind AppConfig feature flag and document it in the example README.
 -    Persistence adapters: implement a shared_preferences SaveDriver adapter with tests; keep InMemory for unit tests.
 

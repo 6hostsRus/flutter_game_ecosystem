@@ -23,6 +23,12 @@ Guidelines:
 
 -    Tasks: Archived completed AI task library items into the changelog and pruned `docs/AI_TASK_LIBRARY.md` and `docs/AI_TASK_RECONCILIATION.md` to list only current open/partial items.
 
+-    Snippets: Migrated small snippets and added tests/README entries
+     -    platformer_player_controller -> `modules/genres/game_scenes/src/platformer/player_controller.dart` (+ tests)
+     -    rpg_stats -> `modules/genres/rpg/src/stats.dart` (+ tests)
+     -    ccg card serialization -> `modules/genres/ccg/lib/src/card.dart` (+ tests/README)
+     -    survivor run_state -> `modules/genres/survivor/src/run_state.dart` (+ tests/README)
+
 ## 2025-09-07
 
 Highlights

@@ -15,12 +15,11 @@ This reconciliation snapshot reflects the current open and partially-complete it
 | Task                     | Status  | Artifacts (current)                                                                               | Gaps / Next                                                               |
 | ------------------------ | ------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | ExampleIntegrationUpdate | Partial | Demo app uses AppConfig flags; match demo updated with cascades; idle module has ECS stub + tests | Add idle ECS demo screen behind feature flag and document example README  |
-| Small Snippets Backlog   | Partial | Remaining small snippet moves (platformer_player_controller, rpg_stats, ccg card serialization)   | Migrate each with a small test and README; close and archive in CHANGELOG |
+| Small Snippets Backlog   | Done    | platformer_player_controller (modules/genres/game_scenes/src/platformer/player_controller.dart + tests), rpg_stats (modules/genres/rpg/src/stats.dart + tests), ccg card (modules/genres/ccg/lib/src/card.dart + tests), survivor run_state (modules/genres/survivor/src/run_state.dart + tests) | Archived: tests and READMEs added; no remaining small snippet migrations |
 
 ## Next Tasks (concrete)
 
-1. Migrate remaining snippet items with tests and minimal READMEs.
-2. Add gated Idle demo screen to the example app and document how to enable it for local testing.
-3. Implement a shared_preferences SaveDriver adapter as a follow-up (non-blocking).
+1. Add gated Idle demo screen to the example app and document how to enable it for local testing.
+2. Implement a shared_preferences SaveDriver adapter as a follow-up (non-blocking).
 
 If anything listed here has been completed and not yet archived to `CHANGELOG.md`, update the changelog and remove the row from this table. 4. Persistence adapters (follow-up) - Provide a basic shared_preferences SaveDriver adapter and tests; keep InMemory as default in tests

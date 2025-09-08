@@ -14,6 +14,23 @@ void main() => runApp(const ProviderScope(child: App()));
 final currencyProvider = walletProvider;
 final appConfigProvider =
     Provider<AppConfig>((ref) => AppConfig.fromEnvironment());
+// Optional: provide a persistent SaveDriver via SharedPreferences.
+// Use [sharedPrefsSaveDriverProvider] to asynchronously obtain the driver,
+// and [saveDriverProvider] to synchronously access a fallback (InMemory) while
+// the async provider is initializing.
+final sharedPrefsSaveDriverProvider = FutureProvider<SaveDriver>((ref) async {
+  try {
+    return await SharedPreferencesSaveDriver.create();
+  } catch (_) {
+    // If SharedPreferences is unavailable on the current platform, fall back.
+    return InMemorySaveDriver();
+  }
+});
+
+final saveDriverProvider = Provider<SaveDriver>((ref) {
+  final async = ref.watch(sharedPrefsSaveDriverProvider);
+  return async.maybeWhen(data: (d) => d, orElse: () => InMemorySaveDriver());
+});
 const bool kDemoMatchButton =
     bool.fromEnvironment('DEMO_MATCH_BUTTON', defaultValue: false);
 final matchDemoEnabledProvider = Provider<bool>((ref) {

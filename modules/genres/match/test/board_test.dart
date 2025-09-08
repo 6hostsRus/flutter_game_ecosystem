@@ -151,7 +151,7 @@ void main() {
         b.cells[i] = layout[i];
       }
       final rng = DeterministicRng(7);
-      final cleared = b.swapAndResolveCascades(1, 2, 2, 2, rng);
+  final cleared = b.swapAndResolveCascades(0, 2, 1, 2, rng);
       expect(cleared, greaterThanOrEqualTo(3)); // At least the initial match
       expect(b.findMatches().isEmpty, isTrue); // Board is stable after cascades
       expect(b.cells.where((v) => v < 0), isEmpty); // Board is refilled
