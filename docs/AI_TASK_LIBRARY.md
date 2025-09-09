@@ -168,8 +168,8 @@ Steps:
 
 Validation:
 
-- CI jobs only run Android/iOS checks for day-to-day pipelines.
-- Developers can still run platform-specific builds locally for other platforms but CI will not validate them until re-enabled.
+-    CI jobs only run Android/iOS checks for day-to-day pipelines.
+-    Developers can still run platform-specific builds locally for other platforms but CI will not validate them until re-enabled.
 
 Notes: This task is low-risk but requires coordinating CI changes; it does not delete platform code.
 
@@ -182,12 +182,14 @@ Purpose: Define a branching policy that blocks direct pushes to `main`, requires
 Steps:
 
 1. Draft a branching model document and add it to `docs/WORKFLOWS.md` describing:
+
      - `/feature/*` branches for working features; multiple `/feature` branches may be squashed or merged together as part of a feature series.
      - `/dev` branch as the main development integration branch where feature branches are merged once review passes.
      - `/stage` branch as a pre-release integration branch used for acceptance testing; only fully green CI runs are merged into `/stage`.
      - `main` is protected: direct merges to `main` are blocked. Only PRs merging `/stage` -> `main` are allowed and must have passing CI/CD and required approvals.
 
 2. Implement branch protection rules on GitHub (or your Git host):
+
      - Protect `main`: require status checks, disallow direct pushes, require PR reviews.
      - Protect `stage`: require CI checks and approvals before merging into `main`.
      - Optionally protect `dev` with lighter checks.
@@ -196,8 +198,7 @@ Steps:
 
 Validation:
 
-- Branch protection setup is in place on the repository.
-- A small demo PR flow (feature -> dev -> stage -> main) is executed successfully in a test or staging repo.
+-    Branch protection setup is in place on the repository.
+-    A small demo PR flow (feature -> dev -> stage -> main) is executed successfully in a test or staging repo.
 
 Priority: P1 — this is a high priority governance task to prevent accidental direct merges to `main`.
-

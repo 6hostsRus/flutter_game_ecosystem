@@ -6,11 +6,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:alchemist/alchemist.dart' as alchemist;
 import 'dart:io' as io;
+
 // Detect CI-mode via a dart-define set when running tests, e.g.
 // `--dart-define=alchemist.platform=ci`. We avoid adding a package-level
 // test config because that can interfere with test discovery in some
 // flutter/test runner versions.
-const String _alchemistPlatform = String.fromEnvironment('alchemist.platform', defaultValue: '');
+const String _alchemistPlatform =
+    String.fromEnvironment('alchemist.platform', defaultValue: '');
 bool get runningOnCi => _alchemistPlatform == 'ci';
 
 // We avoid importing `package:alchemist/alchemist.dart` here directly to keep
@@ -87,12 +89,16 @@ Future<void> runGoldenAlchemist({
 
     if (platformExists && ciExists) {
       // Run both comparisons so developers and CI remain protected.
-      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(platformPath));
-      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(ciPath));
+      await expectLater(find.byKey(const ValueKey('__golden_root__')),
+          matchesGoldenFile(platformPath));
+      await expectLater(find.byKey(const ValueKey('__golden_root__')),
+          matchesGoldenFile(ciPath));
     } else if (ciExists) {
-      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(ciPath));
+      await expectLater(find.byKey(const ValueKey('__golden_root__')),
+          matchesGoldenFile(ciPath));
     } else {
-      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(platformPath));
+      await expectLater(find.byKey(const ValueKey('__golden_root__')),
+          matchesGoldenFile(platformPath));
     }
   });
 }
