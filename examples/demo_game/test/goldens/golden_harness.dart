@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:alchemist/alchemist.dart' as alchemist;
+import 'dart:io' as io;
 // Detect CI-mode via a dart-define set when running tests, e.g.
 // `--dart-define=alchemist.platform=ci`. We avoid adding a package-level
 // test config because that can interfere with test discovery in some
@@ -74,12 +75,24 @@ Future<void> runGoldenAlchemist({
       await whilePerforming(tester);
     }
 
-  // Compare against the checked-in golden. When running in CI-mode we use
-  // a CI-specific golden (which replaces text with solid blocks). This is
-  // enabled by passing --dart-define=alchemist.platform=ci when running
-  // `flutter test` (and when generating CI-mode goldens with
-  // --update-goldens).
-  final resolvedFileName = runningOnCi ? '${fileName}_ci' : fileName;
-  await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile('../../goldens/$resolvedFileName.png'));
+    // Compare against the checked-in golden files. We support three cases:
+    //  - Only a platform golden exists (e.g. `home_screen.png`) -> compare it
+    //  - Only a CI golden exists (e.g. `home_screen_ci.png`) -> compare it
+    //  - Both exist -> compare both (platform first, then CI) so CI and local
+    //    developer regressions are both caught.
+    final platformPath = '../../goldens/$fileName.png';
+    final ciPath = '../../goldens/${fileName}_ci.png';
+    final platformExists = io.File(platformPath).existsSync();
+    final ciExists = io.File(ciPath).existsSync();
+
+    if (platformExists && ciExists) {
+      // Run both comparisons so developers and CI remain protected.
+      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(platformPath));
+      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(ciPath));
+    } else if (ciExists) {
+      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(ciPath));
+    } else {
+      await expectLater(find.byKey(const ValueKey('__golden_root__')), matchesGoldenFile(platformPath));
+    }
   });
 }

@@ -153,3 +153,51 @@ Validation:
 ---
 
 Add these tasks to backlog and assign owners as appropriate.
+
+---
+
+## PlatformTargetsRestrict (P2)
+
+Purpose: Restrict active development to Android and iOS only for the monorepo. Defer desktop (Windows/Linux) and web support until a future phase; keep macOS planned but gated for a later milestone.
+
+Steps:
+
+1. Update repo documentation (README.md and examples) to state supported targets: Android and iOS. Note macOS as "planned".
+2. Adjust CI workflows to avoid running web, windows, and linux tests/builds. Ensure Android and iOS-related tests continue to run.
+3. Add a short migration note in `docs/WORKFLOWS.md` describing how to re-enable additional targets later (feature flag + CI matrix changes).
+
+Validation:
+
+- CI jobs only run Android/iOS checks for day-to-day pipelines.
+- Developers can still run platform-specific builds locally for other platforms but CI will not validate them until re-enabled.
+
+Notes: This task is low-risk but requires coordinating CI changes; it does not delete platform code.
+
+---
+
+## BranchingPolicyPlan (P1)
+
+Purpose: Define a branching policy that blocks direct pushes to `main`, requires merges to `main` to originate from `/stage`, and establishes `/dev` as the integration branch for feature development workflow.
+
+Steps:
+
+1. Draft a branching model document and add it to `docs/WORKFLOWS.md` describing:
+     - `/feature/*` branches for working features; multiple `/feature` branches may be squashed or merged together as part of a feature series.
+     - `/dev` branch as the main development integration branch where feature branches are merged once review passes.
+     - `/stage` branch as a pre-release integration branch used for acceptance testing; only fully green CI runs are merged into `/stage`.
+     - `main` is protected: direct merges to `main` are blocked. Only PRs merging `/stage` -> `main` are allowed and must have passing CI/CD and required approvals.
+
+2. Implement branch protection rules on GitHub (or your Git host):
+     - Protect `main`: require status checks, disallow direct pushes, require PR reviews.
+     - Protect `stage`: require CI checks and approvals before merging into `main`.
+     - Optionally protect `dev` with lighter checks.
+
+3. Create a sample merge workflow (docs + template PR) showing how multiple `/feature` branches are consolidated, merged to `/dev`, tested, then promoted to `/stage` and finally to `main`.
+
+Validation:
+
+- Branch protection setup is in place on the repository.
+- A small demo PR flow (feature -> dev -> stage -> main) is executed successfully in a test or staging repo.
+
+Priority: P1 — this is a high priority governance task to prevent accidental direct merges to `main`.
+
