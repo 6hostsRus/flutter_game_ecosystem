@@ -82,23 +82,49 @@ Future<void> runGoldenAlchemist({
     //  - Only a CI golden exists (e.g. `home_screen_ci.png`) -> compare it
     //  - Both exist -> compare both (platform first, then CI) so CI and local
     //    developer regressions are both caught.
-    final platformPath = '../../goldens/$fileName.png';
-    final ciPath = '../../goldens/${fileName}_ci.png';
+    // Paths are resolved relative to the test file location. From
+    // `examples/demo_game/test/goldens/...` the checked-in baselines live in
+    // `../../goldens/` (i.e. `examples/demo_game/goldens`). Use that
+    // relative path so `matchesGoldenFile` can locate them correctly.
+    // Resolve absolute paths against the test run's working directory
+    // (Uri.base). This ensures existence checks and matchesGoldenFile use
+    // identical targets regardless of where the test runner sets its cwd.
+    final packageRoot = Uri.base.toFilePath();
+    final platformPath = '$packageRoot/goldens/$fileName.png';
+    final ciPath = '$packageRoot/goldens/${fileName}_ci.png';
     final platformExists = io.File(platformPath).existsSync();
     final ciExists = io.File(ciPath).existsSync();
 
-    if (platformExists && ciExists) {
-      // Run both comparisons so developers and CI remain protected.
-      await expectLater(find.byKey(const ValueKey('__golden_root__')),
-          matchesGoldenFile(platformPath));
-      await expectLater(find.byKey(const ValueKey('__golden_root__')),
-          matchesGoldenFile(ciPath));
-    } else if (ciExists) {
-      await expectLater(find.byKey(const ValueKey('__golden_root__')),
-          matchesGoldenFile(ciPath));
+    if (runningOnCi) {
+      // On CI we prefer the CI-specific baseline only. This avoids
+      // platform-specific baselines (captured on developer machines)
+      // causing spurious diffs when run on the CI runner.
+      if (ciExists) {
+        await expectLater(find.byKey(const ValueKey('__golden_root__')),
+            matchesGoldenFile(ciPath));
+      } else if (platformExists) {
+        // Fall back to platform baseline if no CI-specific file exists.
+        await expectLater(find.byKey(const ValueKey('__golden_root__')),
+            matchesGoldenFile(platformPath));
+      } else {
+        // No baseline present — let the test fail with a clear message.
+        throw StateError('No golden baseline found for $fileName');
+      }
     } else {
-      await expectLater(find.byKey(const ValueKey('__golden_root__')),
-          matchesGoldenFile(platformPath));
+      // Local/developer runs: compare platform baseline first (developer
+      // expectation) and also compare CI baseline if present so local
+      // developers catch CI regressions early.
+      if (platformExists) {
+        await expectLater(find.byKey(const ValueKey('__golden_root__')),
+            matchesGoldenFile(platformPath));
+      }
+      if (ciExists) {
+        await expectLater(find.byKey(const ValueKey('__golden_root__')),
+            matchesGoldenFile(ciPath));
+      }
+      if (!platformExists && !ciExists) {
+        throw StateError('No golden baseline found for $fileName');
+      }
     }
   });
 }
