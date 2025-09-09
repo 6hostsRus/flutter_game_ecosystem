@@ -72,6 +72,53 @@ Notes:
 -    Start with adding font loading in the test harness to address the most common cause (font/antialias differences).
 -    Keep CI artifact upload enabled only while diagnosing; remove or keep as desired after resolution.
 
+### Review metrics commit strategy (P2)
+
+Purpose: Decide where and how automated metric updates should be created, reviewed, and merged in CI/CD. The goal is to avoid permission errors and to keep the main branches protected while ensuring metrics stay up to date.
+
+Steps:
+
+1. Audit current `tools/update_metrics.dart` to understand the intended changes and the files it touches (`docs/METRICS.md`).
+2. Decide whether metric updates should be:
+     - committed directly by CI (requires write permission and protected branch rules),
+     - created via an automated PR for human review (recommended), or
+     - stored as artifacts for a scheduled job that consolidates and applies them under a maintainer account.
+3. For the chosen approach, document required GitHub permissions and reviewer rules. If automated merging is desired, list required branch protection exemptions and create a security plan.
+4. Update CI workflow to implement the chosen approach. If using PRs, prefer `peter-evans/create-pull-request@v4` with a PAT stored in `secrets.METRICS_BOT_TOKEN` (avoid using `GITHUB_TOKEN` to bypass branch protections). If committing directly, run the commit on a controlled runner with a token scoped to the task.
+5. Add tests / dry-run mode for `tools/update_metrics.dart` so CI can validate the change without committing.
+
+Validation:
+
+-    A run of CI where metrics would change produces either an open PR, an artifact, or a direct commit according to the chosen plan, without pipeline permission failures.
+-    Documentation is updated with the approved process and permissions checklist.
+
+Notes:
+
+-    Start with the automated PR approach to keep protections intact and to make the process visible to reviewers.
+-    Keep credentials limited in scope and rotate tokens regularly.
+
+### Audit and fix schema validator CI step (P2)
+
+Purpose: Fix `tools/schema_validator` so `dart run tools/schema_validator/bin/validate_schemas.dart` executes in CI without missing package errors, and decide whether to re-enable the step or continue to run it as a gated/manual check.
+
+Steps:
+
+1. Reproduce locally: run `dart run tools/schema_validator/bin/validate_schemas.dart` inside the repo after `melos bootstrap` and record the exact error (likely missing package dependency `json_schema2`).
+2. Open `tools/schema_validator/pubspec.yaml` and ensure it declares `json_schema2` (and any other runtime deps) under `dependencies:` with compatible versions. If missing, add the dependency and run `melos bootstrap`.
+3. If `tools/schema_validator` is intended to be a standalone package, ensure it has a proper `environment:` sdk constraint and an executable entry in `bin/` or `tool/` and that CI runs it from the package root (or use `dart run` from the repo root with `-P` if needed).
+4. Add a small CI job that runs `melos bootstrap` for that package and runs the validator in a restricted mode first (e.g., `--dry-run`), then enable full validation once stable.
+5. Add unit/smoke tests for the validator to avoid regressions; include them in `melos run test` for the package.
+
+Validation:
+
+-    `dart run tools/schema_validator/bin/validate_schemas.dart` runs locally and in CI without missing package errors.
+-    CI job completes successfully when schema validation is enabled.
+
+Notes:
+
+-    If `json_schema2` has transitive constraints or platform-specific code, prefer pinning a compatible version in the validator pubspec and update lockfiles accordingly.
+-    As a temporary measure, keep the CI step a no-op until the validator is fixed to avoid blocking other CI activities.
+
 ### Route shared_utils unawaited NDJSON into Analytics sink
 
 Purpose: Replace the on-disk NDJSON fallback in `packages/shared_utils/lib/shared_utils.dart`
