@@ -23,7 +23,8 @@ void main() {
           return notifier;
         }),
       ]);
-      return UncontrolledProviderScope(container: container, child: const demo.App());
+      return UncontrolledProviderScope(
+          container: container, child: const demo.App());
     },
     pumpBeforeTest: (tester) async {
       await tester.binding.setSurfaceSize(const Size(400, 800));

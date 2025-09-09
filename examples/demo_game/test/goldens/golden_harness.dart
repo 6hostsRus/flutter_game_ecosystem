@@ -2,7 +2,6 @@
 // falls back to a testWidgets + matchesGoldenFile approach so tests remain
 // runnable across environments.
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:alchemist/alchemist.dart' as alchemist;
 import 'dart:io' as io;
@@ -55,7 +54,8 @@ Future<void> runGoldenAlchemist({
   testWidgets(name, (WidgetTester tester) async {
     // Apply deterministic surface size and DPR.
     await tester.binding.setSurfaceSize(const Size(400, 800));
-    tester.binding.window.devicePixelRatioTestValue = 3.0;
+    // Use the WidgetTester's view API instead of the deprecated `window`.
+    tester.view.devicePixelRatio = 3.0;
 
     // Pump the widget under a MediaQuery with the expected logical size so
     // layout sees the correct constraints. Wrap the top-level child with a

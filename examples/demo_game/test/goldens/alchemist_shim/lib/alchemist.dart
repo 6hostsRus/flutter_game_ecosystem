@@ -20,7 +20,8 @@ void goldenTest(
   testWidgets(name, (WidgetTester tester) async {
     // Default environment alignment
     await tester.binding.setSurfaceSize(const Size(400, 800));
-    tester.binding.window.devicePixelRatioTestValue = 3.0;
+    // Use the WidgetTester's view API instead of the deprecated `window`.
+    tester.view.devicePixelRatio = 3.0;
 
     // Pump the widget under a keyed subtree so the golden finder is exact.
     const goldenKey = ValueKey('__golden_root__');

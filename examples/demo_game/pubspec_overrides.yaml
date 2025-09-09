@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: core_services,core_services_isar,game_core,game_scenes,idle,in_app_purchase,match,providers,services,survivor,ui_shell,shared_utils
+# melos_managed_dependency_overrides: core_services,core_services_isar,game_core,game_scenes,idle,in_app_purchase,match,providers,services,shared_utils,survivor,ui_shell
 dependency_overrides:
   core_services:
     path: ../../packages/services/core_services

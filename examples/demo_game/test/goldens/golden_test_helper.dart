@@ -1,4 +1,3 @@
-import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,7 +6,8 @@ Future<void> prepareGoldenTest(WidgetTester tester) async {
   // The repository master goldens were captured at DPR=3.0 (1200x2400 for a
   // 400x800 logical surface). Match that here so the test image pixel
   // dimensions line up with the checked-in baselines.
-  tester.binding.window.devicePixelRatioTestValue = 3.0;
+  // Use the WidgetTester's view API instead of the deprecated `window`.
+  tester.view.devicePixelRatio = 3.0;
 
   // Provide a small settle so async providers and font loaders finish.
   await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -36,12 +36,12 @@ void registerFontAsset(String family, String assetPath) {
 /// identically in tests and in the golden baselines.
 Future<void> loadRegisteredFonts() async {
   for (final f in _registeredFonts) {
-  // rootBundle.load returns ByteData; FontLoader.addFont expects a
-  // Future<ByteData>, so pass the Future directly.
-  final fontFuture = rootBundle.load(f.assetPath);
-  final loader = FontLoader(f.family);
-  loader.addFont(fontFuture);
-  await loader.load();
+    // rootBundle.load returns ByteData; FontLoader.addFont expects a
+    // Future<ByteData>, so pass the Future directly.
+    final fontFuture = rootBundle.load(f.assetPath);
+    final loader = FontLoader(f.family);
+    loader.addFont(fontFuture);
+    await loader.load();
   }
   // Small delay to ensure font glyphs are ready for rendering.
   await Future<void>.delayed(const Duration(milliseconds: 50));
@@ -49,4 +49,3 @@ Future<void> loadRegisteredFonts() async {
 
 /// Backwards-compatible alias used by existing tests.
 Future<void> loadFonts() async => await loadRegisteredFonts();
-
