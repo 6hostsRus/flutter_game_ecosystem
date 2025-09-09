@@ -27,6 +27,10 @@ scripts:
      flutter:warm: flutter --version
      test: melos run flutter:warm && melos exec --concurrency=1 -- flutter test --reporter expanded
      example: melos exec --scope="demo_game" -- flutter run
+     verify-ci: >
+          melos run flutter:warm &&
+          melos exec --scope="demo_game" -- flutter pub get &&
+          melos exec --scope="demo_game" --concurrency=1 -- flutter test --dart-define=alchemist.platform=ci --reporter expanded
      check: >
           melos run format &&
           melos run analyze &&
