@@ -51,6 +51,27 @@ For previously completed work and the full archive of reconciled tasks see `CHAN
 
 ## New follow-ups added (P2)
 
+### Fix CI golden diffs (P2)
+
+Purpose: Resolve CI-only golden pixel diffs by ensuring deterministic fonts and capturing failure artifacts for triage.
+
+Steps:
+
+1. Add a deterministic font loader to the golden test harness so tests use bundled fonts instead of system fonts. Use `FontLoader` and `rootBundle.load` to load TTF assets before pumping widgets.
+2. Ensure font files are added to `examples/demo_game/assets/fonts/` and referenced correctly in pubspec assets so `rootBundle` can load them during tests.
+3. Add a temporary CI step to upload the golden failure folder (`examples/demo_game/test/goldens/failures/**`) as an artifact for visual triage.
+4. Re-enable the CI golden tests, run once, inspect artifacts, and decide whether to (a) update CI baselines (`*_ci.png`) and commit, or (b) adjust font loading/locale to match developer output.
+
+Validation:
+
+-    CI run shows no pixel diffs after font loading or updated baselines.
+-    Failure artifacts are available in the Actions UI for triage during the first debug run.
+
+Notes:
+
+-    Start with adding font loading in the test harness to address the most common cause (font/antialias differences).
+-    Keep CI artifact upload enabled only while diagnosing; remove or keep as desired after resolution.
+
 ### Route shared_utils unawaited NDJSON into Analytics sink
 
 Purpose: Replace the on-disk NDJSON fallback in `packages/shared_utils/lib/shared_utils.dart`
