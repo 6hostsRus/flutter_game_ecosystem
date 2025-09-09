@@ -60,22 +60,14 @@ jobs:
                  id: collect_coverage
                  run: |
                       set -e
-                      # Run `flutter test --coverage` only in packages that have a test/ dir.
-                      # Exclude the demo_game goldens package to avoid golden-related failures during coverage.
-                      melos exec --ignore="examples/demo_game" --concurrency=1 -- bash -lc "if [ -d test ]; then echo 'Running coverage in:' \"$(pwd)\"; flutter test --coverage || true; else echo 'No tests in:' \"$(pwd)\"; fi"
-                      # Only merge coverage if any per-package coverage files were produced.
-                      FOUND=0
-                      for f in $(find . -name lcov.info -path "*/coverage/lcov.info" 2>/dev/null); do
-                        FOUND=1
-                        echo "Found coverage file: $f"
-                      done
-                      if [ "$FOUND" -eq 1 ]; then
-                        dart run tools/merge_coverage.dart || true
-                        echo "COVERAGE_MERGED=1" >> $GITHUB_OUTPUT
-                      else
-                        echo "No coverage files found, skipping merge." >&2
-                        echo "COVERAGE_MERGED=0" >> $GITHUB_OUTPUT
-                      fi
+                      # Delegate coverage collection and merge to a Dart helper which
+                      # runs per-package tests (skipping ignored paths) and merges
+                      # results into coverage/lcov.info. The tool will print
+                      # COVERAGE_MERGED=1 or COVERAGE_MERGED=0 which we capture below.
+                      dart run tools/collect_coverage_ci.dart --ignore=examples/demo_game | tee collect_coverage.log
+                      # Extract the final COVERAGE_MERGED line and expose it as a step output
+                      COVERED=$(grep '^COVERAGE_MERGED=' collect_coverage.log | tail -n1 | sed 's/^COVERAGE_MERGED=//') || COVERED=0
+                      echo "COVERAGE_MERGED=$COVERED" >> $GITHUB_OUTPUT
 
                - name: Upload merged coverage artifact
                  if: steps.collect_coverage.outputs.COVERAGE_MERGED == '1'
