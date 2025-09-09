@@ -35,3 +35,11 @@ scripts:
           melos run format &&
           melos run analyze &&
           melos run test
+     test:non-goldens: >
+          # Run tests across the repo but skip the demo_game (which contains
+          # golden tests). Useful for CI to separate golden runs.
+          melos exec --ignore="examples/demo_game" --concurrency=1 -- flutter test --reporter expanded
+     test:goldens: >
+          # Run demo_game tests (goldens) in CI-mode so goldens are validated
+          # with deterministic CI config.
+          melos exec --scope="demo_game" --concurrency=1 -- flutter test --dart-define=alchemist.platform=ci --reporter expanded

@@ -49,8 +49,11 @@ jobs:
                - name: Analyze
                  run: melos run analyze
 
-               - name: Test
-                 run: melos run test
+               - name: Run non-golden tests
+                 run: melos run test:non-goldens
+
+               - name: Run CI-mode golden tests
+                 run: melos run test:goldens
 
                - name: Collect coverage (aggregate)
                  run: |
