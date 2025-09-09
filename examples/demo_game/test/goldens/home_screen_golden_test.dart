@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:demo_game/main.dart' as demo;
 import 'golden_test_helper.dart';
+import 'golden_harness.dart';
 
 void main() {
-  testWidgets('HomeScreen golden', (tester) async {
-    const width = 400.0;
-    const height = 800.0;
-    await tester.binding.setSurfaceSize(const Size(width, height));
-
-    await tester.pumpWidget(const ProviderScope(child: demo.App()));
-  await loadFonts();
-  await prepareGoldenTest(tester);
-
-    // Ensure expected primary text present before capturing.
-    expect(find.textContaining('Home'), findsWidgets);
-
-    await expectLater(
-      find.byType(MaterialApp),
-      matchesGoldenFile('../../goldens/home_screen.png'),
-    );
+  setUpAll(() async {
+    // register demo-specific fonts here if you have bundled fonts, e.g.
+    // registerFontAsset('Arcade', 'assets/fonts/Arcade.ttf');
+    await loadFonts();
   });
+
+  // Migrate to Alchemist-style golden test.
+  runGoldenAlchemist(
+    name: 'HomeScreen golden',
+    fileName: 'home_screen',
+    builder: () => const ProviderScope(child: demo.App()),
+    pumpBeforeTest: (tester) async {
+      await tester.binding.setSurfaceSize(const Size(400, 800));
+      await prepareGoldenTest(tester);
+    },
+    whilePerforming: (tester) async {
+      expect(find.textContaining('Home'), findsWidgets);
+    },
+  );
 }

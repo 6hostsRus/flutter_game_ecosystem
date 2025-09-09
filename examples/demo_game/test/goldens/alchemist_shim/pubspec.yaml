@@ -1,0 +1,11 @@
+name: alchemist
+version: 0.0.0
+sdk: '>=3.3.0 <4.0.0'
+description: Local shim of alchemist used for CI to avoid blocked-text capture
+environment:
+     sdk: '>=3.3.0 <4.0.0'
+dependencies:
+     flutter:
+          sdk: flutter
+     flutter_test:
+          sdk: flutter

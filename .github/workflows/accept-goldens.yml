@@ -1,28 +1,28 @@
 name: Accept Goldens
 
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to update goldens from (must be pushable)'
-        required: true
-        default: chore/update-docs-and-tech-data
+     workflow_dispatch:
+          inputs:
+               branch:
+                    description: 'Branch to update goldens from (must be pushable)'
+                    required: true
+                    default: chore/update-docs-and-tech-data
 
 jobs:
-  accept:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-      - name: Pull branch
-        run: |
-          git fetch origin ${{ github.event.inputs.branch }}
-          git checkout ${{ github.event.inputs.branch }}
-      - name: Copy updated goldens into main branch
-        run: |
-          # This action expects the caller to have pushed working goldens to the branch
-          echo "Manual: please merge or cherry-pick the golden updates from the branch into main" || true
+     accept:
+          runs-on: ubuntu-latest
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
+               - name: Set up Flutter
+                 uses: subosito/flutter-action@v2
+                 with:
+                      channel: stable
+               - name: Pull branch
+                 run: |
+                      git fetch origin ${{ github.event.inputs.branch }}
+                      git checkout ${{ github.event.inputs.branch }}
+               - name: Copy updated goldens into main branch
+                 run: |
+                      # This action expects the caller to have pushed working goldens to the branch
+                      echo "Manual: please merge or cherry-pick the golden updates from the branch into main" || true
