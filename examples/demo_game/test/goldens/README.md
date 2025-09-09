@@ -1,3 +1,29 @@
+CI-mode goldens (alchemist)
+=================================
+
+This folder contains CI-mode golden baselines generated for the demo_game
+package. CI-mode replaces rendered text with solid blocks so golden tests
+remain stable across different OS font renderers.
+
+How to generate CI-mode goldens locally
+
+1. From the `examples/demo_game` package root run:
+
+```bash
+flutter test --update-goldens --dart-define=alchemist.platform=ci
+```
+
+This will produce `*_ci.png` images in `examples/demo_game/goldens` which
+should be committed to the repository.
+
+How to run CI-mode tests locally
+
+```bash
+flutter test --dart-define=alchemist.platform=ci
+```
+
+On CI, ensure the test step uses the same `--dart-define=alchemist.platform=ci` flag
+so the runner compares against the CI-mode golden files.
 # Golden tests
 
 This folder contains widget golden tests for the demo game. Baseline images live in `examples/demo_game/goldens/`.

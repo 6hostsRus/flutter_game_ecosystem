@@ -1,0 +1,25 @@
+name: CI - Demo game goldens
+
+on:
+  push:
+    paths:
+      - 'examples/demo_game/**'
+  pull_request:
+    paths:
+      - 'examples/demo_game/**'
+
+jobs:
+  demo-goldens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+      - name: Install deps
+        run: flutter pub get
+        working-directory: examples/demo_game
+      - name: Run CI-mode golden tests
+        run: flutter test --dart-define=alchemist.platform=ci
+        working-directory: examples/demo_game
