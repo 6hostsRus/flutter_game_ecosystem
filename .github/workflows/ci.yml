@@ -55,11 +55,32 @@ jobs:
                - name: Run CI-mode golden tests
                  run: melos run test:goldens
 
-               - name: Collect coverage (aggregate)
+               - name: Collect coverage (per-package, aggregate)
+                 id: collect_coverage
                  run: |
-                      flutter test --coverage
-                      # Merge per-package coverage files if present
-                      dart run tools/merge_coverage.dart || true
+                      set -e
+                      # Run `flutter test --coverage` only in packages that have a test/ dir.
+                      melos exec --concurrency=1 -- bash -lc "if [ -d test ]; then echo 'Running coverage in:' \"$(pwd)\"; flutter test --coverage || true; else echo 'No tests in:' \"$(pwd)\"; fi"
+                      # Only merge coverage if any per-package coverage files were produced.
+                      FOUND=0
+                      for f in $(find . -name lcov.info -path "*/coverage/lcov.info" 2>/dev/null); do
+                        FOUND=1
+                        echo "Found coverage file: $f"
+                      done
+                      if [ "$FOUND" -eq 1 ]; then
+                        dart run tools/merge_coverage.dart || true
+                        echo "COVERAGE_MERGED=1" >> $GITHUB_OUTPUT
+                      else
+                        echo "No coverage files found, skipping merge." >&2
+                        echo "COVERAGE_MERGED=0" >> $GITHUB_OUTPUT
+                      fi
+
+               - name: Upload merged coverage artifact
+                 if: steps.collect_coverage.outputs.COVERAGE_MERGED == '1'
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: merged-coverage-lcov
+                      path: coverage/lcov.info
 
                - name: Quality gates consolidated
                  id: gates

@@ -27,19 +27,32 @@ scripts:
      flutter:warm: flutter --version
      test: melos run flutter:warm && melos exec --concurrency=1 -- flutter test --reporter expanded
      example: melos exec --scope="demo_game" -- flutter run
-     verify-ci: >
-          melos run flutter:warm &&
+     verify-ci: melos run flutter:warm &&
           melos exec --scope="demo_game" -- flutter pub get &&
           melos exec --scope="demo_game" --concurrency=1 -- flutter test --dart-define=alchemist.platform=ci --reporter expanded
-     check: >
-          melos run format &&
+     check: melos run format &&
           melos run analyze &&
           melos run test
-     test:non-goldens: >
+     test:non-goldens:
           # Run tests across the repo but skip the demo_game (which contains
           # golden tests). Useful for CI to separate golden runs.
-          melos exec --ignore="examples/demo_game" --concurrency=1 -- flutter test --reporter expanded
-     test:goldens: >
+          melos exec --ignore="demo_game" --concurrency=1 -- flutter test --reporter expanded
+     test:goldens:
           # Run demo_game tests (goldens) in CI-mode so goldens are validated
           # with deterministic CI config.
-          melos exec --scope="demo_game" --concurrency=1 -- flutter test --dart-define=alchemist.platform=ci --reporter expanded
+          melos run flutter:warm && melos exec --scope="demo_game" --concurrency=1 -- flutter test --dart-define=alchemist.platform=ci --reporter expanded
+     coverage:
+          # Use the repository tool which runs per-package coverage and aggregates results.
+          # The tool supports --verbose to stream per-package test output and --skip-metrics
+          # to avoid the final metrics update when running locally.
+          melos run flutter:warm && \
+          dart run tools/run_all_package_coverage.dart --verbose --skip-metrics
+     test:serial:
+          # Run package tests serially using the repository helper to avoid Flutter startup lock
+          melos run flutter:warm && bash tools/run_all_tests.sh
+     kill-dart:
+          # Interactive helper to kill dart/flutter processes
+          bash tools/kill_dart_flutter.sh
+     kill-dart:force:
+          # Non-interactive: force kill and remove flutter SDK lockfile
+          bash tools/kill_dart_flutter.sh -y --remove-lock
