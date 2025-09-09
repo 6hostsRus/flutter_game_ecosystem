@@ -1,5 +1,5 @@
 schema_version: 1
-last_updated: '2025-09-05'
+last_updated: '2025-09-09'
 packages:
      services:
           path: packages/services
@@ -89,3 +89,11 @@ packages:
           owner: examples
           domain: showcase
           notes: 'Integration reference of modules'
+     :
+          path: packages/game_core
+          role: library
+          status: experimental
+          since: '2025-09-09'
+          owner: core
+          domain: misc
+          notes: ''
