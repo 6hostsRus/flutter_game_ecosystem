@@ -13,13 +13,25 @@ jobs:
           runs-on: ubuntu-latest
           steps:
                - uses: actions/checkout@v4
+
+               - name: Read Flutter pin
+                 id: flutter_pin
+                 run: |
+                      if [ -f .github/flutter_version.txt ]; then 
+                        echo "FLUTTER_VERSION=$(cat .github/flutter_version.txt)" >> $GITHUB_OUTPUT
+                      else 
+                        echo "FLUTTER_VERSION=stable" >> $GITHUB_OUTPUT
+                      fi
+
                - name: Set up Flutter
                  uses: subosito/flutter-action@v2
                  with:
-                      flutter-version: 'stable'
+                      flutter-version: ${{ steps.flutter_pin.outputs.FLUTTER_VERSION }}
+
                - name: Install deps
                  run: flutter pub get
                  working-directory: examples/demo_game
+
                - name: Run CI-mode golden tests
                  run: flutter test --dart-define=alchemist.platform=ci
                  working-directory: examples/demo_game

@@ -8,28 +8,35 @@ jobs:
           runs-on: ubuntu-latest
           steps:
                - uses: actions/checkout@v4
+
                - name: Read Flutter pin
                  id: flutter_pin
                  run: |
                       if [ -f .github/flutter_version.txt ]; then echo "FLUTTER_VERSION=$(cat .github/flutter_version.txt)" >> $GITHUB_OUTPUT; else echo "FLUTTER_VERSION=stable" >> $GITHUB_OUTPUT; fi
-               - uses: subosito/flutter-action@v2
+
+               - name: Set up Flutter
+                 uses: subosito/flutter-action@v2
                  with:
                       # either a specific version string in .github/flutter_version.txt or 'stable'
-                      channel: ${{ steps.flutter_pin.outputs.FLUTTER_VERSION }}
+                      flutter-version: ${{ steps.flutter_pin.outputs.FLUTTER_VERSION }}
+
                - name: Detect goldens
                  id: detect
                  run: |
                       if ls examples/demo_game/goldens/*.png 2>/dev/null; then echo "present=true" >> $GITHUB_OUTPUT; else echo "present=false" >> $GITHUB_OUTPUT; fi
+
                - name: Flutter pub get (demo_game)
                  if: steps.detect.outputs.present == 'true'
                  run: |
                       cd examples/demo_game
                       flutter pub get
+
                - name: Run golden tests
                  if: steps.detect.outputs.present == 'true'
                  run: |
                       cd examples/demo_game
                       flutter test test/goldens
+
                - name: Ensure no uncommitted golden diffs
                  if: steps.detect.outputs.present == 'true'
                  run: |
@@ -37,6 +44,7 @@ jobs:
                         echo "Golden baselines changed. Did you forget to update and commit?" >&2
                         exit 1
                       fi
+
                - name: Upload golden diffs (on failure)
                  if: failure() && steps.detect.outputs.present == 'true'
                  uses: actions/upload-artifact@v4

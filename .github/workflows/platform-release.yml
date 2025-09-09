@@ -31,12 +31,15 @@ jobs:
                - name: Checkout
                  uses: actions/checkout@v4
 
+               - name: Read Flutter pin
+                 id: flutter_pin
+                 run: |
+                      if [ -f .github/flutter_version.txt ]; then echo "FLUTTER_VERSION=$(cat .github/flutter_version.txt)" >> $GITHUB_OUTPUT; else echo "FLUTTER_VERSION=stable" >> $GITHUB_OUTPUT; fi
                - name: Set up Flutter
                  uses: subosito/flutter-action@v2
                  with:
-                      channel: stable
+                      flutter-version: ${{ steps.flutter_pin.outputs.FLUTTER_VERSION }}
                       cache: true
-
                - name: Build (android/web)
                  run: |
                       set -e
@@ -83,10 +86,14 @@ jobs:
                - name: Checkout
                  uses: actions/checkout@v4
 
+               - name: Read Flutter pin
+                 id: flutter_pin_ios
+                 run: |
+                      if [ -f .github/flutter_version.txt ]; then echo "FLUTTER_VERSION=$(cat .github/flutter_version.txt)" >> $GITHUB_OUTPUT; else echo "FLUTTER_VERSION=stable" >> $GITHUB_OUTPUT; fi
                - name: Set up Flutter
                  uses: subosito/flutter-action@v2
                  with:
-                      channel: stable
+                      flutter-version: ${{ steps.flutter_pin_ios.outputs.FLUTTER_VERSION }}
                       cache: true
 
                - name: Build (ios)

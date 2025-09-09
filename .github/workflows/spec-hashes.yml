@@ -21,10 +21,19 @@ jobs:
                  with:
                       fetch-depth: 0
 
+               - name: Read Flutter pin
+                 id: flutter_pin
+                 run: |
+                      if [ -f .github/flutter_version.txt ]; then 
+                        echo "FLUTTER_VERSION=$(cat .github/flutter_version.txt)" >> $GITHUB_OUTPUT
+                      else 
+                        echo "FLUTTER_VERSION=stable" >> $GITHUB_OUTPUT
+                      fi
+
                - name: Setup Flutter
                  uses: subosito/flutter-action@v2
                  with:
-                      channel: stable
+                      flutter-version: ${{ steps.flutter_pin.outputs.FLUTTER_VERSION }}
                       cache: true
 
                - name: Install dependencies
@@ -38,11 +47,11 @@ jobs:
                       set -e
                       CHANGED=$(git status --porcelain docs/SPEC_HASHES.md docs/metrics/spec_hashes.json | wc -l)
                       if [ "$CHANGED" -gt 0 ]; then
-                        git config user.name 'ci-bot'
-                        git config user.email 'ci-bot@users.noreply.github.com'
-                        git add docs/SPEC_HASHES.md docs/metrics/spec_hashes.json
-                        git commit -m 'chore(spec): update SPEC_HASHES and JSON [skip ci]'
-                        git push || true
+                           git config user.name 'ci-bot'
+                           git config user.email 'ci-bot@users.noreply.github.com'
+                           git add docs/SPEC_HASHES.md docs/metrics/spec_hashes.json
+                           git commit -m 'chore(spec): update SPEC_HASHES and JSON [skip ci]'
+                           git push || true
                       else
-                        echo "No spec hash changes to commit"
+                           echo "No spec hash changes to commit"
                       fi

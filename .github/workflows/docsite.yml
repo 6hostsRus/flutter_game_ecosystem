@@ -1,22 +1,26 @@
 name: Publish API Docs
 on:
-  push:
-    tags:
-      - "v*.*.*"
+     push:
+          tags:
+               - 'v*.*.*'
 permissions:
-  contents: write
+     contents: write
 jobs:
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-      - name: Build docs
-        run: dart doc
-      - name: Publish
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./doc/api
+     docs:
+          runs-on: ubuntu-latest
+          steps:
+               - uses: actions/checkout@v4
+               - name: Read Flutter pin
+                 id: flutter_pin
+                 run: |
+                      if [ -f .github/flutter_version.txt ]; then echo "FLUTTER_VERSION=$(cat .github/flutter_version.txt)" >> $GITHUB_OUTPUT; else echo "FLUTTER_VERSION=stable" >> $GITHUB_OUTPUT; fi
+               - uses: subosito/flutter-action@v2
+                 with:
+                      flutter-version: ${{ steps.flutter_pin.outputs.FLUTTER_VERSION }}
+               - name: Build docs
+                 run: dart doc
+               - name: Publish
+                 uses: peaceiris/actions-gh-pages@v3
+                 with:
+                      github_token: ${{ secrets.GH_TOKEN }}
+                      publish_dir: ./doc/api

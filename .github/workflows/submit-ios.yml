@@ -1,25 +1,29 @@
 name: Submit iOS (TestFlight)
 on:
-  repository_dispatch:
-    types: [submit-ios]
+     repository_dispatch:
+          types: [submit-ios]
 permissions:
-  contents: read
+     contents: read
 jobs:
-  submit:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-      - name: Build IPA
-        run: |
-          flutter build ipa --release --no-codesign
-      - name: Upload to TestFlight (Fastlane)
-        run: |
-          gem install fastlane
-          fastlane pilot upload --ipa build/ios/ipa/*.ipa --skip_waiting_for_build_processing true
-        env:
-          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
-          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APPSTORE_P8 }}
+     submit:
+          runs-on: macos-latest
+          steps:
+               - uses: actions/checkout@v4
+               - name: Read Flutter pin
+                 id: flutter_pin
+                 run: |
+                      if [ -f .github/flutter_version.txt ]; then echo "FLUTTER_VERSION=$(cat .github/flutter_version.txt)" >> $GITHUB_OUTPUT; else echo "FLUTTER_VERSION=stable" >> $GITHUB_OUTPUT; fi
+               - uses: subosito/flutter-action@v2
+                 with:
+                      flutter-version: ${{ steps.flutter_pin.outputs.FLUTTER_VERSION }}
+               - name: Build IPA
+                 run: |
+                      flutter build ipa --release --no-codesign
+               - name: Upload to TestFlight (Fastlane)
+                 run: |
+                      gem install fastlane
+                      fastlane pilot upload --ipa build/ios/ipa/*.ipa --skip_waiting_for_build_processing true
+                 env:
+                      APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+                      APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
+                      APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APPSTORE_P8 }}
