@@ -1,0 +1,28 @@
+# board.v1 schema (stub)
+board:
+  width: 8
+  height: 8
+  gravity: down         # down|up|left|right
+  refill: bag           # bag|random
+  rng_seed: null
+tiles:
+  kinds: 5
+  weights: [1,1,1,1,1]
+matches:
+  patterns:
+    line3: { enabled: true }
+    line4: { bonus: line_clear, power: 1 }
+    line5: { bonus: color_bomb, power: 1 }
+    tee:   { bonus: cross_clear,  power: 1 }
+    ell:   { bonus: corner_bomb,  power: 1 }
+  combo:
+    base: 1.0
+    per_cascade: 0.25
+analytics:
+  on_swap: match.swap
+  on_match: match.match
+  on_cascade_end: match.cascade_end
+  on_board_stable: match.board_stable
+meta:
+  version: 1
+  schema: board.v1

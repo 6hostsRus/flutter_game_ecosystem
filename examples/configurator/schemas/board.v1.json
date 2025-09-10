@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "board.v1",
+  "type": "object",
+  "required": [
+    "board",
+    "tiles",
+    "matches",
+    "meta"
+  ],
+  "properties": {
+    "board": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "gravity": {
+          "type": "string"
+        },
+        "refill": {
+          "type": "string"
+        },
+        "rng_seed": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "gravity",
+        "refill"
+      ]
+    },
+    "tiles": {
+      "type": "object"
+    },
+    "matches": {
+      "type": "object"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "board.v1"
+        }
+      }
+    }
+  }
+}

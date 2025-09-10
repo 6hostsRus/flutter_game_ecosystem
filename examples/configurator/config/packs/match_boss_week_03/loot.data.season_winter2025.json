@@ -1,0 +1,22 @@
+[
+  {
+    "item_id": "winter_banner",
+    "rarity": "rare",
+    "weight": 10,
+    "min_rank": "gold",
+    "tags": [
+      "cosmetic",
+      "seasonal"
+    ]
+  },
+  {
+    "item_id": "frost_aura",
+    "rarity": "epic",
+    "weight": 4,
+    "min_rank": "platinum",
+    "tags": [
+      "cosmetic",
+      "aura"
+    ]
+  }
+]

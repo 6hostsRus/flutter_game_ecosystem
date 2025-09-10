@@ -1,0 +1,14 @@
+# loot.v1 schema index for this pack
+schema: loot.v1
+sources:
+  - file: loot.data.arena_speed.csv
+    key: items
+  - file: loot.data.season_winter2025.json
+    key: seasonal
+weights:
+  items: 0.8
+  seasonal: 0.2
+rules:
+  min_rank_gate:
+    items: "gold"
+    seasonal: "platinum"

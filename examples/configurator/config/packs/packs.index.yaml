@@ -1,0 +1,32 @@
+# authoritative list of packs recognized by the configurator
+# Fields:
+# - id: unique identifier (folder name under config/packs/)
+# - name: human-friendly
+# - engine: match|idle|survivor|rpg (routes to correct runtime)
+# - discipline: pve|pvp|mixed (quick filtering + QA awareness)
+# - season/tags: discovery + storefront surfacing
+# - lockSeed: true enforces parity (e.g., PvP); disables seed editing
+# - minAppVersion/compat: prevents loading packs on incompatible builds
+# - rollout: optional experiment metadata for controlled exposure
+# - locales/l10nBundle: localized string packs (reserve for future)
+# - requiresSubs: e.g., ["vip", "premium"] (paywall integration)
+# - risk: low|medium|high|experimental (QA/approval signal)
+# - path: relative folder path
+packs:
+  - id: match_boss_week_03
+    name: "Boss Week 3: Shadow Knight"
+    engine: match
+    discipline: pve
+    season: "winter-2025"
+    tags: ["boss","hard","featured"]
+    lockSeed: false
+    minAppVersion: "1.2.0"
+    compat: ">=1.2,<2.0"
+    rollout:
+      experimentId: "exp-4521"
+      cohort: 50
+    locales: ["en"]
+    l10nBundle: "strings/en.yaml"
+    requiresSubs: []
+    risk: low
+    path: "match_boss_week_03"

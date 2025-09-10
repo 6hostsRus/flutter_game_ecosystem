@@ -1,0 +1,5 @@
+# Local dev overrides
+config/overrides/dev/local.yaml
+
+# Golden recordings
+goldens/

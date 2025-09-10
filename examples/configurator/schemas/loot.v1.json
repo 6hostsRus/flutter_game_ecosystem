@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "loot.v1",
+  "type": "object",
+  "required": [
+    "schema",
+    "sources",
+    "weights"
+  ],
+  "properties": {
+    "schema": {
+      "const": "loot.v1"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "file",
+          "key"
+        ],
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "weights": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+# rpg.v1 (placeholder)
+rpg:
+  encounter_seed: null
+meta:
+  version: 1
+  schema: rpg.v1
