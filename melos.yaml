@@ -56,3 +56,6 @@ scripts:
      kill-dart:force:
           # Non-interactive: force kill and remove flutter SDK lockfile
           bash tools/kill_dart_flutter.sh -y --remove-lock
+     bundle:
+          # Create a zip of the repository excluding build and other ignored files
+          bash tools/create_light_bundle.sh
