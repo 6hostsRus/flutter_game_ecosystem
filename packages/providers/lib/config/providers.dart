@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:riverpod/riverpod.dart';
 
@@ -59,21 +58,21 @@ Map<String, dynamic> _deepMerge(Map<String, dynamic> a, Map<String, dynamic> b) 
 /// Placeholder loaders; wire these to your file-watcher in the configurator.
 typedef Loader = Future<Map<String, dynamic>> Function(EngineId engine, String? packId);
 
-final defaultsLoaderProvider = Provider<Loader>((_) async => (engine, packId) => Future.value(<String, dynamic>{}));
-final packLoaderProvider = Provider<Loader>((_) async => (engine, packId) => Future.value(<String, dynamic>{}));
-final envFlagsLoaderProvider = Provider<Loader>((_) async => (engine, packId) => Future.value(<String, dynamic>{}));
-final deviceOverridesLoaderProvider = Provider<Loader>((_) async => (engine, packId) => Future.value(<String, dynamic>{}));
-final devOverridesLoaderProvider = Provider<Loader>((_) async => (engine, packId) => Future.value(<String, dynamic>{}));
+final defaultsLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final packLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final envFlagsLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final deviceOverridesLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final devOverridesLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
 
 /// Produces the full merge chain and final merged map for the selected engine/pack.
 final mergeChainProvider = FutureProvider<MergeChain>((ref) async {
   final engine = ref.watch(selectedEngineProvider);
   final packId = ref.watch(selectedPackIdProvider);
-  final defaults = await (await ref.watch(defaultsLoaderProvider))(engine, packId);
-  final pack = await (await ref.watch(packLoaderProvider))(engine, packId);
-  final flags = await (await ref.watch(envFlagsLoaderProvider))(engine, packId);
-  final device = await (await ref.watch(deviceOverridesLoaderProvider))(engine, packId);
-  final dev = await (await ref.watch(devOverridesLoaderProvider))(engine, packId);
+  final defaults = await ref.watch(defaultsLoaderProvider)(engine, packId);
+  final pack = await ref.watch(packLoaderProvider)(engine, packId);
+  final flags = await ref.watch(envFlagsLoaderProvider)(engine, packId);
+  final device = await ref.watch(deviceOverridesLoaderProvider)(engine, packId);
+  final dev = await ref.watch(devOverridesLoaderProvider)(engine, packId);
 
   // Merge order: defaults < pack < env flags < device < dev
   final merged = _deepMerge(
