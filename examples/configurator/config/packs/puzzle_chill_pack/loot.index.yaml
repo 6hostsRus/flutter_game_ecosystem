@@ -1,0 +1,6 @@
+schema: loot.v1
+sources:
+  - file: loot.data.chill.json
+    key: items
+weights:
+  items: 1.0

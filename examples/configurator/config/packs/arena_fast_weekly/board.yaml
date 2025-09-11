@@ -1,0 +1,25 @@
+# board.v1 tuned for speed PvP; smaller board, higher combo per cascade
+board:
+  width: 7
+  height: 7
+  gravity: down
+  refill: bag
+  rng_seed: 777              # enforced by lockSeed at pack level
+tiles:
+  kinds: 6
+  weights: [1,1,1,1,1,1]
+matches:
+  patterns:
+    line3: { enabled: true }
+    line4: { bonus: line_clear, power: 1 }
+    line5: { bonus: color_bomb, power: 1 }
+    tee:   { bonus: cross_clear,  power: 1 }
+    ell:   { bonus: corner_bomb,  power: 1 }
+  combo:
+    base: 1.0
+    per_cascade: 0.40
+yields:
+  energy_per_tile: 1
+  soft_currency_per_tile: 1
+meta:
+  schema: board.v1

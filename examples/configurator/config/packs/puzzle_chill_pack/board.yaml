@@ -1,0 +1,23 @@
+# board.v1 tuned for casual puzzle; larger board, gentler combo gain
+board:
+  width: 9
+  height: 9
+  gravity: down
+  refill: bag
+  rng_seed: 13579
+tiles:
+  kinds: 5
+  weights: [1,1,1,1,1]
+matches:
+  patterns:
+    line3: { enabled: true }
+    line4: { bonus: line_clear, power: 1 }
+    line5: { bonus: color_bomb, power: 1 }
+  combo:
+    base: 1.0
+    per_cascade: 0.20
+yields:
+  energy_per_tile: 1
+  soft_currency_per_tile: 1
+meta:
+  schema: board.v1

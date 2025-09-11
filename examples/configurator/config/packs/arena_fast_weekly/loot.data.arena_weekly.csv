@@ -1,0 +1,4 @@
+item_id,rarity,weight,min_rank,tags
+arena_banner_speed,rare,12,gold,"pvp,cosmetic"
+gear_chest_speed,rare,10,gold,"pvp,chest"
+gem_small,uncommon,6,gold,currency

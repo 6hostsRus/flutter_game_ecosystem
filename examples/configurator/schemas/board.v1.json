@@ -1,58 +1,99 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "board.v1",
-  "type": "object",
-  "required": [
-    "board",
-    "tiles",
-    "matches",
-    "meta"
-  ],
-  "properties": {
-    "board": {
-      "type": "object",
-      "properties": {
-        "width": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "height": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "gravity": {
-          "type": "string"
-        },
-        "refill": {
-          "type": "string"
-        },
-        "rng_seed": {
-          "type": [
-            "integer",
-            "null"
-          ]
-        }
-      },
-      "required": [
-        "width",
-        "height",
-        "gravity",
-        "refill"
-      ]
-    },
-    "tiles": {
-      "type": "object"
-    },
-    "matches": {
-      "type": "object"
-    },
-    "meta": {
-      "type": "object",
-      "properties": {
-        "schema": {
-          "const": "board.v1"
-        }
-      }
-    }
-  }
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "title": "board.v1",
+     "type": "object",
+     "required": ["board", "tiles", "matches", "meta"],
+     "properties": {
+          "board": {
+               "type": "object",
+               "required": ["width", "height", "gravity", "refill"],
+               "properties": {
+                    "width": {
+                         "type": "integer",
+                         "minimum": 1
+                    },
+                    "height": {
+                         "type": "integer",
+                         "minimum": 1
+                    },
+                    "gravity": {
+                         "type": "string",
+                         "enum": ["down", "up", "left", "right"]
+                    },
+                    "refill": {
+                         "type": "string",
+                         "enum": ["bag", "random"]
+                    },
+                    "rng_seed": {
+                         "type": ["integer", "null"]
+                    }
+               }
+          },
+          "tiles": {
+               "type": "object",
+               "required": ["kinds"],
+               "properties": {
+                    "kinds": {
+                         "type": "integer",
+                         "minimum": 1
+                    },
+                    "weights": {
+                         "type": "array",
+                         "items": {
+                              "type": "number"
+                         }
+                    }
+               }
+          },
+          "matches": {
+               "type": "object",
+               "required": ["patterns"],
+               "properties": {
+                    "patterns": {
+                         "type": "object",
+                         "required": ["line3"],
+                         "properties": {
+                              "line3": {
+                                   "type": "object",
+                                   "required": ["enabled"],
+                                   "properties": {
+                                        "enabled": {
+                                             "type": "boolean"
+                                        }
+                                   }
+                              }
+                         }
+                    },
+                    "combo": {
+                         "type": "object",
+                         "properties": {
+                              "base": {
+                                   "type": "number"
+                              },
+                              "per_cascade": {
+                                   "type": "number"
+                              }
+                         }
+                    }
+               }
+          },
+          "yields": {
+               "type": "object"
+          },
+          "obstacles": {
+               "type": "array"
+          },
+          "analytics": {
+               "type": "object"
+          },
+          "meta": {
+               "type": "object",
+               "required": ["schema"],
+               "properties": {
+                    "schema": {
+                         "const": "board.v1"
+                    }
+               }
+          }
+     }
 }

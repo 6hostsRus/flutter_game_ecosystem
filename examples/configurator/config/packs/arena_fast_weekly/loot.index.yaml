@@ -1,0 +1,9 @@
+schema: loot.v1
+sources:
+  - file: loot.data.arena_weekly.csv
+    key: items
+weights:
+  items: 1.0
+rules:
+  min_rank_gate:
+    items: "gold"
