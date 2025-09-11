@@ -1,0 +1,27 @@
+*** PATCH: modules/genres/match/lib/src/board.dart (conceptual) ***
+- class MatchBoard {
+-   final int width;
+-   final int height;
+-   final int kinds;
+-   // ...
+-   MatchBoard(this.width, this.height, {this.kinds = 5});
+- }
++ import 'board_config.dart';
++ class MatchBoard {
++   final BoardConfig cfg;
++   int get width => cfg.width;
++   int get height => cfg.height;
++   int get kinds => cfg.kinds;
++
++   // keep existing board state fields...
++
++   MatchBoard(this.cfg) {
++     // TODO: seed RNG with cfg.rngSeed if present
++     // TODO: use cfg.gravity/cfg.refill in cascade/refill steps
++     // TODO: consult cfg.patterns in match detection
++   }
++
++   void reseed(int seed) {
++     // reinitialize RNG to deterministic state
++   }
++ }
