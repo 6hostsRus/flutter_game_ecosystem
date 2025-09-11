@@ -43,11 +43,13 @@ class MergeChain {
   });
 }
 
-Map<String, dynamic> _deepMerge(Map<String, dynamic> a, Map<String, dynamic> b) {
+Map<String, dynamic> _deepMerge(
+    Map<String, dynamic> a, Map<String, dynamic> b) {
   final out = <String, dynamic>{}..addAll(a);
   b.forEach((k, v) {
     if (v is Map && a[k] is Map) {
-      out[k] = _deepMerge(a[k] as Map<String, dynamic>, v as Map<String, dynamic>);
+      out[k] =
+          _deepMerge(a[k] as Map<String, dynamic>, v as Map<String, dynamic>);
     } else {
       out[k] = v;
     }
@@ -56,13 +58,19 @@ Map<String, dynamic> _deepMerge(Map<String, dynamic> a, Map<String, dynamic> b) 
 }
 
 /// Placeholder loaders; wire these to your file-watcher in the configurator.
-typedef Loader = Future<Map<String, dynamic>> Function(EngineId engine, String? packId);
+typedef Loader = Future<Map<String, dynamic>> Function(
+    EngineId engine, String? packId);
 
-final defaultsLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
-final packLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
-final envFlagsLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
-final deviceOverridesLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
-final devOverridesLoaderProvider = Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final defaultsLoaderProvider =
+    Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final packLoaderProvider =
+    Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final envFlagsLoaderProvider =
+    Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final deviceOverridesLoaderProvider =
+    Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
+final devOverridesLoaderProvider =
+    Provider<Loader>((_) => (engine, packId) async => <String, dynamic>{});
 
 /// Produces the full merge chain and final merged map for the selected engine/pack.
 final mergeChainProvider = FutureProvider<MergeChain>((ref) async {
@@ -108,4 +116,3 @@ final hooksProvider = Provider<List<BoardEventHook>>((ref) {
   // TODO: assemble from registry & flags
   return const [];
 });
-

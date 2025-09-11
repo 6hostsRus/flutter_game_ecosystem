@@ -24,6 +24,7 @@ Guidelines:
 -    Tasks: Archived completed AI task library items into the changelog and pruned `docs/AI_TASK_LIBRARY.md` and `docs/AI_TASK_RECONCILIATION.md` to list only current open/partial items.
 
 -    Snippets: Migrated small snippets and added tests/README entries
+
      -    platformer_player_controller -> `modules/genres/game_scenes/src/platformer/player_controller.dart` (+ tests)
      -    rpg_stats -> `modules/genres/rpg/src/stats.dart` (+ tests)
      -    ccg card serialization -> `modules/genres/ccg/lib/src/card.dart` (+ tests/README)
@@ -32,7 +33,6 @@ Guidelines:
 -    Config Runtime PoC (providers) — 2025-09-11
 
      -    Migrated `packages/providers` to the canonical `config_runtime` usage surface: normalized Loader provider signatures and fixed awaiting patterns. Added migration plan and PoC PR template under `docs/migrations/` to guide subsequent per-package PRs. (commit `26899c1`)
-
 
 ## 2025-09-07
 
