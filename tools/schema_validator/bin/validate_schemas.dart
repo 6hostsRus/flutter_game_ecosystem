@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:yaml/yaml.dart';
-import 'package:json_schema2/json_schema2.dart';
+import 'package:json_schema2/json_schema.dart';
 
 Future<void> main(List<String> args) async {
   final parser = ArgParser()
@@ -45,14 +45,14 @@ Future<void> main(List<String> args) async {
 Future<JsonSchema> _loadSchema(String path) async {
   final txt = await File(path).readAsString();
   final data = jsonDecode(txt);
-  return JsonSchema.createSchema(data);
+  return JsonSchema.create(data);
 }
 
 void _validate(JsonSchema schema, Object? data, String filename) {
-  final result = schema.validateWithErrors(data);
-  if (result.isNotEmpty) {
+  final result = schema.validate(data);
+  if (result.errors.isNotEmpty) {
     stderr.writeln('Validation errors in $filename:');
-    for (final err in result) {
+    for (final err in result.errors) {
       stderr.writeln(' - ${err.message} at ${err.instancePath}');
     }
     exit(1);

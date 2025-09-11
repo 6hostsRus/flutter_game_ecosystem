@@ -1,0 +1,5 @@
+name: goldens
+description: Golden capture & deterministic replay utilities.
+version: 0.1.0
+environment: { sdk: '>=3.3.0 <4.0.0' }
+dependencies: { path: ^1.9.0, meta: ^1.12.0 }

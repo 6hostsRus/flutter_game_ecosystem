@@ -11,6 +11,8 @@ dependencies:
           sdk: flutter
      riverpod: ^2.5.1
      hooks_riverpod: ^2.5.1
+     config_runtime:
+          path: ../config_runtime
      services:
           path: ../services
 
