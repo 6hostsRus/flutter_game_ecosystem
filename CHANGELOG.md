@@ -29,6 +29,11 @@ Guidelines:
      -    ccg card serialization -> `modules/genres/ccg/lib/src/card.dart` (+ tests/README)
      -    survivor run_state -> `modules/genres/survivor/src/run_state.dart` (+ tests/README)
 
+-    Config Runtime PoC (providers) — 2025-09-11
+
+     -    Migrated `packages/providers` to the canonical `config_runtime` usage surface: normalized Loader provider signatures and fixed awaiting patterns. Added migration plan and PoC PR template under `docs/migrations/` to guide subsequent per-package PRs. (commit `26899c1`)
+
+
 ## 2025-09-07
 
 Highlights
