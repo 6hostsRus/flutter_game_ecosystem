@@ -9,6 +9,8 @@ dependencies:
           sdk: flutter
      game_core:
           path: ../../../packages/game_core
+     providers:
+          path: ../../../packages/providers
 dev_dependencies:
      flutter_test:
           sdk: flutter

@@ -6,8 +6,8 @@ import 'dart:convert';
 class BoardConfig {
   final int width;
   final int height;
-  final String gravity;   // down|up|left|right
-  final String refill;    // bag|random
+  final String gravity; // down|up|left|right
+  final String refill; // bag|random
   final int? rngSeed;
 
   /// Tile kinds and optional spawn weights (length == kinds)
@@ -100,27 +100,47 @@ class BoardConfig {
 
   factory BoardConfig.fromMap(Map m) {
     // minimal validation; the configurator does full JSON-Schema validation pre-load
-    final matches = (m['matches'] as Map?) ?? const {};
-    final combo = (matches['combo'] as Map?) ?? const {};
-    final tiles = (m['tiles'] as Map?) ?? const {};
-    final board = (m['board'] as Map?) ?? const {};
+    final matches =
+        Map<String, dynamic>.from((m['matches'] as Map?) ?? const {});
+    final combo =
+        Map<String, dynamic>.from((matches['combo'] as Map?) ?? const {});
+    final tiles = Map<String, dynamic>.from((m['tiles'] as Map?) ?? const {});
+    final board = Map<String, dynamic>.from((m['board'] as Map?) ?? const {});
     return BoardConfig(
-      width: (board['width'] ?? 8) as int,
-      height: (board['height'] ?? 8) as int,
-      gravity: (board['gravity'] ?? 'down') as String,
-      refill: (board['refill'] ?? 'bag') as String,
+      width: (board['width'] ?? 8) is int
+          ? (board['width'] ?? 8) as int
+          : int.parse((board['width'] ?? '8').toString()),
+      height: (board['height'] ?? 8) is int
+          ? (board['height'] ?? 8) as int
+          : int.parse((board['height'] ?? '8').toString()),
+      gravity: (board['gravity'] ?? 'down').toString(),
+      refill: (board['refill'] ?? 'bag').toString(),
       rngSeed: board['rng_seed'] is int ? board['rng_seed'] as int : null,
-      kinds: (tiles['kinds'] ?? 5) as int,
+      kinds: (tiles['kinds'] ?? 5) is int
+          ? (tiles['kinds'] ?? 5) as int
+          : int.parse((tiles['kinds'] ?? '5').toString()),
       weights: tiles['weights'] == null
           ? null
-          : (tiles['weights'] as List).map((e) => (e as num).toDouble()).toList(),
-      patterns: ((matches['patterns'] as Map?) ?? const {}).map((k, v) => MapEntry('$k', v)),
-      comboBase: (combo['base'] ?? 1.0 as num).toDouble(),
-      comboPerCascade: (combo['per_cascade'] ?? 0.25 as num).toDouble(),
-      obstacles: (m['obstacles'] as Map?) ?? const {},
-      yields: (m['yields'] as Map?) ?? const {},
-      analytics: ((m['analytics'] as Map?) ?? const {}).map((k, v) => MapEntry('$k', '$v')),
-      meta: (m['meta'] as Map?) ?? const {'schema': 'board.v1'},
+          : (tiles['weights'] as List)
+              .map((e) => (e as num).toDouble())
+              .toList(),
+      patterns:
+          Map<String, dynamic>.from((matches['patterns'] as Map?) ?? const {}),
+      comboBase: ((combo['base'] ?? 1.0) is num
+              ? (combo['base'] ?? 1.0) as num
+              : double.parse((combo['base'] ?? '1.0').toString()))
+          .toDouble(),
+      comboPerCascade: ((combo['per_cascade'] ?? 0.25) is num
+              ? (combo['per_cascade'] ?? 0.25) as num
+              : double.parse((combo['per_cascade'] ?? '0.25').toString()))
+          .toDouble(),
+      obstacles:
+          Map<String, dynamic>.from((m['obstacles'] as Map?) ?? const {}),
+      yields: Map<String, dynamic>.from((m['yields'] as Map?) ?? const {}),
+      analytics: Map<String, String>.from(((m['analytics'] as Map?) ?? const {})
+          .map((k, v) => MapEntry('$k', '$v'))),
+      meta: Map<String, dynamic>.from(
+          (m['meta'] as Map?) ?? const {'schema': 'board.v1'}),
     );
   }
 

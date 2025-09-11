@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'dart:math';
-import 'board_config.dart';
+import 'src/board_config.dart';
 import 'hooks.dart';
 
 /// A minimal, deterministic Match-3 engine that consumes [BoardConfig].
@@ -70,10 +70,15 @@ class MatchBoard {
   /// Attempts a swap. If no match results, reverts the swap.
   /// Returns true if the move was valid (produced a match).
   bool trySwap(int ax, int ay, int bx, int by) {
-    if (!inBounds(ax, ay) || !inBounds(bx, by) || !areAdjacent(ax, ay, bx, by)) {
+    if (!inBounds(ax, ay) ||
+        !inBounds(bx, by) ||
+        !areAdjacent(ax, ay, bx, by)) {
       return false;
     }
-    hooks.forEach((h) => h.onSwap({'a':[ax,ay],'b':[bx,by]}));
+    hooks.forEach((h) => h.onSwap({
+          'a': [ax, ay],
+          'b': [bx, by]
+        }));
 
     final ai = index(ax, ay);
     final bi = index(bx, by);
@@ -99,12 +104,12 @@ class MatchBoard {
     for (int y = 0; y < height; y++) {
       int runLen = 1;
       for (int x = 1; x < width; x++) {
-        if (_cells[index(x, y)] == _cells[index(x-1, y)]) {
+        if (_cells[index(x, y)] == _cells[index(x - 1, y)]) {
           runLen++;
         } else {
           if (runLen >= 3) {
             for (int k = 0; k < runLen; k++) {
-              match.add(index(x-1-k, y));
+              match.add(index(x - 1 - k, y));
             }
           }
           runLen = 1;
@@ -112,7 +117,7 @@ class MatchBoard {
       }
       if (runLen >= 3) {
         for (int k = 0; k < runLen; k++) {
-          match.add(index(width-1-k, y));
+          match.add(index(width - 1 - k, y));
         }
       }
     }
@@ -120,12 +125,12 @@ class MatchBoard {
     for (int x = 0; x < width; x++) {
       int runLen = 1;
       for (int y = 1; y < height; y++) {
-        if (_cells[index(x, y)] == _cells[index(x, y-1)]) {
+        if (_cells[index(x, y)] == _cells[index(x, y - 1)]) {
           runLen++;
         } else {
           if (runLen >= 3) {
             for (int k = 0; k < runLen; k++) {
-              match.add(index(x, y-1-k));
+              match.add(index(x, y - 1 - k));
             }
           }
           runLen = 1;
@@ -133,7 +138,7 @@ class MatchBoard {
       }
       if (runLen >= 3) {
         for (int k = 0; k < runLen; k++) {
-          match.add(index(x, height-1-k));
+          match.add(index(x, height - 1 - k));
         }
       }
     }

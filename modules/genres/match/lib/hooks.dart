@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import '../../../../../packages/services/lib/telemetry/telemetry_bus.dart';
+import 'package:providers/telemetry/telemetry_bus.dart';
 
 /// Basic event hook interface for the board lifecycle.
 abstract class BoardEventHook {
