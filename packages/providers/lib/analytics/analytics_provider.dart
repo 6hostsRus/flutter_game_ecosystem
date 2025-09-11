@@ -2,6 +2,8 @@ library providers.analytics.analytics_provider;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:services/analytics/analytics_port.dart';
+import 'package:services/analytics/analytics_port.dart' as analytics_port
+    show setGlobalAnalyticsPort;
 import 'package:services/analytics/adapters/debug_logger_adapter.dart';
 
 // Optional adapters (wire up only if you add dependencies).
@@ -102,5 +104,8 @@ final analyticsPortProvider = Provider<AnalyticsPort>((ref) {
     if (ref.read(amplitudeAnalyticsAdapterProvider) != null)
       ref.read(amplitudeAnalyticsAdapterProvider)!,
   ];
-  return MultiAnalytics(sinks);
+  final port = MultiAnalytics(sinks);
+  // Register global sink for non-Riverpod helpers (shared_utils).
+  analytics_port.setGlobalAnalyticsPort(port);
+  return port;
 });

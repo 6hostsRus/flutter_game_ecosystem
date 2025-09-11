@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:services/analytics/analytics_port.dart' as analytics;
 
 /// Thin, centralized utilities used across the mono-repo.
 ///
@@ -54,19 +55,31 @@ void unawaited<T>(Future<T> future, {bool handleErrors = false}) {
       if (_unhandledErrorHandler != null) {
         _unhandledErrorHandler!(error, stack);
       } else {
-        // No handler registered: emit a small NDJSON metrics line so
-        // repo tooling / CI can collect the event.
+        // No handler registered: prefer reporting to the global analytics
+        // sink if one is registered (set by provider bundles). This keeps
+        // telemetry consistent in apps that wire analytics, but still
+        // preserves the NDJSON fallback for CI/CLI tooling.
         try {
-          final out = File('../../build/metrics/unhandled_exceptions.ndjson');
-          out.parent.createSync(recursive: true);
-          final entry = {
-            'ts': DateTime.now().toIso8601String(),
-            'error': error.toString(),
-            'stack': stack?.toString(),
-            'source': 'shared_utils.unawaited'
-          };
-          out.writeAsStringSync(jsonEncode(entry) + '\n',
-              mode: FileMode.append);
+          final sink = analytics.getGlobalAnalyticsPort();
+          if (sink != null) {
+            sink.send(analytics.AnalyticsEvent('unawaited_error', {
+              'ts': DateTime.now().toIso8601String(),
+              'error': error.toString(),
+              'stack': stack?.toString(),
+              'source': 'shared_utils.unawaited'
+            }));
+          } else {
+            final out = File('../../build/metrics/unhandled_exceptions.ndjson');
+            out.parent.createSync(recursive: true);
+            final entry = {
+              'ts': DateTime.now().toIso8601String(),
+              'error': error.toString(),
+              'stack': stack?.toString(),
+              'source': 'shared_utils.unawaited'
+            };
+            out.writeAsStringSync(jsonEncode(entry) + '\n',
+                mode: FileMode.append);
+          }
         } catch (_) {
           Zone.current.handleUncaughtError(error, stack ?? StackTrace.current);
         }

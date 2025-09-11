@@ -68,3 +68,16 @@ class MultiAnalytics implements AnalyticsPort {
     }
   }
 }
+
+/// Optional global analytics sink used by lightweight helpers that can't
+/// reasonably depend on Riverpod or the provider bundle. Packages may
+/// register the active sink at app bootstrap using [setGlobalAnalyticsPort].
+AnalyticsPort? _globalAnalyticsPort;
+
+/// Set the global analytics sink (or null to clear).
+void setGlobalAnalyticsPort(AnalyticsPort? port) {
+  _globalAnalyticsPort = port;
+}
+
+/// Get the currently registered global analytics sink, or null if none.
+AnalyticsPort? getGlobalAnalyticsPort() => _globalAnalyticsPort;
