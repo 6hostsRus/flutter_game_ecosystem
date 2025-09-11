@@ -54,5 +54,6 @@ Notes
 -    Optional artifacts (e.g., semantic parity auto-update) should be non-blocking in CI but upload artifacts for visibility.
 -    Avoid over-automation in a single PR; keep risk low and value visible.
 -    Consider when new branches need made to update the repository. Present git commands to so when necessary to keep work organized and trackable.
+-    Organize what branches need to be merged to a feature branch and generate terminal commands to do so when necessary.
 -    Generate meaningful commit messages when it is time for a commit.
 -    When relocating or deleting a file, present terminal commands to do so in order to avoid user confusion instead of generating new files to reflect changes from file moves.
