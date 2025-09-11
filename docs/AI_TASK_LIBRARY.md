@@ -224,6 +224,73 @@ Add these tasks to backlog and assign owners as appropriate.
 
 ---
 
+## ConfigRuntimeUnify (P1)
+
+Purpose: Unify the `config_runtime` API across packages and migrate consumers incrementally so the repo uses a single canonical runtime.
+
+Steps:
+
+1. Create a migration plan and present as numbered options (e.g., 1. providers-first, 2. examples-first, 3. parallel per-package PRs). Choose one option before editing.
+2. Proof-of-concept: Migrate `packages/providers` to the new `config_runtime` exports in a single, small PR; include `melos bootstrap` + `melos run analyze --scope packages/providers` validation.
+3. Sequentially open per-package PRs following the chosen order; each PR must include a smoke test and `change-class: refactor` header.
+4. Add deprecation wrappers in `config_runtime` where needed to maintain backward compatibility for one release.
+5. After all packages are migrated, run full `melos run analyze` and a representative `melos run test` matrix; update `CHANGELOG.md` and `docs/AI_TASK_RECONCILIATION.md`.
+
+Validation:
+
+-    `melos run analyze` and `melos run test` pass for migrated packages.
+-    Examples build and run (or a smoke matrix demonstrates no missing runtime errors).
+
+Notes:
+
+-    Keep each package PR minimal and reversible; prefer many small PRs over one large PR.
+
+---
+
+## RemoveForwardersAndCanonicalizeExports (P1)
+
+Purpose: Remove local forwarder files that duplicate canonical packages (for example `shared_utils`) and update imports to the canonical package exports.
+
+Steps:
+
+1. Run a repo search for forwarder patterns (exports that re-export another package or local forwarders named `unawaited`, `shared_utils`, etc.).
+2. Create a per-package PR that replaces local imports with `package:shared_utils/shared_utils.dart` (or the canonical path) and removes the forwarder file.
+3. Run `melos bootstrap`, `melos run analyze --scope <pkg>`, and `melos run test --scope <pkg>` before merging.
+4. If many packages are affected, batch into small groups and include a migration README in the first PR.
+
+Validation:
+
+-    Per-package analyzer and tests pass after replacements.
+-    No dangling imports or missing symbols in examples.
+
+Notes:
+
+-    Prefer moving a forwarder to `archive/` before deleting if unsure.
+
+---
+
+## FixSchemaValidatorTool (P0)
+
+Purpose: Repair `tools/schema_validator` so it runs locally and in CI (fix missing deps, ensure executable entry, and add CI job).
+
+Steps:
+
+1. Reproduce locally: `melos bootstrap` then `dart run tools/schema_validator/bin/validate_configs.dart` and capture errors.
+2. Update `tools/schema_validator/pubspec.yaml` with required deps (e.g., `json_schema2`) and a proper `environment:` sdk line if missing.
+3. Add a smoke test and include it in `melos run test` for that package.
+4. Add a CI job that runs `melos bootstrap` and the validator in `--dry-run` mode, then a full run once stable.
+
+Validation:
+
+-    `dart run tools/schema_validator/bin/validate_configs.dart` runs locally and in CI without missing package errors.
+-    CI job completes successfully when validation is enabled.
+
+Notes:
+
+-    If `json_schema2` or other deps cause conflicts, pin compatible versions and update lockfiles.
+
+---
+
 ## PlatformTargetsRestrict (P2)
 
 Purpose: Restrict active development to Android and iOS only for the monorepo. Defer desktop (Windows/Linux) and web support until a future phase; keep macOS planned but gated for a later milestone.
