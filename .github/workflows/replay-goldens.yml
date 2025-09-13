@@ -1,0 +1,16 @@
+name: Replay Goldens
+on:
+     {
+          pull_request: { paths: ['goldens/**', 'packages/goldens/**'] },
+          workflow_dispatch: {},
+     }
+jobs:
+     replay:
+          runs-on: ubuntu-latest
+          steps:
+               - uses: actions/checkout@v4
+               - uses: dart-lang/setup-dart@v1
+               - name: Get packages
+                 run: dart pub get --directory=packages/goldens
+               - name: Replay (placeholder)
+                 run: echo "Wire engine-specific replays here"

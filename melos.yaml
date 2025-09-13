@@ -3,6 +3,10 @@ name: flutter_game_ecosystem
 packages:
      - packages/* # ui_shell, providers, services, etc.
      - packages/*/* # services subpackages (analytics_firebase_adapter, core_services, core_services_isar)
+     - packages/config_runtime
+     - packages/goldens
+     - packages/providers
+     - packages/game_core_engine_contract
      - modules/genres/* # game_scenes, etc.
      - examples/* # demo_game
      # game_core relocated under packages/
@@ -56,3 +60,6 @@ scripts:
      kill-dart:force:
           # Non-interactive: force kill and remove flutter SDK lockfile
           bash tools/kill_dart_flutter.sh -y --remove-lock
+     bundle:
+          # Create a zip of the repository excluding build and other ignored files
+          bash tools/create_light_bundle.sh

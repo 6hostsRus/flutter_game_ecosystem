@@ -1,0 +1,10 @@
+# melos_managed_dependency_overrides: core_services,core_services_isar,in_app_purchase,services
+dependency_overrides:
+  core_services:
+    path: ../services/core_services
+  core_services_isar:
+    path: ../services/core_services_isar
+  in_app_purchase:
+    path: ../in_app_purchase
+  services:
+    path: ../services

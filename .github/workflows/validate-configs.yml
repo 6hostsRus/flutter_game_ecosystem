@@ -1,0 +1,35 @@
+name: Validate Configs
+
+on:
+     pull_request:
+          paths:
+               - 'examples/configurator/config/**'
+               - 'packages/config_runtime/**'
+               - 'tools/schema_validator/**'
+     workflow_dispatch: {}
+
+jobs:
+     validate:
+          runs-on: ubuntu-latest
+          steps:
+               - name: Checkout
+                 uses: actions/checkout@v4
+
+               - name: Setup Dart
+                 uses: dart-lang/setup-dart@v1
+
+               - name: Install validator deps
+                 run: dart pub get --directory=tools/schema_validator
+
+               - name: Run validation
+                 run: |
+                      dart run --directory=tools/schema_validator bin/validate_configs.dart \
+                           --root examples/configurator/config \
+                           --pack demo_pack \
+                           --out goldens/_ci
+
+               - name: Upload artifacts
+                 uses: actions/upload-artifact@v4
+                 with:
+                      name: config-validation
+                      path: goldens/_ci/**

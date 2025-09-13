@@ -1,0 +1,15 @@
+meta:
+  version: 1
+  authors: ["shannon","design_team"]
+  created: "2025-09-05"
+
+include:
+  - board.yaml
+  - loot.index.yaml
+  - achievements.yaml
+
+analytics:
+  on_swap: match.swap
+  on_match: match.match
+  on_cascade_end: match.cascade_end
+  on_board_stable: match.board_stable

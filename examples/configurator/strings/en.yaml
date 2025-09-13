@@ -1,0 +1,13 @@
+# UTF-8, YAML
+strings:
+  ui:
+    engines: "Engines"
+    packs: "Packs"
+    seed: "Seed"
+    telemetry: "Telemetry"
+    validation: "Validation"
+  titles:
+    match_boss_week_03: "Boss Week 3: Shadow Knight"
+  items:
+    shadow_cape: "Shadow Cape"
+    void_shard: "Void Shard"

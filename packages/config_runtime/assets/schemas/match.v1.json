@@ -1,0 +1,28 @@
+{
+     "$schema": "https://json-schema.org/draft-07/schema",
+     "title": "Match Engine Config v1",
+     "type": "object",
+     "properties": {
+          "engine": { "const": "match" },
+          "board": {
+               "type": "object",
+               "properties": {
+                    "width": { "type": "integer", "minimum": 3 },
+                    "height": { "type": "integer", "minimum": 3 },
+                    "tileTypes": {
+                         "type": "array",
+                         "items": { "type": "string" },
+                         "minItems": 3
+                    }
+               },
+               "required": ["width", "height", "tileTypes"]
+          },
+          "loot": {
+               "type": "object",
+               "properties": {
+                    "drops": { "type": "array", "items": { "type": "object" } }
+               }
+          }
+     },
+     "required": ["engine", "board"]
+}

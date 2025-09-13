@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "achievements.v1",
+  "type": "object",
+  "required": [
+    "achievements",
+    "meta"
+  ],
+  "properties": {
+    "achievements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "requires",
+          "reward"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "requires": {
+            "type": "object"
+          },
+          "reward": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "schema"
+      ],
+      "properties": {
+        "schema": {
+          "const": "achievements.v1"
+        }
+      }
+    }
+  }
+}

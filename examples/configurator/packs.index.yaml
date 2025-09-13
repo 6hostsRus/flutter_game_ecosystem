@@ -1,0 +1,52 @@
+packs:
+  - id: match_boss_week_03
+    name: "Boss Week 3: Shadow Knight"
+    engine: match
+    discipline: pve
+    season: "winter-2025"
+    tags: ["boss","hard","featured"]
+    lockSeed: false
+    minAppVersion: "1.2.0"
+    compat: ">=1.2,<2.0"
+    rollout:
+      experimentId: "exp-4521"
+      cohort: 50
+    locales: ["en"]
+    l10nBundle: "strings/en.yaml"
+    requiresSubs: []
+    risk: low
+    path: "match_boss_week_03"
+
+  - id: arena_fast_weekly
+    name: "Arena: Speed Weekly"
+    engine: match
+    discipline: pvp
+    season: "weekly-rotation"
+    tags: ["arena","speed","weekly"]
+    lockSeed: true                  # PvP parity enforced
+    minAppVersion: "1.2.0"
+    compat: ">=1.2,<2.0"
+    rollout:
+      experimentId: "exp-4610"
+      cohort: 100
+    locales: ["en"]
+    l10nBundle: "strings/en.yaml"
+    requiresSubs: ["vip"]
+    risk: experimental               # flagged for caution
+    path: "arena_fast_weekly"
+
+  - id: puzzle_chill_pack
+    name: "Puzzle: Chill Pack"
+    engine: match
+    discipline: pve
+    season: "evergreen"
+    tags: ["puzzle","casual","training"]
+    lockSeed: false
+    minAppVersion: "1.2.0"
+    compat: ">=1.2,<2.0"
+    rollout: { }
+    locales: ["en"]
+    l10nBundle: "strings/en.yaml"
+    requiresSubs: []
+    risk: low
+    path: "puzzle_chill_pack"

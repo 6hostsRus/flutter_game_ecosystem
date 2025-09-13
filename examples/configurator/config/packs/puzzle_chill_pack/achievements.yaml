@@ -1,0 +1,11 @@
+achievements:
+  - id: puzzle_start
+    name: "First Steps"
+    requires: { puzzle: 5 }
+    reward: { coins: 100 }
+  - id: puzzle_chain_master
+    name: "Chain Master"
+    requires: { max_cascade: 5 }
+    reward: { gems: 1 }
+meta:
+  schema: achievements.v1

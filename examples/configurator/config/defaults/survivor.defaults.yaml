@@ -1,0 +1,7 @@
+# survivor.v1 (placeholder)
+survivor:
+  wave_duration_s: 60
+  rng_seed: null
+meta:
+  version: 1
+  schema: survivor.v1

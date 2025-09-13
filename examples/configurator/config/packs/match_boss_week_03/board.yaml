@@ -1,0 +1,36 @@
+# board.v1 (human-readable knobs for this pack)
+board:
+  width: 8
+  height: 8
+  gravity: down
+  refill: bag
+  rng_seed: 123456      # this pack sets a seed; can be overridden unless lockSeed at pack level
+tiles:
+  kinds: 6
+  weights: [1,1,1,1,1,0.8]
+matches:
+  patterns:
+    line3: { enabled: true }
+    line4: { bonus: line_clear, power: 1 }
+    line5: { bonus: color_bomb, power: 1 }
+    tee:   { bonus: cross_clear,  power: 1 }
+    ell:   { bonus: corner_bomb,  power: 1 }
+  combo:
+    base: 1.0
+    per_cascade: 0.33
+obstacles:
+  - id: stone_2x2
+    type: block
+    hp: 3
+    spawn_chance: 0.02
+yields:
+  energy_per_tile: 1
+  soft_currency_per_tile: 1
+  gem_drop:
+    schema: loot.v1
+    base_chance: 0.0005
+    pity:
+      threshold_matches: 500
+      grant: 1
+meta:
+  schema: board.v1

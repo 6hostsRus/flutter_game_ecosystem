@@ -1,0 +1,7 @@
+# idle.v1 (placeholder)
+idle:
+  tick_ms: 1000
+  rng_seed: null
+meta:
+  version: 1
+  schema: idle.v1

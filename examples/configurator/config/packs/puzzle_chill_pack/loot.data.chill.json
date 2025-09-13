@@ -1,0 +1,22 @@
+[
+  {
+    "item_id": "puzzle_refill_small",
+    "rarity": "common",
+    "weight": 20,
+    "min_rank": "bronze",
+    "tags": [
+      "pve",
+      "refill"
+    ]
+  },
+  {
+    "item_id": "puzzle_refill_medium",
+    "rarity": "uncommon",
+    "weight": 10,
+    "min_rank": "silver",
+    "tags": [
+      "pve",
+      "refill"
+    ]
+  }
+]

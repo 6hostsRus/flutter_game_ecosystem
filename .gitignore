@@ -64,3 +64,6 @@
 
 # Ignore generated docs
 **/docs/generated/
+
+# Ignore pdfs
+**/*.pdf

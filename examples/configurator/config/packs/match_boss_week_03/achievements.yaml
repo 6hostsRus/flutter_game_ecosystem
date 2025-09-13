@@ -1,0 +1,8 @@
+# achievements.v1 (stub)
+achievements:
+  - id: trifecta_weekly
+    name: "Weekly Trifecta"
+    requires: { puzzle: 10, battle: 10, master: 10 }
+    reward: { chest: "boss_small" }
+meta:
+  schema: achievements.v1

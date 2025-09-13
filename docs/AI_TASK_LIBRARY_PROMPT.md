@@ -33,8 +33,9 @@ Instructions
 4. Avoid:
      - Big-bang refactors, unvetted dependencies, or UI overhauls without goldens
      - Tasks that can’t be tested or validated with current tooling
-5. Include a short “Next PRs” recommendation list (2–4 items).
-6. Keep formatting simple (Markdown headings, bullet lists). No code unless essential.
+5. When proposing multiple migration strategies or approaches, present them as numbered options (1., 2., 3., ...). The maintainer may reply with a single number (e.g., "2") or a range (e.g., "1-3") to select one or more options. For repo-wide refactors, require a per-package, multi-PR plan before generating bulk edits.
+6. Include a short “Next PRs” recommendation list (2–4 items).
+7. Keep formatting simple (Markdown headings, bullet lists). No code unless essential.
 
 Output Format
 
