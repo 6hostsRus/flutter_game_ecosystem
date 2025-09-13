@@ -11,140 +11,50 @@ Note: Before executing any task from this library, follow the standard steps in 
 
 ---
 
-# Open Tasks (current)
+## Open Tasks (current)
 
-This file contains the actionable tasks that are still open or partially complete. Completed tasks have been archived to `CHANGELOG.md` and are no longer listed here.
+The PoC work is consolidated on a single feature branch `feat/config-runtime-unify-v1` and
+will be progressed there. Completed items have been moved to `CHANGELOG.md` and the
+reconciliation file. The items below are still open or partially complete and are
+managed from the feature branch rather than separate per-package PRs unless reviewers
+request focused PRs.
 
-Before running any task, follow the standard execution steps in `docs/AI_TASK_CHECKLIST.md`.
+### ConfigRuntimeUnify (P1) — In progress (feature branch PoC)
 
----
+Purpose: Unify `packages/config_runtime` usage across the monorepo. The PoC changes
+for `packages/providers`, `packages/services`, and `packages/shared_utils` are on
+`feat/config-runtime-unify-v1` and have been validated locally (analyze + tests).
 
-## ExampleIntegrationUpdate (P2) — Partial
+Current scope on feature branch:
 
-Purpose: Update `examples/demo_game` and genre modules to use new `game_core` APIs and any migrated snippets. Some demo wiring remains gated by feature flags and documentation updates.
+-    Normalized Loader provider signatures in `packages/providers`.
+-    Added global analytics accessor in `packages/services` (`AnalyticsPort` /
+     `setGlobalAnalyticsPort` / `getGlobalAnalyticsPort`).
+-    Updated `packages/shared_utils` `unawaited()` to prefer routing unawaited errors to
+     the global analytics sink, falling back to NDJSON if unavailable.
 
-Steps:
+Validation performed (local):
 
-1. Replace old imports/usages with new `game_core` interfaces and utilities in the example and genre modules.
-2. Ensure scenes build and run; adjust providers/services wiring if needed.
-3. Add a short README note in the example about the new APIs and feature flags.
+-    `melos bootstrap` succeeded (18 packages bootstrapped).
+-    `melos run analyze` reported "No issues found" across the repo.
+-    Per-package `flutter test` / `dart test` executed for packages with tests: All passed.
 
-Validation:
+Notes:
 
--    `melos run example` runs without regressions.
--    Basic gameplay loop and save/ads/analytics hooks still function.
+-    Per the owner's instruction, no new focused PRs will be created at this time. Work
+     will continue on `feat/config-runtime-unify-v1`. If reviewers request smaller PRs
+     later, the branch can be split into focused PRs.
 
 ---
 
 ## Next Tasks (backlog)
 
-These are smaller follow-ups that remain after the large consolidation work:
-
--    Example wiring: add optional Idle demo screen behind AppConfig feature flag and document it in the example README.
--    Persistence adapters: implement a shared_preferences SaveDriver adapter with tests; keep InMemory for unit tests.
+-    Add gated Idle demo screen to `examples/demo_game` and document its enablement.
+-    Implement a shared_preferences SaveDriver adapter with tests (follow-up, non-blocking).
 
 ---
 
 For previously completed work and the full archive of reconciled tasks see `CHANGELOG.md`.
-
----
-
-## New follow-ups added (P2)
-
-### Fix CI golden diffs (P2)
-
-Purpose: Resolve CI-only golden pixel diffs by ensuring deterministic fonts and capturing failure artifacts for triage.
-
-Steps:
-
-1. Add a deterministic font loader to the golden test harness so tests use bundled fonts instead of system fonts. Use `FontLoader` and `rootBundle.load` to load TTF assets before pumping widgets.
-2. Ensure font files are added to `examples/demo_game/assets/fonts/` and referenced correctly in pubspec assets so `rootBundle` can load them during tests.
-3. Add a temporary CI step to upload the golden failure folder (`examples/demo_game/test/goldens/failures/**`) as an artifact for visual triage.
-4. Re-enable the CI golden tests, run once, inspect artifacts, and decide whether to (a) update CI baselines (`*_ci.png`) and commit, or (b) adjust font loading/locale to match developer output.
-
-Validation:
-
--    CI run shows no pixel diffs after font loading or updated baselines.
--    Failure artifacts are available in the Actions UI for triage during the first debug run.
-
-Notes:
-
--    Start with adding font loading in the test harness to address the most common cause (font/antialias differences).
--    Keep CI artifact upload enabled only while diagnosing; remove or keep as desired after resolution.
-
-### Review metrics commit strategy (P2)
-
-Purpose: Decide where and how automated metric updates should be created, reviewed, and merged in CI/CD. The goal is to avoid permission errors and to keep the main branches protected while ensuring metrics stay up to date.
-
-Steps:
-
-1. Audit current `tools/update_metrics.dart` to understand the intended changes and the files it touches (`docs/METRICS.md`).
-2. Decide whether metric updates should be:
-     - committed directly by CI (requires write permission and protected branch rules),
-     - created via an automated PR for human review (recommended), or
-     - stored as artifacts for a scheduled job that consolidates and applies them under a maintainer account.
-3. For the chosen approach, document required GitHub permissions and reviewer rules. If automated merging is desired, list required branch protection exemptions and create a security plan.
-4. Update CI workflow to implement the chosen approach. If using PRs, prefer `peter-evans/create-pull-request@v4` with a PAT stored in `secrets.METRICS_BOT_TOKEN` (avoid using `GITHUB_TOKEN` to bypass branch protections). If committing directly, run the commit on a controlled runner with a token scoped to the task.
-5. Add tests / dry-run mode for `tools/update_metrics.dart` so CI can validate the change without committing.
-
-Validation:
-
--    A run of CI where metrics would change produces either an open PR, an artifact, or a direct commit according to the chosen plan, without pipeline permission failures.
--    Documentation is updated with the approved process and permissions checklist.
-
-Notes:
-
--    Start with the automated PR approach to keep protections intact and to make the process visible to reviewers.
--    Keep credentials limited in scope and rotate tokens regularly.
-
-### Audit and fix schema validator CI step (P2)
-
-Purpose: Fix `tools/schema_validator` so `dart run tools/schema_validator/bin/validate_schemas.dart` executes in CI without missing package errors, and decide whether to re-enable the step or continue to run it as a gated/manual check.
-
-Steps:
-
-1. Reproduce locally: run `dart run tools/schema_validator/bin/validate_schemas.dart` inside the repo after `melos bootstrap` and record the exact error (likely missing package dependency `json_schema2`).
-2. Open `tools/schema_validator/pubspec.yaml` and ensure it declares `json_schema2` (and any other runtime deps) under `dependencies:` with compatible versions. If missing, add the dependency and run `melos bootstrap`.
-3. If `tools/schema_validator` is intended to be a standalone package, ensure it has a proper `environment:` sdk constraint and an executable entry in `bin/` or `tool/` and that CI runs it from the package root (or use `dart run` from the repo root with `-P` if needed).
-4. Add a small CI job that runs `melos bootstrap` for that package and runs the validator in a restricted mode first (e.g., `--dry-run`), then enable full validation once stable.
-5. Add unit/smoke tests for the validator to avoid regressions; include them in `melos run test` for the package.
-
-Validation:
-
--    `dart run tools/schema_validator/bin/validate_schemas.dart` runs locally and in CI without missing package errors.
--    CI job completes successfully when schema validation is enabled.
-
-Notes:
-
--    If `json_schema2` has transitive constraints or platform-specific code, prefer pinning a compatible version in the validator pubspec and update lockfiles accordingly.
--    As a temporary measure, keep the CI step a no-op until the validator is fixed to avoid blocking other CI activities.
-
-### Route shared_utils unawaited NDJSON into Analytics sink
-
-Purpose: Replace the on-disk NDJSON fallback in `packages/shared_utils/lib/shared_utils.dart`
-with a call into the repository's analytics sink so unhandled unawaited exceptions
-are collected in the same place as other metrics.
-
-Steps:
-
-1. Update `shared_utils.unawaited` so that when `_unhandledErrorHandler` is null it
-   attempts to resolve an `AnalyticsPort` (via a short-lived `ProviderContainer`)
-   and call `send(AnalyticsEvent('unawaited_error', {...}))`.
-2. Keep the NDJSON fallback as a last-resort if analytics is unavailable or writing fails.
-3. Add tests verifying analytics sink receives events and that fallback still writes when
-   analytics is not available.
-
-Validation:
-
--    Unit tests in `packages/shared_utils` and `packages/providers` pass.
--    `melos run analyze` reports no new analyzer errors.
-
-### Open PR and request review
-
-Purpose: Push the branch `chore/update-docs-and-tech-data` (already pushed) and open a PR
-with a short description summarizing the change, linking to the tests and CI results.
-
-Steps:
 
 1. Create a GitHub PR: title `chore: centralize unawaited handler and demo wiring`.
 2. In PR description include testing steps, the CI run link, and a note about the

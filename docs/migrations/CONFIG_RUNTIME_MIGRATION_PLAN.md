@@ -1,95 +1,148 @@
 # Config Runtime Migration Plan (PoC + Full Migration)
 
-Purpose: A compact, actionable migration plan to unify `packages/config_runtime` usage across the monorepo with a safe per-package, multi-PR approach.
+Purpose: A compact, actionable migration plan to unify `packages/config_runtime` usage across the monorepo.
 
-How to use
+Current approach (decision)
 
--    Read the plan and pick one numbered option below (reply with the option number or a range like `1-2`).
--    After selecting an option, create the PoC PR using the sample PR template in `docs/migrations/POC_PR_TEMPLATE.md` and follow the Per-PR checklist.
+-    The PoC and subsequent migration work are being executed on a single feature branch
+     `feat/config-runtime-unify-v1`. This branch contains the PoC changes (providers,
+     services, shared_utils) and will be used to continue incremental migrations. The
+     decision was made to favor a unified feature branch and single PR for visibility
+     and easier coordination. If reviewers request split PRs later, the branch can be
+     sliced into focused per-package PRs.
 
-Quick checklist (per your request)
+Quick checklist
 
--    Present options as numbered choices; reply with a number or range to select.
 -    Run `melos bootstrap` at repo root before analysis or tests.
--    Use `melos run analyze --scope <pkg>` and `melos run test --scope <pkg>` for per-package validation.
--    Keep PRs small: 1 package or small subtree per PR.
+-    Per-package validation (working commands used in this repository):
 
-Migration options (pick one)
+-    Use the repository melos scripts where appropriate, or run per-package
+-    analyzer/tests directly. Examples (these work in this repo):
 
-1. Providers-first (recommended PoC)
+```zsh
+# bootstrap the workspace
+melos bootstrap
 
-     - PoC package: `packages/providers`.
-     - Rationale: `providers` references `config_runtime` and touches many consumers; it's a focused surface to validate API ergonomics and deprecation wrappers.
-     - Expected effort: small PoC, medium follow-ups.
+# analyze a package directly (preferred for per-package checks)
+cd packages/<pkg> && dart analyze .
 
-2. Examples-first
+# run tests for a package (if it has a test/ directory)
+cd packages/<pkg> && dart test
 
-     - PoC package: `examples/demo_game`.
-     - Rationale: Update the demo app to the new runtime to validate runtime and asset schema loading across app-level wiring (assets, schemas).
-     - Expected effort: medium (assets, goldens may need attention).
+# repository-wide scripts (melos)
+melos run analyze    # runs `melos exec -- dart analyze .` across packages
+melos run test       # runs the repo test script (see melos.yaml)
+```
 
-3. Parallel per-package PRs (fast, higher merge coordination)
-     - PoC: pick 2 small packages (e.g., `packages/shared_utils`, `packages/game_core`) to validate approach.
-     - Rationale: Moves faster but requires CI coordination and careful review to avoid mass breakage.
+Recommended sequence (as implemented on feature branch)
 
-Recommended order (safe, incremental)
-
-1. PoC: `packages/providers` (option 1) — validate API and deprecation wrapper pattern.
-2. `tools/schema_validator` — ensure validator uses the new runtime without missing deps.
-3. `packages/services` and `packages/shared_utils` — core infra packages.
-4. `packages/game_core` and `modules/genres/*` (one genre at a time: `match`, `idle`, `rpg`, `survivor`).
+1. PoC: `packages/providers` — validated and merged into the feature branch.
+2. `packages/services` and `packages/shared_utils` — core infra changes completed on
+   the feature branch (analytics accessor, unawaited handling).
+3. `tools/schema_validator` — ensure validator works with new runtime (fix deps).
+4. `packages/game_core` and `modules/genres/*` — one genre at a time: `match`,
+   `idle`, `rpg`, `survivor`.
 5. `examples/demo_game` — final integration and golden-test validation.
 
-Per-PR checklist (must include in every PR description)
+Per-feature-branch checklist (what to attach to PR #1 as updates)
 
--    Title prefix: `refactor(config-runtime): <short>`
--    `change-class: refactor` header at the top of modified files (where applicable).
--    `melos bootstrap` run and a short note: "bootstraped: yes".
--    Validators run:
-     -    `melos run analyze --scope <pkg>` (attach result)
-     -    `melos run test --scope <pkg>` (attach result or note if skipped)
--    Minimal smoke test steps for reviewers (one-liner commands).
--    Link to reconciliation: update `docs/AI_TASK_RECONCILIATION.md` with Status/Artifacts/Gaps.
+-    Title: `feat(config-runtime): unified migration PoC + batch` (PR #1 is the canonical PR).
+-    Add a `docs/migrations/PR_1_SUMMARY.md` file (or update it) containing per-package
+     analyze/test outputs and short notes for reviewers.
+-    For each incremental commit or package change on the feature branch, run and
+     paste `melos run analyze --scope <pkg>` and `melos run test --scope <pkg>` outputs
+     into the PR conversation or `PR_1_SUMMARY.md`.
+-    Keep commits small and comment-friendly; if a reviewer requests a focused PR for
+     a package, create it from the feature branch snapshot.
 
 PR size guidance
 
--    Keep PRs < 300 LOC where practical.
--    If >3 packages affected, split into separate PRs and include a migration README in the first PR describing the full plan.
+-    Keep changes per commit small and targeted; the feature PR is intended to hold
+     the full progression of the migration, not to force reviewers to accept a single
+     large monolith without context.
 
 Rollback & compatibility
 
--    Add small deprecation shims in `packages/config_runtime` where the old API surface existed. Keep shims for one release cycle to ease migration.
--    If a package cannot be migrated immediately, add a temporary adapter inside the package (small local shim) and plan a follow-up to remove it.
+-    Add short-lived deprecation shims where needed and keep them for a single
+     release cycle.
+-    If a package cannot be migrated in time, add an internal shim in that package
+     and schedule a follow-up to remove it.
 
 Validation commands (examples)
 
 ```zsh
+# bootstrap
 melos bootstrap
-melos run analyze --scope packages/providers
-melos run test --scope packages/providers
+
+# per-package analyzer (example: providers)
+cd packages/providers && dart analyze .
+cd packages/providers && dart test
+
+# full repo scripts (useful for CI or broad checks)
+melos run analyze
+melos run test
 ```
 
 CI recommendations
 
--    Run per-PR `melos bootstrap` in CI for the changed scope.
--    For large migrations, enable the CI matrix to validate a sampling of packages instead of full repo to speed iteration.
--    Enable artifact upload for failing golden diffs during example migration so baselines can be triaged.
+-    The feature branch should be the primary integration point and CI should run
+     per-commit checks (bootstrap + per-package analyze + a representative test
+     matrix). For performance, CI can run a sampling of packages' tests but must run
+     full `melos run analyze`.
 
 Edge cases & risks
 
--    Golden tests and fonts: when migrating `examples/demo_game`, address deterministic font loading early.
--    Generated files tracked in examples can cause noisy diffs; run the emergency cleanup task first if CI noise is high.
--    Transitive dependency conflicts (e.g., `json_schema2`) may require pinning versions in `tools/schema_validator`.
+-    Golden tests and fonts: address deterministic font loading early when migrating
+     `examples/demo_game`.
 
-Next steps after you pick an option
+Note on goldens for this migration:
 
--    I will create a PoC PR using the template in `docs/migrations/POC_PR_TEMPLATE.md` for the chosen package (default: `packages/providers`).
--    I will run `melos bootstrap` and the per-package analyze/test commands and paste outputs into the PR description.
--    After PoC is merged, proceed through the recommended order with per-package PRs.
+-    For the purposes of the ConfigRuntimeUnify migration we'll skip running
+     `examples/demo_game` golden tests as part of the per-package validation. The
+     golden harness requires a targeted refactor (deterministic font loading,
+     CI-only shims) which will be implemented in a follow-up change. In PR notes
+     mark goldens as "SKIPPED - to be refactored later" so reviewers are aware.
+-    Transitive dependency conflicts (e.g., `json_schema2`) may require pinning
+     versions in `tools/schema_validator`.
 
----
+Next steps
 
-Files referenced
+-    Continue incremental package migrations on `feat/config-runtime-unify-v1`.
+-    Update `docs/migrations/PR_1_SUMMARY.md` and the feature PR body with the
+     per-package verification outputs as commits land.
 
--    `docs/migrations/POC_PR_TEMPLATE.md` (sample PR template)
--    `docs/AI_TASK_RECONCILIATION.md` (update after each PR)
+Test runner guidance (quick reference)
+
+Use these rules when running per-package tests locally or adding validation
+instructions to PRs:
+
+-    If the package depends on Flutter (has `flutter:` under `dependencies` or a
+     `flutter_test` dev_dependency), run tests with `flutter test` from the package
+     directory. Example:
+
+```zsh
+cd packages/game_core
+flutter test --reporter=expanded
+```
+
+-    For pure-Dart packages (no Flutter dependency), use `dart test` from the
+     package directory. Example:
+
+```zsh
+cd packages/config_runtime
+dart test --reporter=expanded
+```
+
+-    You can use the repository melos scripts for workspace-level runs. Examples
+     (from repo root):
+
+```zsh
+melos run analyze   # uses `melos exec -- dart analyze .` across packages
+melos run test      # runs the repo test helper which uses flutter/dart appropriately
+
+# or run tests scoped with melos exec (supported pattern):
+melos exec --scope="game_core" -- flutter test --reporter=expanded
+melos exec --scope="config_runtime" -- dart test --reporter=expanded
+```
+
+Add a short note in PR descriptions which runner you used (dart vs flutter) to make it easy for reviewers.

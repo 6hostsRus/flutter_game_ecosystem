@@ -4,62 +4,111 @@ Purpose: A concrete multi-PR schedule and reviewer checklist to migrate the repo
 
 High-level approach
 
--    Break the migration into package-scoped PRs.
--    Each PR is small, testable, and reversible.
--    First PR (PoC) is `packages/providers` (already completed locally).
+-    The migration work will continue on the consolidated feature branch
+     `feat/config-runtime-unify-v1`. This branch holds the PoC and subsequent
+     incremental package changes. The feature-branch-first approach improves
+     visibility and reduces PR churn; focused per-package PRs can be created from
+     this branch on request.
 
-Phases and PRs
+Phases (feature-branch progression)
 
 Phase 0 - Prep
 
--    PR 0.1: Emergency cleanup (if needed) — remove tracked generated files and update .gitignore. (owner: infra)
--    PR 0.2: Docs & process — add migration plan and PR template. (owner: docs)
+-    Emergency cleanup (if needed) — remove tracked generated files and update .gitignore.
+-    Docs & process — migration plan and PR template (already present).
 
-Phase 1 - Core infra (PoC done)
+Phase 1 - Core infra (PoC applied on feature branch)
 
--    PR 1.1: `packages/providers` — PoC (normalize Loader providers, per-package validate). (owner: you/repo maintainer)
--    PR 1.2: `tools/schema_validator` — ensure validator uses config_runtime and add CI job. (owner: infra/tools)
--    PR 1.3: `packages/services` — migrate telemetry and telemetry adapters to new runtime. (owner: services)
--    PR 1.4: `packages/shared_utils` — canonical helpers & unawaited handler integration. (owner: shared_utils)
+-    `packages/providers` — PoC changes applied on branch.
+-    `packages/services` and `packages/shared_utils` — analytics accessor and `unawaited` integration applied on branch.
 
 Phase 2 - Game Core & Genres
 
--    PR 2.1: `packages/game_core` — update core config interfaces to consume unified runtime (owner: game_core)
--    PR 2.2: `modules/genres/match` (one genre per PR thereafter) — migrate `match`, `idle`, `rpg`, `survivor` sequentially. (owner: genres)
+-    `packages/game_core` and `modules/genres/*` — migrate incrementally on the feature branch, one genre at a time.
 
 Phase 3 - Examples & Goldens
 
--    PR 3.1: `examples/demo_game` — update demo wiring, assets/schemas, and golden test harness (deterministic fonts); upload artifacts for first run. (owner: demo)
+-    `examples/demo_game`  final integration and golden-test validation; address deterministic fonts early.
 
-Per-PR checklist
+Note on goldens for this migration:
 
--    Title: `refactor(config-runtime): <package>`
--    Include `change-class: refactor` header at top of modified files.
--    Run locally and include the following in PR description:
-     -    `melos bootstrap` output
-     -    `melos run analyze --scope <package>` output
-     -    `melos run test --scope <package>` output (or rationale if skipped)
--    Update `docs/AI_TASK_RECONCILIATION.md` with Status/Artifacts/Gaps for the PR.
--    For the first PR touching many packages, include a `docs/migrations/MIGRATION_README.md` describing the full plan.
+-    For the purposes of the ConfigRuntimeUnify migration we'll skip running
+     `examples/demo_game` golden tests as part of the per-package validation. The
+     golden harness requires a targeted refactor (deterministic font loading,
+     CI-only shims) which will be implemented in a follow-up change. In PR notes
+     mark goldens as "SKIPPED - to be refactored later" so reviewers are aware.
+
+Per-feature-branch checklist (updates for PR #1)
+
+-    PR #1 title: `feat(config-runtime): unified migration PoC + batch` (feature branch PR).
+-    Include a `docs/migrations/PR_1_SUMMARY.md` file that is updated as packages are migrated with per-package analyze/test outputs.
+-    For each package change committed to the feature branch, run and attach analyzer/test outputs. Recommended commands (these are proven in this repo):
+
+```zsh
+# bootstrap workspace
+melos bootstrap
+
+# analyze a package directly
+cd packages/<pkg> && dart analyze .
+
+# run package tests (if present)
+cd packages/<pkg> && dart test
+
+# repo-wide scripts
+melos run analyze
+melos run test
+```
 
 Reviewer checklist
 
--    Confirm analyzer and tests for the package are green.
+-    Confirm analyzer and tests for packages affected in a commit are green.
 -    For schema changes: validate schemas run and link to validator artifacts.
 -    For examples: validate golden artifacts and check deterministic font loading.
 
+Test runner guidance (quick reference)
+
+Use these rules when running per-package tests locally or adding validation
+instructions to PRs:
+
+-    If the package depends on Flutter (has `flutter:` under `dependencies` or a
+     `flutter_test` dev_dependency), run tests with `flutter test` from the package
+     directory. Example:
+
+```zsh
+cd packages/game_core
+flutter test --reporter=expanded
+```
+
+-    For pure-Dart packages (no Flutter dependency), use `dart test` from the
+     package directory. Example:
+
+```zsh
+cd packages/config_runtime
+dart test --reporter=expanded
+```
+
+-    You can use the repository melos scripts for workspace-level runs. Examples
+     (from repo root):
+
+```zsh
+melos run analyze   # uses `melos exec -- dart analyze .` across packages
+melos run test      # runs the repo test helper which uses flutter/dart appropriately
+
+# or run tests scoped with melos exec (supported pattern):
+melos exec --scope="game_core" -- flutter test --reporter=expanded
+melos exec --scope="config_runtime" -- dart test --reporter=expanded
+```
+
+Add a short note in PR descriptions which runner you used (dart vs flutter) to make it easy for reviewers.
+
 CI/GitHub actions guidance
 
--    Each PR should run `melos bootstrap` in CI before analyze/test steps.
--    For multi-package PRs, limit CI matrix to a sampling of packages for speed, but run full analyze.
--    Upload golden diffs artifacts for triage in the first demo PR.
+-    Feature-branch commits should trigger CI that runs `melos bootstrap`, `melos run analyze`, and a representative test matrix. For performance, CI may sample tests but must run full analysis.
 
 Timing & coordination
 
--    Target each PR to be small (1-3 days of focused work). For larger packages (game_core, demo_game) allow 1-week windows and coordinate with maintainers.
--    Stagger merges to avoid overlapping refactors in the same package.
+-    Keep each commit focused; use clear commit messages and small steps. If reviewers require atomic per-package PRs, create them from the feature branch snapshot.
 
 Rollback strategy
 
--    Each PR must be revertable; keep changes isolated to package scope.
--    If a PR causes unexpected breakage in CI, revert and file a follow-up issue that describes the blocker and next steps.
+-    Use small, revertable commits and keep deprecation shims where needed. If a commit causes CI failures, revert the commit on the feature branch and create a follow-up issue.
